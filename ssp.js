@@ -11,6 +11,7 @@ var user = require('./routes/user');
 var mainquery = require('./routes/mainquery');
 var servicedetails = require('./routes/servicedetails');
 var servicecreate = require('./routes/service-create');
+var post = require('./routes/post');
 
 var http = require('http');
 var path = require('path');
@@ -57,6 +58,8 @@ app.get('/modal-svc-order', mainquery.svc_modal);
 // });
 app.get('/servicedetails', servicedetails.getData);
 app.get('/service-create', servicecreate.create);
+app.post('/customer/create', post.update);
+
 
 
 //Login and Validate User Routes, Logout
