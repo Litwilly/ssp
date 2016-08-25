@@ -2,6 +2,7 @@
  * Module dependencies.
  */
 
+//ssp application
 var express = require('express');
 var dbstarter = require('./model/db_starter');
 var routes = require('./routes');
