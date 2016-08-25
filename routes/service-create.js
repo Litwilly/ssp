@@ -10,19 +10,8 @@ var Status = mongoose.model('Status');
 var _ = require('underscore');
 var async = require('async');
 
+
 exports.create = function(req, res){
-  res.render('service-create',{
-
-  });
-};
-
-exports.svc_modal = function(req, res){
-  res.render('modal-svc-order',{
-
-  });
-};
-
-exports.getData = function(req, res){
   var myequipment = [];
   var prods = [];
   console.log("==========================workshop6===============================");
@@ -37,12 +26,8 @@ exports.getData = function(req, res){
           .exec(function (err, serviceorders){
             serviceorders.forEach(function(yours){
               myequipment.push({
-                "_id": yours._id,
-                "SerialNumber": yours._Equipment.SerialNumber,
-                "OpenDate": yours.OpenDate,
                 "ProblemTypeDescription": yours.ProblemTypeDescription,
-                "ProductName": yours._Product.ProductName,
-                "CurrentStatus": yours.CurrentStatus
+                "PriorityDescription": yours.PriorityDescription
               });
             });
             callback();
@@ -50,7 +35,7 @@ exports.getData = function(req, res){
         },
         function(callback){
           Equipment.find({ _User: req.session.user._id })
-              .populate('_CreatedBy')
+              // .populate('_CreatedBy')
               .populate('_Product')
               .populate('_Equipment')
                         //.sort('NextPMDate')
@@ -59,27 +44,21 @@ exports.getData = function(req, res){
                   equipment.forEach(function(mine){
                     prods.push({
                       "_id": mine._id,
-                      "Product": mine
+                      "ProductID": mine._Product._id,
                       "SerialNumber": mine.SerialNumber,
                       "ProductName": mine._Product.ProductName,
-                      "NextPMDescription": mine.NextPMDescription,
-                      "NextPMDate": mine.NextPMDate
+                      "Room": mine.Room
                     });
                   });
                   callback();
                 });
               }], function(err){
                 if (err)return next(err);
-                if (req.session.user.RoleName === "Customer")
-                  res.render('customer',
-                        { equipment: myequipment,
-                          products:  prods,
-                          firstname: req.session.user.FirstName});
-                else if (req.session.user.RoleName === "Onsite Engineer")
-                  res.render('engineer',
-                        { equipment: myequipment,
-                          products:  prods,
-                          firstname: req.session.user.FirstName});
+                console.log(prods);
+                res.render('service-create',
+                  { equipments: myequipment,
+                    products:  prods,
+                    firstname: req.session.user.FirstName});
               }
             );
         };

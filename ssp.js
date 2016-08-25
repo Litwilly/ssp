@@ -56,7 +56,7 @@ app.get('/modal-svc-order', mainquery.svc_modal);
 //   res.send("Id is set to " + req.query.id);
 // });
 app.get('/servicedetails', servicedetails.getData);
-app.get('/create', servicecreate.create);
+app.get('/service-create', servicecreate.create);
 
 
 //Login and Validate User Routes, Logout

@@ -13,7 +13,7 @@ html
 			.modal-dialog.wide-modal
 				.modal-content
 
-		.modal.fade(id='serviceOrderModal' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		.modal.fade(id='create' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
 			.modal-dialog.wide-modal
 				.modal-content
 
@@ -34,9 +34,10 @@ html
 										span.glyphicon.glyphicon-home
 										|  Home
 								li.active
-									a(data-toggle='modal', href='/modal-serv-req', data-target='#serviceReqModal')
+									//- a(href='/service-create') Create Service Request
+									a(data-toggle='modal', href='/modal-serv-req', data-target='#create')
 										span.glyphicon.glyphicon-wrench
-										|  Create Service Request
+										//- |  Create Service Request
 								li.active
 									a.dropdown-toggle(href='#', data-toggle='dropdown')
 										span.glyphicon.glyphicon-eye-open
