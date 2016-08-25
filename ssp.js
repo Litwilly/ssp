@@ -10,9 +10,7 @@ var user = require('./routes/user');
 
 var mainquery = require('./routes/mainquery');
 var servicedetails = require('./routes/servicedetails');
-
-//Database
-var dbquery = require('./routes/dbquery');
+var servicecreate = require('./routes/service-create');
 
 var http = require('http');
 var path = require('path');
@@ -50,10 +48,15 @@ app.get('/', routes.index);
 app.get('/customer', mainquery.getData);
 app.get('/engineer', mainquery.getData);
 
+// Modal pages
+app.get('/modal-serv-req', mainquery.req_modal);
+app.get('/modal-svc-order', mainquery.svc_modal);
+
 // app.get('/servicedetails', function(req, res) {
 //   res.send("Id is set to " + req.query.id);
 // });
 app.get('/servicedetails', servicedetails.getData);
+app.get('/create', servicecreate.create);
 
 
 //Login and Validate User Routes, Logout

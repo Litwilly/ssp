@@ -10,8 +10,8 @@ var Status = mongoose.model('Status');
 var _ = require('underscore');
 var async = require('async');
 
-exports.req_modal = function(req, res){
-  res.render('modal-serv-req',{
+exports.create = function(req, res){
+  res.render('service-create',{
 
   });
 };
@@ -59,6 +59,7 @@ exports.getData = function(req, res){
                   equipment.forEach(function(mine){
                     prods.push({
                       "_id": mine._id,
+                      "Product": mine
                       "SerialNumber": mine.SerialNumber,
                       "ProductName": mine._Product.ProductName,
                       "NextPMDescription": mine.NextPMDescription,
