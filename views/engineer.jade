@@ -7,16 +7,15 @@ html
 		link(rel='stylesheet', href='/stylesheets/main.css')
 		link(rel='stylesheet', href='/stylesheets/emc-icon-styles.css')
 		link(rel='icon', type='images/png', href='images/favicon.png')
+		//- link(rel='stylesheet', href='/stylesheets/flaticon.css')
 	body
-		.modal.fade(id='serviceReqModal' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-			.modal-dialog.wide-modal
-				.modal-content
-
+		script(src='/javascripts/jquery-2.0.3.min.js')
+		script(src='/javascripts/bootstrap.min.js')
 
 		nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
 			.container
 				.navbar-header
-					a.emcTab(href='/', title='Wonski Medical Solutions')
+					a.emcTab(href='/', title='Wronski Medical Solutions')
 					h3.applicationIdentifier Wonski Medical Solutions
 					ul.nav.navbar-nav.navbar-right
 						button.navbar-toggle(data-toggle='collapse', data-target='.navHeaderCollapse')
@@ -30,7 +29,7 @@ html
 										span.glyphicon.glyphicon-home
 										|  Home
 								li.active
-									a(data-toggle='modal', href='/modal-serv-req', data-target='#serviceReqModal') 
+									a(href='#myModal', data-toggle='modal')
 										span.glyphicon.glyphicon-wrench
 										|  Create Service Request
 								li.active
@@ -57,35 +56,90 @@ html
 				h1 Hello #{firstname}
 				h2 You are an Engineer!
 				p Today is #{moment(Date.now()).format('dddd, MMMM Do')}
-
-		.main
-
+		
 		.container
-			h2.text-center Open Service Orders
-			table.text-center.table.table-striped.table-hover.table-responsive
-				thead
-					tr
-						th.text-center #{header1} Service Order
-						th.text-center #{header2} Equipment
-						th.text-center #{header3} Product
-						th.text-center #{header4} Date Requested
-						th.text-center #{header5} Problem Type
-						th.text-center #{header6} Status
-				tbody
-				for eq in equipment
-					tr
-						td
-							a(href="/servicedetails?id=#{eq._id}") #{eq._id}
-						td= eq.SerialNumber
-						td= eq.ProductName
-						td #{moment(eq.OpenDate).format('dddd,MMMM Do YYYY, hh:mm A')}
-						td= eq.ProblemTypeDescription
-						if eq.CurrentStatus == "Waiting For Customer Approval"
-							td.text-danger #{eq.CurrentStatus}
-						else 
-							td= eq.CurrentStatus
-
-
+					h3.text-center My Service Orders
+					.table-responsive
+						table.table.table-striped.table-bordered
+							thead
+								tr
+									th.text-center Service Order
+									th.text-center Customer
+									th.text-center Equipment
+									th.text-center Product
+									th.text-center Date Service Requested
+									th.text-center Problem Type
+									th.text-center Status
+							tbody
+								for eq in equipment
+									tr
+										td
+											a(data-toggle='modal', href='#myModal') #{eq._id}
+										td= eq.CustomerName
+										td= eq.SerialNumber
+										td= eq.ProductName
+										td #{moment(eq.OpenDate).format('dddd,MMMM Do YYYY, hh:mm A')}
+										td= eq.ProblemTypeDescription
+										if eq.CurrentStatus == "Waiting For Customer Approval"
+											td.text-danger #{eq.CurrentStatus}
+										else 
+											td= eq.CurrentStatus
+		.container
+					h3.text-center Open Service Orders
+					.table-responsive
+						table.table.table-striped.table-bordered
+							thead
+								tr
+									th.text-center Service Order
+									th.text-center Customer
+									th.text-center Equipment
+									th.text-center Product
+									th.text-center Date Service Requested
+									th.text-center Problem Type
+									th.text-center Status
+							tbody
+								for eq in equipment
+									tr
+										td
+											a(data-toggle='modal', href='#myModal') #{eq._id}
+										td= eq.CustomerName
+										td= eq.SerialNumber
+										td= eq.ProductName
+										td #{moment(eq.OpenDate).format('dddd,MMMM Do YYYY, hh:mm A')}
+										td= eq.ProblemTypeDescription
+										if eq.CurrentStatus == "Waiting For Customer Approval"
+											td.text-danger #{eq.CurrentStatus}
+										else 
+											td= eq.CurrentStatus									
+				
+				#myModal.modal.fade
+					.modal-content
+						.modal-header
+							button.close(type='button', data-dismiss='modal', aria-hidden='true')
+							h4.myModalLabel.modal-title
+							| (ProductName) Service Order
+						.modal-body
+							p Here is the Service Order echodata the customer filled out. 
+							.panel-group(id='accordian')
+								.panel.panel-default
+									.panel-heading
+										h4.panel-title
+											a(data-toggle='collapse' data-parent='#accordion' href='#collapse1') Customer Data 
+									.panel-collapse.collapse(id='collapse1')
+										.panel-body
+											p.lead This is all of my Collapse 1 Content
+											p this content is very cool.
+							p
+								button.btn.btn-info(type='button' href='#' id='poppop' rel='popover') Accept Service Order 
+							
+							
+						.modal-footer
+							button.btn.btn-primary(type='button', data-dismiss='modal') Close
+						script
+							$('#poppop').popover();
+							$('#poppop2').popover();
+				
+					
 		.navbar.navbar-default.navbar-fixed-bottom
 			.container
 				p.navbar-text.pull-left
@@ -94,6 +148,3 @@ html
 					a(href='') Support 24x7
 				p.navbar-text.pull-right  
 					a(href='') Privacy Policy
-
-		script(src='/javascripts/jquery-2.0.3.min.js')
-		script(src='/javascripts/bootstrap.min.js')
