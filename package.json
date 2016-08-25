@@ -1,0 +1,23 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node ssp.js",
+    "dev": "nodemon ssp.js --port 3001"
+  },
+  "dependencies": {
+    "express": "3.4.2",
+    "jade": "0.35.0",
+    "async": "*",
+    "connect": "2.11.x",
+    "mongoose": "3.8.x",
+    "moment": "2.4.x",
+    "accounting": "0.3.x",
+    "underscore": "1.6.x",
+    "numeral": "1.5.x"
+  },
+  "devDependencies": {
+    "nodemon": "^1.10.2"
+  }
+}

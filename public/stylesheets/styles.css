@@ -1,0 +1,19 @@
+.main {
+  /*padding: 50px;*/
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus {
+  background-color: #222222 !important;
+}
+
+.jumbotron {
+  color: white !important;
+  background-image: url(../images/maxresdefault.jpg);
+  text-align: center;
+}
+
+
+/*body > div.navbar.navbar-inverse.navbar-fixed-top, body > div.navbar.navbar-inverse.navbar-fixed-top > div > ul > div > ul {
+  height: 61px !important;
+}*/
