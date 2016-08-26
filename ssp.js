@@ -9,6 +9,8 @@ var routes = require('./routes');
 var user = require('./routes/user');
 
 var mainquery = require('./routes/mainquery');
+var customerQuery = require('./routes/customerQuery');
+var engineerQuery = require('./routes/engineerQuery');
 var servicedetails = require('./routes/servicedetails');
 var servicecreate = require('./routes/service-create');
 
@@ -45,8 +47,8 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 
 // User Pages
-app.get('/customer', mainquery.getData);
-app.get('/engineer', mainquery.getData);
+app.get('/customer', customerQuery.getData);
+app.get('/engineer', engineerQuery.getData);
 
 // Modal pages
 app.get('/modal-serv-req', mainquery.req_modal);
