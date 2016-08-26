@@ -81,15 +81,15 @@ html
 					tr
 						td
 							a(data-toggle='modal', href='/modal-svc-order', data-target='#ServiceOrderModal') #{eq._id}
-							//- a(href="/servicedetails?id=#{eq._id}") #{eq._id}
-						td= eq.SerialNumber
-						td= eq.ProductName
-						td #{moment(eq.OpenDate).format('dddd,MMMM Do YYYY, hh:mm A')}
-						td= eq.ProblemTypeDescription
-						if eq.CurrentStatus == "Waiting For Customer Approval"
-							td.text-danger #{eq.CurrentStatus}
-						else 
-							td= eq.CurrentStatus
+							a(href="/servicedetails?id=#{eq._id}") #{eq._id}
+							td= eq.SerialNumber
+							td= eq.ProductName
+							td #{moment(eq.OpenDate).format('dddd,MMMM Do YYYY, hh:mm A')}
+							td= eq.ProblemTypeDescription
+							if eq.CurrentStatus == "Waiting For Customer Approval"
+								td.text-danger #{eq.CurrentStatus}
+							else 
+								td= eq.CurrentStatus
 
 		.container
 			h2.text-center My Equipment
