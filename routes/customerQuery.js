@@ -10,6 +10,8 @@ var Status = mongoose.model('Status');
 var _ = require('underscore');
 var async = require('async');
 
+
+
 exports.req_modal = function(req, res){
   res.render('modal-serv-req',{
 
@@ -22,14 +24,16 @@ exports.svc_modal = function(req, res){
   });
 };
 
+
 exports.getData = function(req, res){
   var myequipment = [];
   var prods = [];
   console.log("==Customer Queries==");
   async.parallel([
     function(callback){
-      ServiceOrder.find({CloseDate: {$exists: false} })
-        // .where('_CreatedBy').equals(48243)
+      ServiceOrder.find()
+        .where('_CreatedBy').equals(req.session.user._id)
+        // .where('CurrentStatus').equals('Completed')
         // .populate('_CreatedBy')
         .populate('_Product')
         .populate('_Equipment')
@@ -38,7 +42,14 @@ exports.getData = function(req, res){
             serviceorders.forEach(function(yours){
               myequipment.push({
                 "_id": yours._id,
+                "_User": yours._User,
+                "StatusDescription": yours._StatusDescription,
+                "ServiceDetails": yours._ServiceDetails,
                 "SerialNumber": yours._Equipment.SerialNumber,
+                "Room": yours._Equipment.Room,
+                "InstallDate": yours._Equipment.InstallDate,
+                "NextPMDate": yours._Equipment.NextPMDate,
+                "NextPMDescription": yours._Equipment.NextPMDescription,
                 "OpenDate": yours.OpenDate,
                 "ProblemTypeDescription": yours.ProblemTypeDescription,
                 "ProductName": yours._Product.ProductName,
@@ -48,6 +59,35 @@ exports.getData = function(req, res){
             callback();
           });
         },
+    // function(callback){
+    //   ServiceOrder.find({CloseDate: {$exists: true} })
+    //     .where('_CreatedBy').equals(req.session.user._id)
+    //     .where('CurrentStatus').equals('Completed')
+    //     // .populate('_CreatedBy')
+    //     .populate('_Product')
+    //     .populate('_Equipment')
+    //       //.select('_id SerialNumber OpenDate ProblemTypeDescription ProductName CurrentStatus')
+    //       .exec(function (err, serviceorders){
+    //         serviceorders.forEach(function(yours){
+    //           myequipment.push({
+    //             "_id": yours._id,
+    //             "_User": yours._User,
+    //             "StatusDescription": yours._StatusDescription,
+    //             "ServiceDetails": yours._ServiceDetails,
+    //             "SerialNumber": yours._Equipment.SerialNumber,
+    //             "Room": yours._Equipment.Room,
+    //             "InstallDate": yours._Equipment.InstallDate,
+    //             "NextPMDate": yours._Equipment.NextPMDate,
+    //             "NextPMDescription": yours._Equipment.NextPMDescription,
+    //             "OpenDate": yours.OpenDate,
+    //             "ProblemTypeDescription": yours.ProblemTypeDescription,
+    //             "ProductName": yours._Product.ProductName,
+    //             "CurrentStatus": yours.CurrentStatus
+    //           });
+    //         });
+    //         callback();
+    //       });
+    //     },
         function(callback){
           Equipment.find({ _User: req.session.user._id })
               .populate('_CreatedBy')
@@ -60,6 +100,7 @@ exports.getData = function(req, res){
                     prods.push({
                       "_id": mine._id,
                       "SerialNumber": mine.SerialNumber,
+                      "StatusDescription": mine.StatusDescription,
                       "ProductName": mine._Product.ProductName,
                       "NextPMDescription": mine.NextPMDescription,
                       "NextPMDate": mine.NextPMDate

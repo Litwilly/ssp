@@ -51,6 +51,9 @@ app.get('/', routes.index);
 app.get('/customer', customerQuery.getData);
 app.get('/engineer', engineerQuery.getData);
 
+app.get('/customer-ServiceOrderTab', customerQuery.getData);
+app.get('/customer-EquipmentTab', customerQuery.getData);
+
 // Modal pages
 app.get('/modal-serv-req', mainquery.req_modal);
 app.get('/modal-svc-order', mainquery.svc_modal);
