@@ -1,8 +1,8 @@
 // Bring Mongoose into the project
 var mongoose = require('mongoose');
 // Build the connection string
-var dbURI = 'mongodb://itlp:itlp@ds013486.mlab.com:13486/itlp';
-// var dbURI = 'mongodb://localhost/EMCITLP'; //localhost can be changed to 127.0.0.1 if localhost will not start
+//var dbURI = 'mongodb://itlp:itlp@ds013486.mlab.com:13486/itlp';
+var dbURI = 'mongodb://localhost/EMCITLP'; //localhost can be changed to 127.0.0.1 if localhost will not start
 
 
 // Create the database connection
