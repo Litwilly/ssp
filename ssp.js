@@ -64,8 +64,12 @@ app.get('/modal-svc-order', mainquery.svc_modal);
 app.get('/servicedetails', servicedetails.getData);
 app.get('/service-create', servicecreate.create);
 app.post('/customer/create', servicecreate.update);
-//Workoffer
+//Workoffer and Assigned
 app.get('/workOfferModal', engineerQuery.getWorkOfferModal);
+app.get('/workOffModal', engineerQuery.getWorkOffModal);
+app.post('/engineer/accept', engineerQuery.postWorkOffModal);
+app.get('/workAssModal', engineerQuery.getWorkAssModal);
+app.post('/engineer/complete', engineerQuery.postWorkAssModal);
 
 //Login and Validate User Routes, Logout
 app.get('/login', user.loginForm);							//Display Login Form

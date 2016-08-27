@@ -10,18 +10,6 @@ var Status = mongoose.model('Status');
 var _ = require('underscore');
 var async = require('async');
 
-exports.req_modal = function(req, res){
-  res.render('workOfferModal',{
-
-  });
-};
-
-// exports.svc_modal = function(req, res){
-//   res.render('modal-svc-order',{
-//
-//   });
-// };
-
 exports.getData = function(req, res){
   var workoffers = [];
   var workassigned = [];
@@ -45,7 +33,8 @@ exports.getData = function(req, res){
                 "SerialNumber": yours._Equipment.SerialNumber,
                 "ProblemTypeDescription": yours.ProblemTypeDescription,
                 "PriorityDescription": yours.PriorityDescription,
-                "CurrentStatus": yours.CurrentStatus
+                "CurrentStatus": yours.CurrentStatus,
+                "Name": yours.CustomerContactInfo.Name
               });
             });
             callback();
@@ -69,7 +58,8 @@ exports.getData = function(req, res){
                     "SerialNumber": mine._Equipment.SerialNumber,
                     "ProblemTypeDescription": mine.ProblemTypeDescription,
                     "PriorityDescription": mine.PriorityDescription,
-                    "CurrentStatus": mine.CurrentStatus
+                    "CurrentStatus": mine.CurrentStatus,
+                    "Name": mine.CustomerContactInfo.Name
                   });
                 });
                 callback();
@@ -96,10 +86,6 @@ exports.getData = function(req, res){
 
 exports.getWorkOfferModal = function(req, res){
   var workoffers = [];
-  var workassigned = [];
-  console.log("==Engineer Queries==");
-  async.parallel([
-    function(callback){
       ServiceOrder.find({CloseDate: {$exists: false} })
         .where('CurrentStatus').equals('Assigned, Waiting to be Accepted')
         // .populate('_CreatedBy')
@@ -120,38 +106,52 @@ exports.getWorkOfferModal = function(req, res){
                 "CurrentStatus": yours.CurrentStatus
               });
             });
-            callback();
           });
-        },
-        function(callback){
-          ServiceOrder.find({CloseDate: {$exists: false} })
-            .where('CurrentStatus').equals('Accepted')
-            // .populate('_CreatedBy')
-            .populate('_Product')
-            .populate('Priority')
-            .populate('_Equipment')
-            .populate('User')
-              //.select('_id SerialNumber OpenDate ProblemTypeDescription ProductName CurrentStatus')
-              .exec(function (err, serviceorders){
-                serviceorders.forEach(function(mine){
-                  workassigned.push({
-                    "_id": mine._id,
-                    "_CreatedBy": mine._CreatedBy,
-                    "ProductName": mine._Product.ProductName,
-                    "SerialNumber": mine._Equipment.SerialNumber,
-                    "ProblemTypeDescription": mine.ProblemTypeDescription,
-                    "PriorityDescription": mine.PriorityDescription,
-                    "CurrentStatus": mine.CurrentStatus
-                  });
-                });
-                callback();
-              });
-            }], function(err){
-                if (err)return next(err);
-                res.render('workOfferModal',
-                      { WorkOffers: workoffers,
-                        WorkAssigned:  workassigned,
-                        firstname: req.session.user.FirstName});
-              }
-            );
+          res.render('workOfferModal',
+                { WorkOffers: workoffers,
+                  firstname: req.session.user.FirstName});
         };
+
+  exports.getWorkAssModal = function(req, res){
+    res.render('workAssModal',
+      { firstname: req.session.user.FirstName,
+        reqid: req.query.reqid,
+        reqprd: req.query.prd,
+        reqpd: req.query.pd,
+        reqstatus: req.query.status,
+        reqname: req.query.name
+      });
+    };
+
+  exports.postWorkAssModal = function(req, res){
+    console.log(req.body.reqid);
+    ServiceOrder.findOne({ _id: req.body.reqid})
+    .exec(function(err, so) {
+       so.CurrentStatus = req.body.Status;
+       so.save(function (err,so){
+       });
+    });
+    res.redirect('/engineer');
+  };
+
+  exports.getWorkOffModal = function(req, res){
+    res.render('workOffModal',
+      { firstname: req.session.user.FirstName,
+        reqid: req.query.reqid,
+        reqprd: req.query.prd,
+        reqpd: req.query.pd,
+        reqstatus: req.query.status,
+        reqname: req.query.name
+      });
+    };
+
+  exports.postWorkOffModal = function(req, res){
+    console.log(req.body.reqid);
+    ServiceOrder.findOne({ _id: req.body.reqid})
+    .exec(function(err, so) {
+       so.CurrentStatus = req.body.Status;
+       so.save(function (err,so){
+       });
+    });
+    res.redirect('/engineer');
+  };
