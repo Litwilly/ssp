@@ -11,16 +11,16 @@ var _ = require('underscore');
 var async = require('async');
 
 exports.req_modal = function(req, res){
-  res.render('modal-serv-req',{
+  res.render('workOfferModal',{
 
   });
 };
 
-exports.svc_modal = function(req, res){
-  res.render('modal-svc-order',{
-
-  });
-};
+// exports.svc_modal = function(req, res){
+//   res.render('modal-svc-order',{
+//
+//   });
+// };
 
 exports.getData = function(req, res){
   var workoffers = [];
@@ -90,6 +90,68 @@ exports.getData = function(req, res){
                       { WorkOffers: workoffers,
                         WorkAssigned:  workassigned,
                          firstname: req.session.user.FirstName});
+              }
+            );
+        };
+
+exports.getWorkOfferModal = function(req, res){
+  var workoffers = [];
+  var workassigned = [];
+  console.log("==Engineer Queries==");
+  async.parallel([
+    function(callback){
+      ServiceOrder.find({CloseDate: {$exists: false} })
+        .where('CurrentStatus').equals('Assigned, Waiting to be Accepted')
+        // .populate('_CreatedBy')
+        .populate('_Product')
+        .populate('Priority')
+        .populate('_Equipment')
+        .populate('User')
+          //.select('_id SerialNumber OpenDate ProblemTypeDescription ProductName CurrentStatus')
+          .exec(function (err, serviceorders){
+            serviceorders.forEach(function(yours){
+              workoffers.push({
+                "_id": yours._id,
+                "_CreatedBy": yours._CreatedBy,
+                "ProductName": yours._Product.ProductName,
+                "SerialNumber": yours._Equipment.SerialNumber,
+                "ProblemTypeDescription": yours.ProblemTypeDescription,
+                "PriorityDescription": yours.PriorityDescription,
+                "CurrentStatus": yours.CurrentStatus
+              });
+            });
+            callback();
+          });
+        },
+        function(callback){
+          ServiceOrder.find({CloseDate: {$exists: false} })
+            .where('CurrentStatus').equals('Accepted')
+            // .populate('_CreatedBy')
+            .populate('_Product')
+            .populate('Priority')
+            .populate('_Equipment')
+            .populate('User')
+              //.select('_id SerialNumber OpenDate ProblemTypeDescription ProductName CurrentStatus')
+              .exec(function (err, serviceorders){
+                serviceorders.forEach(function(mine){
+                  workassigned.push({
+                    "_id": mine._id,
+                    "_CreatedBy": mine._CreatedBy,
+                    "ProductName": mine._Product.ProductName,
+                    "SerialNumber": mine._Equipment.SerialNumber,
+                    "ProblemTypeDescription": mine.ProblemTypeDescription,
+                    "PriorityDescription": mine.PriorityDescription,
+                    "CurrentStatus": mine.CurrentStatus
+                  });
+                });
+                callback();
+              });
+            }], function(err){
+                if (err)return next(err);
+                res.render('workOfferModal',
+                      { WorkOffers: workoffers,
+                        WorkAssigned:  workassigned,
+                        firstname: req.session.user.FirstName});
               }
             );
         };

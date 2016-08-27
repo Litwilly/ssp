@@ -7,15 +7,20 @@ html
 		link(rel='stylesheet', href='/stylesheets/main.css')
 		link(rel='stylesheet', href='/stylesheets/emc-icon-styles.css')
 		link(rel='icon', type='images/png', href='images/favicon.png')
-		//- link(rel='stylesheet', href='/stylesheets/flaticon.css')
+		
 	body
-		script(src='/javascripts/jquery-2.0.3.min.js')
-		script(src='/javascripts/bootstrap.min.js')
+		.modal.fade(id='workOfferModal' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+			.modal-dialog.wide-modal
+				.modal-content
+
+		.modal.fade(id='create' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+			.modal-dialog.wide-modal
+				.modal-content
 
 		nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
 			.container
 				.navbar-header
-					a.emcTab(href='/', title='Wronski Medical Solutions')
+					a.emcTab(href='/', title='Wonski Medical Solutions')
 					h3.applicationIdentifier Wonski Medical Solutions
 					ul.nav.navbar-nav.navbar-right
 						button.navbar-toggle(data-toggle='collapse', data-target='.navHeaderCollapse')
@@ -29,7 +34,8 @@ html
 										span.glyphicon.glyphicon-home
 										|  Home
 								li.active
-									a(href='#myModal', data-toggle='modal')
+									//- a(href='/service-create') Create Service Request
+									a(data-toggle='modal', href='/service-create', data-target='#create')
 										span.glyphicon.glyphicon-wrench
 										|  Create Service Request
 								li.active
@@ -54,93 +60,145 @@ html
 			br
 			.jumbotron
 				h1 Hello #{firstname}
-				h2 You are an Engineer!
+				h2 Welcome to the Engineer Single Service Portal
 				p Today is #{moment(Date.now()).format('dddd, MMMM Do')}
-		
+
+		.main
+
 		.container
-					h3.text-center Work Offers
-					.table-responsive
-						table.table.table-striped.table-bordered
-							thead
-								tr
-									th.text-center Service Order
-									th.text-center Priority
-									th.text-center Customer
-									th.text-center Product
-									th.text-center Problem 
-									th.text-center Status
-							tbody
-								for work in WorkOffers
-									tr
-										td
-											a(data-toggle='modal', href='#myModal') #{work._id}
-										td= work.PriorityDescription
-										td= work._CreatedBy
-										td= work.ProductName									
-										td= work.ProblemTypeDescription
-										if work.CurrentStatus == "Assigned, Waiting to be Accepted"
-											td.text-danger #{work.CurrentStatus}
-										else 
-											td= work.CurrentStatus
+			h3.text-center Work Offers
+			.table-responsive
+				table.text-center.table.table-striped.table-hover
+					thead
+						tr
+							th.text-center Service Order
+							th.text-center Priority
+							th.text-center Customer
+							th.text-center Product
+							th.text-center Problem 
+							th.text-center Status
+					tbody
+						for work in WorkOffers
+							tr
+								td
+									a(data-toggle='modal', href='/workOfferModal' , data-target='#workOfferModal') #{work._id}
+								td= work.PriorityDescription
+								td= work._CreatedBy
+								td= work.ProductName									
+								td= work.ProblemTypeDescription
+								if work.CurrentStatus == "Assigned, Waiting to be Accepted"
+									td.text-danger #{work.CurrentStatus}
+								else 
+									td= work.CurrentStatus
+
 		.container
-					h3.text-center Assigned Work
-					.table-responsive
-						table.table.table-striped.table-bordered
-							thead
-								tr
-									th.text-center Service Order
-									th.text-center Priority
-									th.text-center Customer
-									th.text-center Product
-									th.text-center Problem 
-									th.text-center Status
-							tbody
-								for work in WorkAssigned
-									tr
-										td
-											a(data-toggle='modal', href='#myModal') #{work._id}
-										td= work.PriorityDescription
-										td= work._CreatedBy
-										td= work.ProductName									
-										td= work.ProblemTypeDescription
-										if work.CurrentStatus == "Assigned, Waiting to be Accepted"
-											td.text-danger #{work.CurrentStatus}
-										else 
-											td= work.CurrentStatus									
-				
-				#myModal.modal.fade
-					.modal-content
-						.modal-header
-							button.close(type='button', data-dismiss='modal', aria-hidden='true')
-							h4.myModalLabel.modal-title
-							| (ProductName) Service Order
-						.modal-body
-							p Here is the Service Order echodata the customer filled out. 
-							.panel-group(id='accordian')
-								.panel.panel-default
-									.panel-heading
-										h4.panel-title
-											a(data-toggle='collapse' data-parent='#accordion' href='#collapse1') Customer Data 
-									.panel-collapse.collapse(id='collapse1')
-										.panel-body
-											p.lead This is all of my Collapse 1 Content
-											p this content is very cool.
-							p
-								button.btn.btn-info(type='button' href='#' id='poppop' rel='popover') Accept Service Order 
-							
-							
-						.modal-footer
-							button.btn.btn-primary(type='button', data-dismiss='modal') Close
-						script
-							$('#poppop').popover();
-							$('#poppop2').popover();
-				
-					
-		.navbar.navbar-default.navbar-fixed-bottom
-			.container
-				p.navbar-text.pull-left
-					| &#174; 2016 WMD, Inc.
-				p.navbar-text.pull-right  
-					a(href='') Support 24x7
-				p.navbar-text.pull-right  
-					a(href='') Privacy Policy
+			h3.text-center Assigned Work
+			.table-responsive
+				table.text-center.table.table-striped.table-hover
+					thead
+						tr
+							th.text-center Service Order
+							th.text-center Priority
+							th.text-center Customer
+							th.text-center Product
+							th.text-center Problem 
+							th.text-center Status
+					tbody
+						for work in WorkAssigned
+							tr
+								td
+									a(data-toggle='modal', href='#myModal') #{work._id}
+								td= work.PriorityDescription
+								td= work._CreatedBy
+								td= work.ProductName									
+								td= work.ProblemTypeDescription
+								if work.CurrentStatus == "Assigned, Waiting to be Accepted"
+									td.text-danger #{work.CurrentStatus}
+								else 
+									td= work.CurrentStatus
+
+			//- .container
+			//- 	#myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+			//- 		.modal-dialog(role='document')
+			//- 			.modal-content
+			//- 				.modal-header
+			//- 					button.close(type='button', data-dismiss='modal', aria-hidden='true') x
+			//- 					h1.myModalLabel.modal-title
+			//- 					| View Equipment Details
+			//- 				.modal-body
+			//- 					.panel-group(id='accordian')
+			//- 						.panel.panel-default
+			//- 							.panel-heading 
+			//- 								h4.panel-title 
+			//- 									a(data-toggle='collapse' data-parent='#accordian' href='#collapse1') Action 1
+			//- 							.panel-collapse.collapse(id='collapse1')
+			//- 								.panel-body
+			//- 									p.lead Look at me collapse!!
+			//- 									p this content is sweeet
+			//- 					.panel-group(id='accordian2')
+			//- 						.panel.panel-default
+			//- 							.panel-heading
+			//- 								h4.panel-title
+			//- 									a(data-toggle='collapse' data-parent='#accordian' href='#collapse2') Action 2
+			//- 							.panel-collapse.collapse(id='collapse2')
+			//- 								.panel-body
+			//- 									p.lead This is all of my Collapse 2 Content.
+			//- 									p hi world   
+			//- 					p
+			//- 						button.btn.btn-info(type='button' href='#' id='poppop' rel='popover' data-trigger='hover' data-placement='bottom' data-content='Look at my Popover!' data-original-title='Popover 1:') Let's Pop:
+			//- 					p
+			//- 						button.btn.btn-info(type='button' href='#' id='poppop2' rel='popover' data-trigger='click' data-placement='right' data-content='Look at my 2nd Popover!' data-original-title='Popover 2:') Pop Again:
+			//- 				.modal-footer
+			//- 					button.btn.btn-primary(type='button', data-dismiss='modal') Close
+			//- 
+			//- #myModal2.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+			//- 	.modal-dialog(role='document')
+			//- 		.modal-content
+			//- 			.modal-header
+			//- 				button.close(type='button', data-dismiss='modal', aria-hidden='true') x
+			//- 				h4.myModalLabel.modal-title
+			//- 				| Create Service Order
+			//- 			.modal-body
+			//- 				p
+			//- 					button.btn.btn-info(type='button' href='#' id='poppop3' rel='popover' data-trigger='hover' data-placement='bottom' data-content='Look at my Popover!' data-original-title='Popover 1:') Let's Pop:
+			//- 				p
+			//- 					button.btn.btn-info(type='button' href='#' id='poppop4' rel='popover' data-trigger='click' data-placement='right' data-content='Look at my 2nd Popover!' data-original-title='Popover 2:') Pop Again:
+			//- 				.panel-group(id='accordian3')
+			//- 					.panel.panel-default
+			//- 						.panel-heading
+			//- 							h4.panel-title
+			//- 								a(data-toggle='collapse' data-parent='#accordian3' href='#collapse3') Collapse 1
+			//- 						.panel-collapse.collapse(id='collapse3')
+			//- 							.panel-body
+			//- 								p.lead Look at me collapse!!
+			//- 								p this content is sweeet
+			//- 				.panel-group(id='accordian4')
+			//- 					.panel.panel-default
+			//- 						.panel-heading
+			//- 							h4.panel-title
+			//- 								a(data-toggle='collapse' data-parent='#accordian4' href='#collapse4') Collapse 4
+			//- 						.panel-collapse.collapse(id='collapse4')
+			//- 							.panel-body
+			//- 								p.lead This is all of my Collapse 4 Content.
+			//- 								p hi world   
+			//- 			.modal-footer
+			//- 				button.btn.btn-primary(type='button', data-dismiss='modal') Close
+
+			.navbar.navbar-default.navbar-fixed-bottom
+				.container
+					p.navbar-text.pull-left
+						| &#174; 2016 WMD, Inc.
+					p.navbar-text.pull-right  
+						a(href='') Support 24x7
+					p.navbar-text.pull-right  
+						a(href='') Privacy Policy
+
+
+		script(src='/javascripts/jquery-2.0.3.min.js')
+		script(src='/javascripts/bootstrap.min.js')
+
+		//- script 
+		//- 	$('#poppop').popover();
+		//- 	$('#poppop2').popover();
+		//- 	$('#poppop3').popover();
+		//- 	$('#poppop4').popover();

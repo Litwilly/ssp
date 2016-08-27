@@ -14,6 +14,7 @@ var engineerQuery = require('./routes/engineerQuery');
 var servicedetails = require('./routes/servicedetails');
 var servicecreate = require('./routes/service-create');
 
+
 var http = require('http');
 var path = require('path');
 var app = express();
@@ -60,8 +61,8 @@ app.get('/modal-svc-order', mainquery.svc_modal);
 app.get('/servicedetails', servicedetails.getData);
 app.get('/service-create', servicecreate.create);
 app.post('/customer/create', servicecreate.update);
-
-
+//Workoffer
+app.get('/workOfferModal', engineerQuery.getWorkOfferModal);
 
 //Login and Validate User Routes, Logout
 app.get('/login', user.loginForm);							//Display Login Form
