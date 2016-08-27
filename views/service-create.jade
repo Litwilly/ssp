@@ -22,7 +22,7 @@ html
 						select.form-control(name="Equipment" id="Equipment" required autofocus)
 							option(value="" default selected) Select Your Equipment For Service
 							- for equipment in products
-								p.form-control-static #{equipment._id} Test
+								p.form-control-static #{equipment._id}
 								option(value="{\"equipid\": #{equipment._id}, \"prodid\": #{equipment.ProductID}}") #{equipment.SerialNumber} - #{equipment.ProductName} - #{equipment.Room}
 				.form-group
 					label.col-sm-2.control-label(for="ProblemType") Service Type:

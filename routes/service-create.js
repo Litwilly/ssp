@@ -78,57 +78,61 @@ exports.create = function(req, res){
         );
       };
 
-  //Login Functions
-
 
   exports.update = function(req, res, callback) {
-    async.parallel([
-      function(callback){
-        // find the max service _id
-        ServiceOrder.findOne()
-          .sort('-_id')  // give me the max
-          .select('_id')
-          .exec(function (err, member) {
-              var max = member._id;
-                  console.log("====max====");
-                  console.log(max);
-                  console.log("====max====");
-              });
-              callback();
-          },
-
-
-        function(callback){
-          var myQuery = new ServiceOrder({
-              _id: max + 1,
-              _Equipment: req.body.Equipment.equipid,
-              _CreatedBy: req.session.user._id,
-              ProblemTypeDescription: req.body.ProblemType,
-              PriorityDescription: req.body.Priorty,
-              CustomerContactInfo: {
-                Name: req.body.ContactName,
-                Email: req.body.ContactEmail,
-                Phone: req.body.ContactPhone,
-              },
-              ProblemNotes: req.body.ProblemNotes,
-              OpenDate: req.body.Today,
-              ServiceDetails: {
-                _id: 1,
-                _User: req.session.user._id,
-                StatusDescription: "Submitted By Customer"
-              }
-          });
-
-          myQuery.save(function(err, myQuery) {
-            if (err) return console.error(err);
-            console.dir(myQuery);
-
-          });
-          callback();
-        }], function(err){
-        if (err)return next(err);
-          console.log("works");
+    var maxs = Math.floor((Math.random() * 999999) + 720000);
+    var myQuery = new ServiceOrder({
+        _id: maxs,
+        _Equipment: req.body.Equipment.equpid,
+        _CreatedBy: req.session.user._id,
+        ProblemTypeDescription: req.body.ProblemType,
+        PriorityDescription: req.body.Priorty,
+        CustomerContactInfo: {
+          Name: req.body.ContactName,
+          Email: req.body.ContactEmail,
+          Phone: req.body.ContactPhone,
+        },
+        ProblemNotes: req.body.ProblemNotes,
+        OpenDate: req.body.Today,
+        ServiceDetails: {
+          _id: 1,
+          _User: req.session.user._id,
+          StatusDescription: "Submitted By Customer",
         }
-      );
+    });
+
+    myQuery.save(function(err, myQuery) {
+      if (err) return console.error(err);
+      console.dir(myQuery);
+      console.log("works");
+      res.redirect('/customer');
+      if (req.session.RoleName === "Customer") {
+          res.redirect('/customer');
+      } else if (req.session.RoleName === "Onsite Engineer") {
+          res.redirect('/engineer');
+      }
+    });
 
   };
+
+
+  // (function() {
+  //     var info = "Some info";
+  //
+  //     async.parallel([
+  //         function(callback) {
+  //             setTimeout(function() {
+  //                 callback(null, "one");
+  //             }, 200);
+  //         },
+  //         function(callback) {
+  //             setTimeout(function() {
+  //                 callback(null, "two");
+  //             }, 100);
+  //         }
+  //     ],
+  //     function(error, result) {
+  //         console.log(info);
+  //     });
+  //
+  // }) ();
