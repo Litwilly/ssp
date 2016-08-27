@@ -37,7 +37,7 @@ html
 					.col-sm-10
 						select.form-control(name="Priority" id="Priority"  required)
 							option(value="" default selected) Select The Severity Of The Issue You Are Experiencing
-							- for priority in equipments
+							- for priority in priorities
 								option(value="#{priority.PriorityDescription}") #{priority.PriorityDescription}
 				.form-group
 					label.col-sm-2.control-label(for="ContactName") Contact Name:
