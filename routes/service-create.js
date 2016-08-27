@@ -14,8 +14,22 @@ var async = require('async');
 exports.create = function(req, res){
   var myequipment = [];
   var prods = [];
-  console.log("==========================workshop6===============================");
+  var pmTypes = [];
+  console.log("==========================Get Serivce Create Fields===============================");
   async.parallel([
+    function(callback){
+      PMType.find()
+        .exec(function (err, p){
+           p.forEach(function(pm){
+             pmTypes.push({
+               "_id": pm._id,
+               "PMDescription": pm.PMDescription
+             });
+           });
+           callback();
+        });
+    },
+
     function(callback){
       ServiceOrder.find({CloseDate: {$exists: false} })
         // .where('_CreatedBy').equals(48243)
@@ -33,42 +47,60 @@ exports.create = function(req, res){
             callback();
           });
         },
-        function(callback){
-          Equipment.find({ _User: req.session.user._id })
-              // .populate('_CreatedBy')
-              .populate('_Product')
-              .populate('_Equipment')
-                        //.sort('NextPMDate')
-              //.select('_id SerialNumber ProductName NextPMDescription NextPMDate')
-              .exec(function (err, equipment){
-                  equipment.forEach(function(mine){
-                    prods.push({
-                      "_id": mine._id,
-                      "ProductID": mine._Product._id,
-                      "SerialNumber": mine.SerialNumber,
-                      "ProductName": mine._Product.ProductName,
-                      "Room": mine.Room
-                    });
-                  });
-                  callback();
+    function(callback){
+      Equipment.find({ _User: req.session.user._id })
+          // .populate('_CreatedBy')
+          .populate('_Product')
+          .populate('_Equipment')
+                    //.sort('NextPMDate')
+          //.select('_id SerialNumber ProductName NextPMDescription NextPMDate')
+          .exec(function (err, equipment){
+              equipment.forEach(function(mine){
+                prods.push({
+                  "_id": mine._id,
+                  "ProductID": mine._Product._id,
+                  "SerialNumber": mine.SerialNumber,
+                  "ProductName": mine._Product.ProductName,
+                  "Room": mine.Room
                 });
-              }], function(err){
-                if (err)return next(err);
-                console.log(prods);
-                res.render('service-create',
-                  { equipments: myequipment,
-                    products:  prods,
-                    firstname: req.session.user.FirstName});
-              }
-            );
-        };
-
+              });
+              callback();
+            });
+          }], function(err){
+            if (err)return next(err);
+            console.log(prods);
+            res.render('service-create',
+              { equipments: myequipment,
+                products:  prods,
+                pmt: pmTypes,
+                firstname: req.session.user.FirstName});
+          }
+        );
+      };
 
   //Login Functions
 
-  exports.update = function(req, res) {
+
+  exports.update = function(req, res, callback) {
+    async.parallel([
+      function(callback){
+        // find the max service _id
+        ServiceOrder.findOne()
+          .sort('-_id')  // give me the max
+          .select('_id')
+          .exec(function (err, member) {
+              var max = member._id;
+                  console.log("====max====");
+                  console.log(max);
+                  console.log("====max====");
+              });
+              callback();
+          },
+
+
+        function(callback){
           var myQuery = new ServiceOrder({
-              _id: "333343",
+              _id: max + 1,
               _Equipment: req.body.Equipment.equipid,
               _CreatedBy: req.session.user._id,
               ProblemTypeDescription: req.body.ProblemType,
@@ -79,11 +111,24 @@ exports.create = function(req, res){
                 Phone: req.body.ContactPhone,
               },
               ProblemNotes: req.body.ProblemNotes,
-              OpenDate: req.body.Today
+              OpenDate: req.body.Today,
+              ServiceDetails: {
+                _id: 1,
+                _User: req.session.user._id,
+                StatusDescription: "Submitted By Customer"
+              }
           });
 
           myQuery.save(function(err, myQuery) {
             if (err) return console.error(err);
             console.dir(myQuery);
+
           });
+          callback();
+        }], function(err){
+        if (err)return next(err);
+          console.log("works");
+        }
+      );
+
   };
