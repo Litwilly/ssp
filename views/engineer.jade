@@ -58,59 +58,55 @@ html
 				p Today is #{moment(Date.now()).format('dddd, MMMM Do')}
 		
 		.container
-					h3.text-center My Service Orders
+					h3.text-center Work Offers
 					.table-responsive
 						table.table.table-striped.table-bordered
 							thead
 								tr
 									th.text-center Service Order
+									th.text-center Priority
 									th.text-center Customer
-									th.text-center Equipment
 									th.text-center Product
-									th.text-center Date Service Requested
-									th.text-center Problem Type
+									th.text-center Problem 
 									th.text-center Status
 							tbody
-								for eq in equipment
+								for work in WorkOffers
 									tr
 										td
-											a(data-toggle='modal', href='#myModal') #{eq._id}
-										td= eq.CustomerName
-										td= eq.SerialNumber
-										td= eq.ProductName
-										td #{moment(eq.OpenDate).format('dddd,MMMM Do YYYY, hh:mm A')}
-										td= eq.ProblemTypeDescription
-										if eq.CurrentStatus == "Waiting For Customer Approval"
-											td.text-danger #{eq.CurrentStatus}
+											a(data-toggle='modal', href='#myModal') #{work._id}
+										td= work.PriorityDescription
+										td= work._CreatedBy
+										td= work.ProductName									
+										td= work.ProblemTypeDescription
+										if work.CurrentStatus == "Assigned, Waiting to be Accepted"
+											td.text-danger #{work.CurrentStatus}
 										else 
-											td= eq.CurrentStatus
+											td= work.CurrentStatus
 		.container
-					h3.text-center Open Service Orders
+					h3.text-center Assigned Work
 					.table-responsive
 						table.table.table-striped.table-bordered
 							thead
 								tr
 									th.text-center Service Order
+									th.text-center Priority
 									th.text-center Customer
-									th.text-center Equipment
 									th.text-center Product
-									th.text-center Date Service Requested
-									th.text-center Problem Type
+									th.text-center Problem 
 									th.text-center Status
 							tbody
-								for eq in equipment
+								for work in WorkAssigned
 									tr
 										td
-											a(data-toggle='modal', href='#myModal') #{eq._id}
-										td= eq.CustomerName
-										td= eq.SerialNumber
-										td= eq.ProductName
-										td #{moment(eq.OpenDate).format('dddd,MMMM Do YYYY, hh:mm A')}
-										td= eq.ProblemTypeDescription
-										if eq.CurrentStatus == "Waiting For Customer Approval"
-											td.text-danger #{eq.CurrentStatus}
+											a(data-toggle='modal', href='#myModal') #{work._id}
+										td= work.PriorityDescription
+										td= work._CreatedBy
+										td= work.ProductName									
+										td= work.ProblemTypeDescription
+										if work.CurrentStatus == "Assigned, Waiting to be Accepted"
+											td.text-danger #{work.CurrentStatus}
 										else 
-											td= eq.CurrentStatus									
+											td= work.CurrentStatus									
 				
 				#myModal.modal.fade
 					.modal-content

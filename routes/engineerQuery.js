@@ -23,25 +23,28 @@ exports.svc_modal = function(req, res){
 };
 
 exports.getData = function(req, res){
-  var myequipment = [];
-  var prods = [];
+  var workoffers = [];
+  var workassigned = [];
   console.log("==Engineer Queries==");
   async.parallel([
     function(callback){
       ServiceOrder.find({CloseDate: {$exists: false} })
-        // .where('_CreatedBy').equals(48243)
+        .where('CurrentStatus').equals('Assigned, Waiting to be Accepted')
         // .populate('_CreatedBy')
         .populate('_Product')
+        .populate('Priority')
         .populate('_Equipment')
+        .populate('User')
           //.select('_id SerialNumber OpenDate ProblemTypeDescription ProductName CurrentStatus')
           .exec(function (err, serviceorders){
             serviceorders.forEach(function(yours){
-              myequipment.push({
+              workoffers.push({
                 "_id": yours._id,
-                "SerialNumber": yours._Equipment.SerialNumber,
-                "OpenDate": yours.OpenDate,
-                "ProblemTypeDescription": yours.ProblemTypeDescription,
+                "_CreatedBy": yours._CreatedBy,
                 "ProductName": yours._Product.ProductName,
+                "SerialNumber": yours._Equipment.SerialNumber,
+                "ProblemTypeDescription": yours.ProblemTypeDescription,
+                "PriorityDescription": yours.PriorityDescription,
                 "CurrentStatus": yours.CurrentStatus
               });
             });
@@ -49,36 +52,44 @@ exports.getData = function(req, res){
           });
         },
         function(callback){
-          Equipment.find({ _User: req.session.user._id })
-              .populate('_CreatedBy')
-              .populate('_Product')
-              .populate('_Equipment')
-                        //.sort('NextPMDate')
-              //.select('_id SerialNumber ProductName NextPMDescription NextPMDate')
-              .exec(function (err, equipment){
-                  equipment.forEach(function(mine){
-                    prods.push({
-                      "_id": mine._id,
-                      "SerialNumber": mine.SerialNumber,
-                      "ProductName": mine._Product.ProductName,
-                      "NextPMDescription": mine.NextPMDescription,
-                      "NextPMDate": mine.NextPMDate
-                    });
+          ServiceOrder.find({CloseDate: {$exists: false} })
+            .where('CurrentStatus').equals('Accepted')
+            // .populate('_CreatedBy')
+            .populate('_Product')
+            .populate('Priority')
+            .populate('_Equipment')
+            .populate('User')
+              //.select('_id SerialNumber OpenDate ProblemTypeDescription ProductName CurrentStatus')
+              .exec(function (err, serviceorders){
+                serviceorders.forEach(function(mine){
+                  workassigned.push({
+                    "_id": mine._id,
+                    "_CreatedBy": mine._CreatedBy,
+                    "ProductName": mine._Product.ProductName,
+                    "SerialNumber": mine._Equipment.SerialNumber,
+                    "ProblemTypeDescription": mine.ProblemTypeDescription,
+                    "PriorityDescription": mine.PriorityDescription,
+                    "CurrentStatus": mine.CurrentStatus
                   });
-                  callback();
                 });
-              }], function(err){
+                callback();
+              });
+            }], function(err){
                 if (err)return next(err);
                 if (req.session.user.RoleName === "Customer")
                   res.render('customer',
-                        { equipment: myequipment,
-                          products:  prods,
+                        { equipment: workoffers,
+                          products:  workassigned,
                           firstname: req.session.user.FirstName});
                 else if (req.session.user.RoleName === "Onsite Engineer")
-                  res.render('engineer',
-                        { equipment: myequipment,
-                          products:  prods,
-                          firstname: req.session.user.FirstName});
+                console.log("-----Work Offers");
+                console.log(workoffers);
+                console.log("-------------Assigned Work");
+                console.log(workassigned);
+                res.render('engineer',
+                      { WorkOffers: workoffers,
+                        WorkAssigned:  workassigned,
+                         firstname: req.session.user.FirstName});
               }
             );
         };
