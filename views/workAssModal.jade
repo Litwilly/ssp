@@ -1,0 +1,41 @@
+doctype 5
+html
+	head
+	body
+		form(role="form" id="workAssModal" name="workAssModal" method="post" action="/engineer/complete")
+			.modal-header
+				button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+				h2.myModalLabel.modal-title Add Notes or Complete 
+			.modal-body.form-horizontal
+				.form-group
+					label.col-sm-2.control-label Customer:
+					.col-sm-10
+						p.form-control-static #{reqname}
+				.form-group
+					label.col-sm-2.control-label Priorty:
+					.col-sm-10
+						p.form-control-static #{reqpd}
+				.form-group
+					label.col-sm-2.control-label Product:
+					.col-sm-10
+						p.form-control-static #{reqprd}
+				.form-group
+					label.col-sm-2.control-label Status:
+					.col-sm-10
+					select.form-control(name="Status" id="Status"  required)
+						option(value="" default selected) #{reqstatus}
+						option(value="Completed") Completed
+						p.form-control-static #{reqstatus}
+				.form-group
+					label.col-sm-2.control-label Date:
+					.col-sm-10
+						p.form-control-static #{moment(Today).format('dddd, MMMM Do')}
+				.form-group
+					label.col-sm-2.control-label Work Notes:
+					.col-sm-offset-2.col-sm-10
+						textarea.form-control(id="ActionNotes" rows="7" name="ActionNotes" placeholder="Add Any Additonal Problem Notes Here...")
+			.modal-footer
+				input(type="hidden" name="reqid" value="#{reqid}")
+				input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
+				button.btn.btn-success(type="submit" name="submit" value="submit") Complete Service Request
+				button.btn.btn-danger(type='button', data-dismiss='modal') Cancel
