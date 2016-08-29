@@ -1,122 +1,55 @@
 doctype 5
 html
 	head
+		meta 
+		link(href='assets/css/bootstrap.css', rel='stylesheet')
+		script(src='//html5shim.googlecode.com/svn/trunk/html5.js')
+		link(href='assets/css/google-plus.css', rel='stylesheet')
 	body
-		form(role="form" id="workOffModal" name="workOffModal" method="post")
+		form(role="form" id="workOfferModal" name="workOfferModal" method="post")
 		.modal-header
 			button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
 			h1.myModalLabel.modal-title 
-			| Work Offer      
+			|719767     
 		.modal-body
-			#main.container
-				.row
-					.col-sm-6.col-md-4
-						.panel.panel-default(id='accordian3')
-							.panel-heading
-								h4.panel-title
-									a(data-toggle='collapse' data-parent='#accordian3' href='#collapse3') Details
-							.panel-collapse.collapse.in(id='collapse3')
-								.panel-body
-									//- for work in WorkOffers           
-										.clearfix test        
-										//- .clearfix #{work.ProblemNotes}         
+				form(role="form" id="workOffModal" name="workOffModal" method="post")
+					.row
+						//Panel 1
+						.col-md-12.col-md-8
+							.panel.panel-primary
+								.panel-heading
+									h4 Details
+								.panel-body            
+									.text-center.clearfix
+									|	"This machine is smoking. Like actually on fire"
+									|               
 									hr
-									//New panel
-									label.col-sm-2.control-label Product
-										//- for work in WorkOffers
-										//- p.form-control-static #{work.ProductName} 
-										p.form-control-static Test
-
-							.panel.panel-default(id='accordian2')
-								.panel-heading
-									h4.panel-title
-										a(data-toggle='collapse' data-parent='#accordian2' href='#collapse2') Customer
-								.panel-collapse.collapse.in(id='collapse2')
-									.panel-body
-										.form-group
-											label.col-sm-2.control-label Product:
-											.col-md-4
-												//- for work in WorkOffers
-												//- p.form-control-static #{work.ProductName} 
-												p.form-control-static Test
-										.form-group
-											label.col-sm-2.control-label ID:
-											.col-md-4
-												//- for work in WorkOffers
-												//- p.form-control-static #{work.ID}	
-												p.form-control-static Test	
-										.form-group
-											label.col-sm-2.control-label Serial:
-											.col-md-4
-												//- for work in WorkOffers
-												//- p.form-control-static #{work.SerialNumber}
-												p.form-control-static Test
-										.form-group
-											label.col-sm-2.control-label Location:
-											.col-md-4
-												//- for work in WorkOffers
-												//- p.form-control-static #{work.Location}		
-												p.form-control-static Test
-
-
-							.panel.panel-default(id='accordian')
-								.panel-heading
-									h4.panel-title
-										a(data-toggle='collapse' data-parent='#accordian' href='#collapse1') Customer Contact
-								.panel-collapse.collapse(id='collapse1')
-									.panel-body
-										.form-group
-											label.col-sm-2.control-label Customer Name:
-											.col-md-4
-												//- for work in WorkOffers
-												//- p.form-control-static #{work.CustomerContactInfo.Name}
-												p.form-control-static Test
-
-										.form-group
-											label.col-sm-2.control-label Phone:
-											.col-md-4
-											//- for work in WorkOffers
-											//- p.form-control-static #{work.CustomerContactInfo.Phone}
-											p.form-control-static Test
-
-										.form-group
-											label.col-sm-2.control-label Email:
-											.col-md-4
-											//- for work in WorkOffers
-											//- p.form-control-static #{work.CustomerContactInfo.Email}
-											p.form-control-static Test
-
-						.panel.panel-default
-							.panel-heading
-								h4 Location
-							.panel-body
-								img.img-circle.pull-right(src='/images/uFp_tsTJboUY7kue5XAsGAs28.png')              
-								.clearfix
-								|               There a load of new free Bootstrap 3 ready templates at 
-								| Bootply. All of these templates are free and don&apos;t require extensive 
-								| customization to the Bootstrap baseline.
-								|               
-								hr
-								|               
-								ul.list-unstyled
-									li
-										label.col-sm-2.control-label Email
-											.col-md-4
-											//- for work in WorkOffers
-											//- a(href='http://usebootstrap.com/theme/google-plus') #{work.CustomerContactInfo.Email}
-											a(href='http://usebootstrap.com/theme/google-plus') Test
-
-									li
-										label.col-sm-2.control-label Phone
-											.col-md-4
-											//- for work in WorkOffers
-											//- a(href='http://usebootstrap.com/theme/google-plus') #{work.CustomerContactInfo.Phone}			
-											a(href='http://usebootstrap.com/theme/google-plus') Test		
-				.row
-					.col-sm-4.col-xs-6			
+									|               
+									.col-xs-6 Test
+									.col-xs-6 Test2
+									.col-xs-6 Test3
+									.col-xs-6 Test4
+						//Panel 2
+						.col-md-12.col-md-8			
+							.panel.panel-default
+									.panel-heading
+										img.img-circle.pull-right(src='/images/uFp_tsTJboUY7kue5XAsGAs28.png')
+										h4 Customer
+									.panel-body                        
+										hr	
+						//Panel 3
+						.col-md-12.col-md-8			
+							.panel.panel-default
+									.panel-heading
+										h4 Location
+									.panel-body                        
+										hr	
+						//Buttons				
 						input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
-						button.btn.btn-success(type="submit" name="submit" value="submit") Accept Service Request
-						button.btn.btn-danger(type='button', data-dismiss='modal') Reject				
+						.col-xs-6
+							button.btn.btn-success.pull-right(type="submit" name="submit" value="submit") Accept Service Request
+						.col-xs-6
+							button.btn.btn-danger.pull-left(type='button', data-dismiss='modal') Reject				
 
 		//- //- input(type="hidden" name="Today" value="#{Today}")
 		//- input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")

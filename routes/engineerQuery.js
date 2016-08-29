@@ -28,9 +28,11 @@ exports.getData = function(req, res){
             serviceorders.forEach(function(yours){
               workoffers.push({
                 "_id": yours._id,
-                "_CreatedBy": yours._CreatedBy,
+                "CustomerContactInfo": yours.CustomerContactInfo,
                 "ProductName": yours._Product.ProductName,
                 "SerialNumber": yours._Equipment.SerialNumber,
+                "Location": yours._Equipment.Room,
+                //***CHANGE: Added more Equipment Queries
                 "ProblemTypeDescription": yours.ProblemTypeDescription,
                 "PriorityDescription": yours.PriorityDescription,
                 "CurrentStatus": yours.CurrentStatus,
@@ -53,9 +55,11 @@ exports.getData = function(req, res){
                 serviceorders.forEach(function(mine){
                   workassigned.push({
                     "_id": mine._id,
-                    "_CreatedBy": mine._CreatedBy,
+                    "CustomerContactInfo": mine.CustomerContactInfo,
                     "ProductName": mine._Product.ProductName,
                     "SerialNumber": mine._Equipment.SerialNumber,
+                    "Location": mine._Equipment.Room,
+                    //***CHANGE: Added more Equipment Queries
                     "ProblemTypeDescription": mine.ProblemTypeDescription,
                     "PriorityDescription": mine.PriorityDescription,
                     "CurrentStatus": mine.CurrentStatus,
@@ -83,7 +87,7 @@ exports.getData = function(req, res){
               }
             );
         };
-
+//Modal Functions
 exports.getWorkOfferModal = function(req, res){
   var workoffers = [];
       ServiceOrder.find({CloseDate: {$exists: false} })
@@ -98,16 +102,21 @@ exports.getWorkOfferModal = function(req, res){
             serviceorders.forEach(function(yours){
               workoffers.push({
                 "_id": yours._id,
-                "_CreatedBy": yours._CreatedBy,
+                "CustomerContactInfo": yours.CustomerContactInfo,
                 "ProductName": yours._Product.ProductName,
                 "SerialNumber": yours._Equipment.SerialNumber,
+                "Location": yours._Equipment.Room,
+                "ID": yours._Equipment._id,
+                "ProblemNotes": yours.ProblemNotes,
+                //***Stuart CHANGE: Added more Equipment Queries
                 "ProblemTypeDescription": yours.ProblemTypeDescription,
                 "PriorityDescription": yours.PriorityDescription,
-                "CurrentStatus": yours.CurrentStatus
+                "CurrentStatus": yours.CurrentStatuss
               });
             });
           });
-          res.render('workOfferModal',
+          //***Stuart CHANGE: Reference Test modal
+          res.render('workOffModal',
                 { WorkOffers: workoffers,
                   firstname: req.session.user.FirstName});
         };
@@ -137,13 +146,26 @@ exports.getWorkOfferModal = function(req, res){
 
   exports.getWorkOffModal = function(req, res){
     res.render('workOffModal',
-      { firstname: req.session.user.FirstName,
+      {
+        firstname: req.session.user.FirstName,
         reqid: req.query.reqid,
         reqprd: req.query.prd,
         reqpd: req.query.pd,
         reqstatus: req.query.status,
         reqname: req.query.name
       });
+
+  exports.postWorkOffModal = function(req, res){
+    console.log(req.body.reqid);
+    ServiceOrder.findOne({ _id: req.body.reqid})
+    .exec(function(err, so) {
+       so.CurrentStatus = req.body.Status;
+       so.CloseDate = req.body.Today;
+       so.save(function (err,so){
+       });
+    });
+    res.redirect('/engineer');
+  };
     };
 
   exports.postWorkOffModal = function(req, res){
