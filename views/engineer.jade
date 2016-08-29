@@ -83,7 +83,7 @@ html
 								td
 									a(data-toggle='modal', href='/workOfferModal' , data-target='#workOfferModal') #{work._id}
 								td= work.PriorityDescription
-								td= work._CreatedBy
+								td= work.CustomerContactInfo.Name
 								td= work.ProductName									
 								td= work.ProblemTypeDescription
 								if work.CurrentStatus == "Assigned, Waiting to be Accepted"
@@ -109,7 +109,7 @@ html
 								td
 									a(data-toggle='modal', href='#myModal') #{work._id}
 								td= work.PriorityDescription
-								td= work._CreatedBy
+								td= work.CustomerContactInfo.Name
 								td= work.ProductName									
 								td= work.ProblemTypeDescription
 								if work.CurrentStatus == "Assigned, Waiting to be Accepted"

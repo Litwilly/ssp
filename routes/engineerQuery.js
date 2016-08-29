@@ -40,9 +40,11 @@ exports.getData = function(req, res){
             serviceorders.forEach(function(yours){
               workoffers.push({
                 "_id": yours._id,
-                "_CreatedBy": yours._CreatedBy,
+                "CustomerContactInfo": yours.CustomerContactInfo,
                 "ProductName": yours._Product.ProductName,
                 "SerialNumber": yours._Equipment.SerialNumber,
+                "Location": yours._Equipment.Room,
+                //***CHANGE: Added more Equipment Queries
                 "ProblemTypeDescription": yours.ProblemTypeDescription,
                 "PriorityDescription": yours.PriorityDescription,
                 "CurrentStatus": yours.CurrentStatus
@@ -64,9 +66,11 @@ exports.getData = function(req, res){
                 serviceorders.forEach(function(mine){
                   workassigned.push({
                     "_id": mine._id,
-                    "_CreatedBy": mine._CreatedBy,
+                    "CustomerContactInfo": mine.CustomerContactInfo,
                     "ProductName": mine._Product.ProductName,
                     "SerialNumber": mine._Equipment.SerialNumber,
+                    "Location": mine._Equipment.Room,
+                    //***CHANGE: Added more Equipment Queries
                     "ProblemTypeDescription": mine.ProblemTypeDescription,
                     "PriorityDescription": mine.PriorityDescription,
                     "CurrentStatus": mine.CurrentStatus
@@ -93,7 +97,7 @@ exports.getData = function(req, res){
               }
             );
         };
-
+//Render queires for work offer modal
 exports.getWorkOfferModal = function(req, res){
   var workoffers = [];
   var workassigned = [];
@@ -112,9 +116,13 @@ exports.getWorkOfferModal = function(req, res){
             serviceorders.forEach(function(yours){
               workoffers.push({
                 "_id": yours._id,
-                "_CreatedBy": yours._CreatedBy,
+                "CustomerContactInfo": yours.CustomerContactInfo,
                 "ProductName": yours._Product.ProductName,
                 "SerialNumber": yours._Equipment.SerialNumber,
+                "Location": yours._Equipment.Room,
+                "ID": yours._Equipment._id,
+                "ProblemNotes": yours.ProblemNotes,
+                //***CHANGE: Added more Equipment Queries
                 "ProblemTypeDescription": yours.ProblemTypeDescription,
                 "PriorityDescription": yours.PriorityDescription,
                 "CurrentStatus": yours.CurrentStatus
@@ -136,9 +144,12 @@ exports.getWorkOfferModal = function(req, res){
                 serviceorders.forEach(function(mine){
                   workassigned.push({
                     "_id": mine._id,
-                    "_CreatedBy": mine._CreatedBy,
+                    "CustomerContactInfo": mine.CustomerContactInfo ,
                     "ProductName": mine._Product.ProductName,
                     "SerialNumber": mine._Equipment.SerialNumber,
+                    "Location": mine._Equipment.Room,
+                    "ID": mine._Equipment._id,
+                    //***CHANGE: Added more Equipment Queries
                     "ProblemTypeDescription": mine.ProblemTypeDescription,
                     "PriorityDescription": mine.PriorityDescription,
                     "CurrentStatus": mine.CurrentStatus
@@ -148,7 +159,7 @@ exports.getWorkOfferModal = function(req, res){
               });
             }], function(err){
                 if (err)return next(err);
-                res.render('workOfferModal',
+                res.render('workOfferModal_test',
                       { WorkOffers: workoffers,
                         WorkAssigned:  workassigned,
                         firstname: req.session.user.FirstName});
