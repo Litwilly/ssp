@@ -7,17 +7,20 @@ html
 		link(rel='stylesheet', href='/stylesheets/main.css')
 		link(rel='stylesheet', href='/stylesheets/emc-icon-styles.css')
 		link(rel='icon', type='images/png', href='images/favicon.png')
- 
+		link(href='assets/css/bootstrap.css', rel='stylesheet')
+		link(href='assets/css/google-plus.css', rel='stylesheet')
+
+
 	body
 
 		.modal.fade(id='serviceReqModal' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
 			.modal-dialog.wide-modal
 				.modal-content
-		
+
 		.modal.fade(id='create' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
 			.modal-dialog.wide-modal
 				.modal-content
-				
+
 		//- NAV BAR
 		nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
 			.container
@@ -66,8 +69,9 @@ html
 				h2 Welcome Valued Customer!
 				p Today is #{moment(Date.now()).format('dddd, MMMM Do')}
 
+
 		.main
-		
+
 		if (completed.length)
 		for comp in completed
 			.container
@@ -84,58 +88,78 @@ html
 					button.close(type='button', data-dismiss='alert', aria-label='Close')
 						span(aria-hidden='true') ×
 					strong 
-						|  Service order #{ov._id} is overdue for maintenance!
+						|  Equipment #{ov._id} is overdue for maintenance!
+
+		// - TABS
+		.container
+			.col-sm-6.col-md-4
+			.panel.panel-default
+				.panel-heading
+					a.pull-right(href='#')
+					//- h4 Tabs
+				.panel-body
+					ul.nav.nav-tabs
+						li.active
+							a(href='#A', data-toggle='tab') Service Orders
+						li
+							a(href='#B', data-toggle='tab') Equipment
+						li
+							//- a(href='#C', data-toggle='tab') Section 3
+					.tabbable
+						.tab-content
+							#A.tab-pane.active
+								.well.well-sm 
+								h2.text-center Service Orders
+								table.text-center.table.table-striped.table-hover.table-responsive
+									thead
+										tr
+											th.text-center #{header1} Service Order
+											//- th.text-center #{header2} Equipment
+											th.text-center #{header3} Product
+											//- th.text-center #{header4} Date Requested
+											//- th.text-center #{header5} Problem Type
+											th.text-center #{header6} Status
+									tbody
+									for eq in equipment
+										tr
+											td
+												a(data-toggle='modal', href='#SOModal') #{eq._id}
+												//a(href="/servicedetails?id=#{eq._id}") #{eq._id}
+												//- td= eq.SerialNumber
+												td= eq.ProductName
+												//- td #{moment(eq.OpenDate).format('dddd,MMMM Do YYYY, hh:mm A')}
+												//- td= eq.ProblemTypeDescription
+												if eq.CurrentStatus == "Waiting For Customer Approval"
+													td.text-danger #{eq.CurrentStatus}
+												else 
+													td= eq.CurrentStatus
+
+							#B.tab-pane
+								.well.well-sm 
+								h2.text-center My Equipment
+								table.table.table-striped.table-hover.table-responsive
+									thead
+										tr
+											th.text-center #{header1} Serial Number
+											th.text-center #{header2} Product
+											th.text-center #{header} Current Status
+											th.text-center #{header3} Maintance Needed
+											th.text-center #{header3} Date Required
+
+									tbody    
+									for p in products 
+										tr
+											a(data-toggle='modal', href='#EModal') #{p._SerialNumber}
+											td.text-center= p.SerialNumber
+											td.text-center= p.ProductName
+											td.text-center= p.StatusDescription
+											td.text-center= p.NextPMDescription
+											td.text-center #{moment(p.NextPMDate).format('dddd,MMMM Do YYYY, hh:mm A')}
+
+							#C.tab-pane
+								.well.well-sm I've decided that I like wells.
 
 
-		//- SERVICE ORDER TABLE
-		.container
-			h2.text-center Service Orders
-			table.text-center.table.table-striped.table-hover.table-responsive
-				thead
-					tr
-						th.text-center #{header1} Service Order
-						//- th.text-center #{header2} Equipment
-						th.text-center #{header3} Product
-						//- th.text-center #{header4} Date Requested
-						//- th.text-center #{header5} Problem Type
-						th.text-center #{header6} Status
-				tbody
-				for eq in equipment
-					tr
-						td
-							a(data-toggle='modal', href='#SOModal') #{eq._id}
-							//a(href="/servicedetails?id=#{eq._id}") #{eq._id}
-							//- td= eq.SerialNumber
-							td= eq.ProductName
-							//- td #{moment(eq.OpenDate).format('dddd,MMMM Do YYYY, hh:mm A')}
-							//- td= eq.ProblemTypeDescription
-							if eq.CurrentStatus == "Waiting For Customer Approval"
-								td.text-danger #{eq.CurrentStatus}
-							else 
-								td= eq.CurrentStatus
-	
-		//- EQUIPMENT TABLE
-		.container
-			h2.text-center My Equipment
-			table.table.table-striped.table-hover.table-responsive
-				thead
-					tr
-						th.text-center #{header1} Serial Number
-						th.text-center #{header2} Product
-						th.text-center #{header} Current Status
-						th.text-center #{header3} Maintance Needed
-						th.text-center #{header3} Date Required
-							
-				tbody    
-				for p in products 
-					tr
-						a(data-toggle='modal', href='#EModal') #{p._SerialNumber}
-						td.text-center= p.SerialNumber
-						td.text-center= p.ProductName
-						td.text-center= p.StatusDescription
-						td.text-center= p.NextPMDescription
-						td.text-center #{moment(p.NextPMDate).format('dddd,MMMM Do YYYY, hh:mm A')}
-						
 			//- MODAL - SERVICE ORDER TABLE 
 			#SOModal.modal.fade
 				.modal-content
@@ -147,7 +171,7 @@ html
 						p Here is the Service Order echodata the customer filled out. 
 					.modal-footer
 						button.btn.btn-primary(type='button', data-dismiss='modal') Close
-		
+
 			//- MODAL - EQUIPMENT TABLE
 			#EModal.modal.fade
 				.modal-content
@@ -169,19 +193,18 @@ html
 					.modal-footer
 						button.btn.btn-primary(type='button', data-dismiss='modal') Yes 
 						button.btn.btn-primary(type='button', data-dismiss='modal') No
-			
+
 		//- FOOTER
-			.navbar.navbar-default.navbar-fixed-bottom
-				.container
-					p.navbar-text.pull-left
-						| &#174; 2016 WMD, Inc.
-					p.navbar-text.pull-right  
-						a(href='') Support 24x7
-					p.navbar-text.pull-right  
-						a(href='') Privacy Policy
+		.navbar.navbar-default.navbar-fixed-bottom
+			.container
+				p.navbar-text.pull-left
+					| &#174; 2016 WMD, Inc.
+				p.navbar-text.pull-right  
+					a(href='') Support 24x7
+				p.navbar-text.pull-right  
+					a(href='') Privacy Policy
 
 
 		script(src='/javascripts/jquery-2.0.3.min.js')
 		script(src='/javascripts/jquery-1.12.3.js')
 		script(src='/javascripts/bootstrap.min.js')
-		

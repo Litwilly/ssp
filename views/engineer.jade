@@ -7,6 +7,8 @@ html
 		link(rel='stylesheet', href='/stylesheets/main.css')
 		link(rel='stylesheet', href='/stylesheets/emc-icon-styles.css')
 		link(rel='icon', type='images/png', href='images/favicon.png')
+		link(href='assets/css/bootstrap.css', rel='stylesheet')
+		link(href='assets/css/google-plus.css', rel='stylesheet')
 
 	body
 		.modal.fade(id='workOffModal' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
@@ -47,7 +49,7 @@ html
 										li
 											a(href='') View My Equipment
 										li
-											a(href='') View My Reports
+											a(href='') View My Reports 
 										li
 											a(href='') Email Search
 										li
@@ -65,70 +67,92 @@ html
 
 		.main
 
+		// - TABS
 		.container
-			h3.text-center Work Offers
-			.table-responsive
-				table.text-center.table.table-striped.table-hover
-					thead
-						tr
-							th.text-center Service Order
-							th.text-center Priority
-							th.text-center Customer
-							th.text-center Product
-							th.text-center Problem 
-							th.text-center Status
-					tbody
-						for work in WorkOffers
-							tr
-								td
-									//- a(data-toggle='modal', href='/workOffModal', data-target='#workOffModal') #{work._id}
-									a(data-toggle='modal', href='/workOffModal?reqid=#{work._id}&pd=#{work.PriorityDescription}&name=' + encodeURIComponent("#{work.Name}") + '&prd=' + encodeURIComponent("#{work.ProductName}") + '&status=' +encodeURIComponent("#{work.CurrentStatus}"), data-target='#workOffModal') #{work._id}
-									//- a(data-toggle='modal', href='/workOfferModal' , data-target='#workOfferModal') #{work._id}
-								td= work.PriorityDescription
-								td= work.Name
-								td= work.ProductName									
-								td= work.ProblemTypeDescription
-								if work.CurrentStatus == "Assigned, Waiting to be Accepted"
-									td.text-danger #{work.CurrentStatus}
-								else 
-									td= work.CurrentStatus
+			.col-sm-6.col-md-4
+			.panel.panel-default
+				.panel-heading
+					a.pull-right(href='#')
+					//- h4 Tabs
+				.panel-body
+					ul.nav.nav-tabs
+						li.active
+							a(href='#A', data-toggle='tab') Offered Work
+						li
+							a(href='#B', data-toggle='tab') Assigned Work
+						li
+							//- a(href='#C', data-toggle='tab') Section 3
+					.tabbable
+						.tab-content
+							#A.tab-pane.active
+								.well.well-sm 
+								h3.text-center Work Offers
+								.table-responsive
+									table.text-center.table.table-striped.table-hover
+										thead
+											tr
+												th.text-center Service Order
+												th.text-center Priority
+												th.text-center Customer
+												th.text-center Product
+												th.text-center Problem 
+												th.text-center Status
+										tbody
+											for work in WorkOffers
+												tr
+													td
+														//- a(data-toggle='modal', href='/workOffModal', data-target='#workOffModal') #{work._id}
+														a(data-toggle='modal', href='/workOffModal?reqid=#{work._id}&pd=#{work.PriorityDescription}&name=' + encodeURIComponent("#{work.Name}") + '&prd=' + encodeURIComponent("#{work.ProductName}") + '&status=' +encodeURIComponent("#{work.CurrentStatus}"), data-target='#workOffModal') #{work._id}
+														//- a(data-toggle='modal', href='/workOfferModal' , data-target='#workOfferModal') #{work._id}
+													td= work.PriorityDescription
+													td= work.Name
+													td= work.ProductName									
+													td= work.ProblemTypeDescription
+													if work.CurrentStatus == "Assigned, Waiting to be Accepted"
+														td.text-danger #{work.CurrentStatus}
+													else 
+														td= work.CurrentStatus
 
-		.container
-			h3.text-center Assigned Work
-			.table-responsive
-				table.text-center.table.table-striped.table-hover
-					thead
-						tr
-							th.text-center Service Order
-							th.text-center Priority
-							th.text-center Customer
-							th.text-center Product
-							th.text-center Problem 
-							th.text-center Status
-					tbody
-						for work in WorkAssigned
-							tr
-								td
-									a(data-toggle='modal', href='/workAssModal?reqid=#{work._id}&pd=#{work.PriorityDescription}&status=#{work.CurrentStatus}&name=' + encodeURIComponent("#{work.Name}") + '&prd=' +encodeURIComponent("#{work.ProductName}"), data-target='#workAssModal') #{work._id}
-									//- a(data-toggle='modal', href='/workAssModal?name=#{work.Name}&id=#{work._id}&pd=#{work.PriorityDescription}&prd=#{work.ProductName}&status=#{work.CurrentStatus}', data-target='#workAssModal') #{work._id}
-									//- a(data-toggle='modal', href='/workAssModal', data-target='#workAssModal') #{work._id}
-								td= work.PriorityDescription
-								td= work.Name
-								td= work.ProductName									
-								td= work.ProblemTypeDescription
-								if work.CurrentStatus == "Assigned, Waiting to be Accepted"
-									td.text-danger #{work.CurrentStatus}
-								else 
-									td= work.CurrentStatus
+							#B.tab-pane
+								.well.well-sm
+								h3.text-center Assigned Work
+								.table-responsive
+									table.text-center.table.table-striped.table-hover
+										thead
+											tr
+												th.text-center Service Order
+												th.text-center Priority
+												th.text-center Customer
+												th.text-center Product
+												th.text-center Problem 
+												th.text-center Status
+										tbody
+											for work in WorkAssigned
+												tr
+													td
+														a(data-toggle='modal', href='/workAssModal?reqid=#{work._id}&pd=#{work.PriorityDescription}&status=#{work.CurrentStatus}&name=' + encodeURIComponent("#{work.Name}") + '&prd=' +encodeURIComponent("#{work.ProductName}"), data-target='#workAssModal') #{work._id}
+														//- a(data-toggle='modal', href='/workAssModal?name=#{work.Name}&id=#{work._id}&pd=#{work.PriorityDescription}&prd=#{work.ProductName}&status=#{work.CurrentStatus}', data-target='#workAssModal') #{work._id}
+														//- a(data-toggle='modal', href='/workAssModal', data-target='#workAssModal') #{work._id}
+													td= work.PriorityDescription
+													td= work.Name
+													td= work.ProductName									
+													td= work.ProblemTypeDescription
+													if work.CurrentStatus == "Assigned, Waiting to be Accepted"
+														td.text-danger #{work.CurrentStatus}
+													else 
+														td= work.CurrentStatus
+							#C.tab-pane
+								.well.well-sm I've decided that I like wells.
 
-			.navbar.navbar-default.navbar-fixed-bottom
-				.container
-					p.navbar-text.pull-left
-						| &#174; 2016 WMD, Inc.
-					p.navbar-text.pull-right  
-						a(href='') Support 24x7
-					p.navbar-text.pull-right  
-						a(href='') Privacy Policy
+
+		.navbar.navbar-default.navbar-fixed-bottom
+			.container
+				p.navbar-text.pull-left
+					| &#174; 2016 WMD, Inc.
+				p.navbar-text.pull-right  
+					a(href='') Support 24x7
+				p.navbar-text.pull-right  
+					a(href='') Privacy Policy
 
 
 		script(src='/javascripts/jquery-2.0.3.min.js')
