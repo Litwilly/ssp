@@ -17,13 +17,15 @@ html
 									a(data-toggle='collapse' data-parent='#accordian3' href='#collapse3') Details
 							.panel-collapse.collapse.in(id='collapse3')
 								.panel-body
-									for work in WorkOffers           
-										.clearfix #{work.ProblemNotes}         
+									//- for work in WorkOffers           
+										.clearfix test        
+										//- .clearfix #{work.ProblemNotes}         
 									hr
 									//New panel
 									label.col-sm-2.control-label Product
-										for work in WorkOffers
-											p.form-control-static #{work.ProductName} 
+										//- for work in WorkOffers
+										//- p.form-control-static #{work.ProductName} 
+										p.form-control-static Test
 
 							.panel.panel-default(id='accordian2')
 								.panel-heading
@@ -34,23 +36,27 @@ html
 										.form-group
 											label.col-sm-2.control-label Product:
 											.col-md-4
-												for work in WorkOffers
-													p.form-control-static #{work.ProductName} 
+												//- for work in WorkOffers
+												//- p.form-control-static #{work.ProductName} 
+												p.form-control-static Test
 										.form-group
 											label.col-sm-2.control-label ID:
 											.col-md-4
-												for work in WorkOffers
-													p.form-control-static #{work.ID}				
+												//- for work in WorkOffers
+												//- p.form-control-static #{work.ID}	
+												p.form-control-static Test	
 										.form-group
 											label.col-sm-2.control-label Serial:
 											.col-md-4
-												for work in WorkOffers
-													p.form-control-static #{work.SerialNumber}	
+												//- for work in WorkOffers
+												//- p.form-control-static #{work.SerialNumber}
+												p.form-control-static Test
 										.form-group
 											label.col-sm-2.control-label Location:
 											.col-md-4
-												for work in WorkOffers
-													p.form-control-static #{work.Location}		
+												//- for work in WorkOffers
+												//- p.form-control-static #{work.Location}		
+												p.form-control-static Test
 
 
 							.panel.panel-default(id='accordian')
@@ -62,18 +68,23 @@ html
 										.form-group
 											label.col-sm-2.control-label Customer Name:
 											.col-md-4
-												for work in WorkOffers
-													p.form-control-static #{work.CustomerContactInfo.Name}
+												//- for work in WorkOffers
+												//- p.form-control-static #{work.CustomerContactInfo.Name}
+												p.form-control-static Test
+
 										.form-group
 											label.col-sm-2.control-label Phone:
 											.col-md-4
-											for work in WorkOffers
-												p.form-control-static #{work.CustomerContactInfo.Phone}
+											//- for work in WorkOffers
+											//- p.form-control-static #{work.CustomerContactInfo.Phone}
+											p.form-control-static Test
+
 										.form-group
 											label.col-sm-2.control-label Email:
 											.col-md-4
-											for work in WorkOffers
-												p.form-control-static #{work.CustomerContactInfo.Email}
+											//- for work in WorkOffers
+											//- p.form-control-static #{work.CustomerContactInfo.Email}
+											p.form-control-static Test
 
 						.panel.panel-default
 							.panel-heading
@@ -91,13 +102,16 @@ html
 									li
 										label.col-sm-2.control-label Email
 											.col-md-4
-											for work in WorkOffers
-												a(href='http://usebootstrap.com/theme/google-plus') #{work.CustomerContactInfo.Email}
+											//- for work in WorkOffers
+											//- a(href='http://usebootstrap.com/theme/google-plus') #{work.CustomerContactInfo.Email}
+											a(href='http://usebootstrap.com/theme/google-plus') Test
+
 									li
 										label.col-sm-2.control-label Phone
 											.col-md-4
-											for work in WorkOffers
-												a(href='http://usebootstrap.com/theme/google-plus') #{work.CustomerContactInfo.Phone}			
+											//- for work in WorkOffers
+											//- a(href='http://usebootstrap.com/theme/google-plus') #{work.CustomerContactInfo.Phone}			
+											a(href='http://usebootstrap.com/theme/google-plus') Test		
 				.row
 					.col-sm-4.col-xs-6			
 						input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
