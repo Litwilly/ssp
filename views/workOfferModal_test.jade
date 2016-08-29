@@ -1,0 +1,125 @@
+doctype 5
+html
+	head
+	body
+		form(role="form" id="workOfferModal" name="workOfferModal" method="post")
+		.modal-header
+			button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+			h1.myModalLabel.modal-title 
+			| Work Offer      
+		.modal-body
+			#main.container
+				.row
+					.col-sm-6.col-md-4
+						.panel.panel-default(id='accordian3')
+							.panel-heading
+								h4.panel-title
+									a(data-toggle='collapse' data-parent='#accordian3' href='#collapse3') Details
+							.panel-collapse.collapse.in(id='collapse3')
+								.panel-body
+									for work in WorkOffers           
+										.clearfix #{work.ProblemNotes}         
+									hr
+									//New panel
+									label.col-sm-2.control-label Product
+											for work in WorkOffers
+												p.form-control-static #{work.ProductName} 
+																	
+							.panel.panel-default(id='accordian2')
+								.panel-heading
+									h4.panel-title
+										a(data-toggle='collapse' data-parent='#accordian2' href='#collapse2') Customer
+								.panel-collapse.collapse.in(id='collapse2')
+									.panel-body
+										.form-group
+											label.col-sm-2.control-label Product:
+											.col-md-4
+												for work in WorkOffers
+													p.form-control-static #{work.ProductName} 
+										.form-group
+											label.col-sm-2.control-label ID:
+											.col-md-4
+												for work in WorkOffers
+													p.form-control-static #{work.ID}				
+										.form-group
+											label.col-sm-2.control-label Serial:
+											.col-md-4
+												for work in WorkOffers
+													p.form-control-static #{work.SerialNumber}	
+										.form-group
+											label.col-sm-2.control-label Location:
+											.col-md-4
+												for work in WorkOffers
+													p.form-control-static #{work.Location}		
+												
+													
+							.panel.panel-default(id='accordian')
+								.panel-heading
+									h4.panel-title
+											a(data-toggle='collapse' data-parent='#accordian' href='#collapse1') Customer Contact
+								.panel-collapse.collapse(id='collapse1')
+									.panel-body
+										.form-group
+											label.col-sm-2.control-label Customer Name:
+											.col-md-4
+												for work in WorkOffers
+													p.form-control-static #{work.CustomerContactInfo.Name}
+										.form-group
+											label.col-sm-2.control-label Phone:
+											.col-md-4
+											for work in WorkOffers
+												p.form-control-static #{work.CustomerContactInfo.Phone}
+										.form-group
+											label.col-sm-2.control-label Email:
+											.col-md-4
+											for work in WorkOffers
+												p.form-control-static #{work.CustomerContactInfo.Email}
+													
+						.panel.panel-default
+							.panel-heading
+								h4 Location
+							.panel-body
+								img.img-circle.pull-right(src='/images/uFp_tsTJboUY7kue5XAsGAs28.png')              
+								.clearfix
+								|               There a load of new free Bootstrap 3 ready templates at 
+								| Bootply. All of these templates are free and don&apos;t require extensive 
+								| customization to the Bootstrap baseline.
+								|               
+								hr
+								|               
+								ul.list-unstyled
+									li
+										label.col-sm-2.control-label Email
+											.col-md-4
+											for work in WorkOffers
+												a(href='http://usebootstrap.com/theme/google-plus') #{work.CustomerContactInfo.Email}
+									li
+										label.col-sm-2.control-label Phone
+											.col-md-4
+											for work in WorkOffers
+												a(href='http://usebootstrap.com/theme/google-plus') #{work.CustomerContactInfo.Phone}			
+				.row
+					.col-sm-4.col-xs-6			
+						input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
+						button.btn.btn-success(type="submit" name="submit" value="submit") Accept Service Request
+						button.btn.btn-danger(type='button', data-dismiss='modal') Reject				
+
+		//- //- input(type="hidden" name="Today" value="#{Today}")
+		//- input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
+		//- button.btn.btn-success(type="submit" name="submit" value="submit") Accept Service Request
+		//- button.btn.btn-danger(type='button', data-dismiss='modal') Reject
+		script
+			$(document).ready(function(){
+				$('#ProblemType').change(function() {
+					var probSelect = $('#ProblemType option:selected').val();
+					if(probSelect == "Preventative Maintenance") {
+						$('#PM').html("<label class='col-sm-2 control-label PM2' for='PMType'> Preventative Maintenance Type: </label>\
+						<div class='col-sm-10'> <select id='pmOptions' class='form-control PM2' name='PMType' id='PMType' required> <option value='' default selected> Select The Preventative Maintenance Type Required </option>");
+						$.each( !{JSON.stringify(pmt)}, function( key, pmtypes ){
+							$('#pmOptions').append("<option value='" + pmtypes.PMDescription + "'>" + pmtypes.PMDescription + "</option>");
+						});
+					}else {
+						$('.PM2').hide();
+					}
+				});
+			});

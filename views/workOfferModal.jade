@@ -5,60 +5,88 @@ html
 		form(role="form" id="workOfferModal" name="workOfferModal" method="post")
 			.modal-header
 				button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-				h4.myModalLabel.modal-title 
-				| Accept or Reject Work
+				h1.myModalLabel.modal-title 
+				| Work Offer
 			.modal-body.form-horizontal
-				.form-group
-					label.col-sm-2.control-label Customer:
+					label.col-sm-2.control-label Priority:
 					.col-sm-10
-						p.form-control-static #{firstname}
-				.form-group
-					label.col-sm-2.control-label Date:
-					.col-sm-10
-						p.form-control-static #{moment(Today).format('dddd, MMMM Do')}
-				.form-group
-					label.col-sm-2.control-label(for="Equipment") Equipment:
-					.col-sm-10
-						select.form-control(name="Equipment" id="Equipment" required autofocus)
-							option(value="" default selected) Select Your Equipment For Service
-							- for equipment in WorkOffers
-								p.form-control-static #{equipment._id}
-								option(value="{\"equipid\": #{equipment._id}, \"prodid\": #{equipment.ProductID}}") #{equipment.SerialNumber} - #{equipment.ProductName} - #{equipment.Room}
-				.form-group
-					label.col-sm-2.control-label(for="ProblemType") Service Type:
-					.col-sm-10
-						select.form-control(name="ProblemType" id="ProblemType"  required)
-							option(value="" default selected) Select The Problem Type You Are Experiencing
-							- for serviceType in WorkOffers
-								option(value="#{serviceType.ProblemTypeDescription}") #{serviceType.ProblemTypeDescription}
-				.form-group(id="PM")
-				.form-group
-					label.col-sm-2.control-label(for="Priority") Priority:
-					.col-sm-10
-						select.form-control(name="Priority" id="Priority"  required)
-							option(value="" default selected) Select The Severity Of The Issue You Are Experiencing
-							- for priority in WorkOffers
-								option(value="#{priority.PriorityDescription}") #{priority.PriorityDescription}
-				.form-group
-					label.col-sm-2.control-label(for="ContactName") Contact Name:
-					.col-sm-10
-						input.form-control(type="text" name="ContactName" id="ContactName"  required placeholder="Example: Albert Einstien")
-				.form-group
-					label.col-sm-2.control-label(for="ContactEmail") Contact Email:
-					.col-sm-10
-						input.form-control(type="email" name="ContactEmail" id="ContactEmail"  required placeholder="Example: aeinstein@genius.com")
-				.form-group
-					label.col-sm-2.control-label(for="ContactPhone") Contact Phone:
-					.col-sm-10
-						input.form-control(type="tel" name="ContactPhone" id="ContactPhone"  required placeholder="Example: 123-456-7890")
-				.form-group
-					.col-sm-offset-2.col-sm-10
-						textarea.form-control(id="ProblemNotes" rows="7" name="ProblemNotes" placeholder="Add Any Additonal Problem Notes Here...")
+						for work in WorkOffers
+							p.form-control-static #{work.PriorityDescription}
+			//Problem Collapse
+					.panel-group(id='accordian3')
+						.panel.panel-default
+							.panel-heading
+								h4.panel-title
+									a(data-toggle='collapse' data-parent='#accordian3' href='#collapse3') Problem
+							.panel-collapse.collapse.in(id='collapse3')
+								.panel-body
+									.form-group
+										label.col-sm-2.control-label Problem:
+										.col-md-4
+											for work in WorkOffers
+												p.form-control-static #{work.ProblemTypeDescription}
+									.form-group
+										label.col-sm-2.control-label Notes:
+										.col-md-4
+											for work in WorkOffers
+												p.form-control-static #{work.ProblemNotes}
+			//Equipment Collapse
+				.panel-group(id='accordian2')
+					.panel.panel-default
+						.panel-heading
+							h4.panel-title
+								a(data-toggle='collapse' data-parent='#accordian2' href='#collapse2') Problem
+						.panel-collapse.collapse.in(id='collapse2')
+							.panel-body
+								.form-group
+									label.col-sm-2.control-label Product:
+									.col-md-4
+										for work in WorkOffers
+											p.form-control-static #{work.ProductName}
+								.form-group
+									label.col-sm-2.control-label ID:
+									.col-md-4
+										for work in WorkOffers
+											p.form-control-static #{work.ID}				
+								.form-group
+									label.col-sm-2.control-label Serial:
+									.col-md-4
+										for work in WorkOffers
+											p.form-control-static #{work.SerialNumber}	
+								.form-group
+									label.col-sm-2.control-label Location:
+									.col-md-4
+										for work in WorkOffers
+											p.form-control-static #{work.Location}			
+			//Customer Collapse
+				.panel-group(id='accordian')
+					.panel.panel-default
+						.panel-heading
+							h4.panel-title
+									a(data-toggle='collapse' data-parent='#accordian' href='#collapse1') Customer Contact
+						.panel-collapse.collapse(id='collapse1')
+							.panel-body
+								.form-group
+									label.col-sm-2.control-label Customer Name:
+									.col-md-4
+										for work in WorkOffers
+											p.form-control-static #{work.CustomerContactInfo.Name}
+								.form-group
+									label.col-sm-2.control-label Phone:
+									.col-md-4
+									for work in WorkOffers
+										p.form-control-static #{work.CustomerContactInfo.Phone}
+								.form-group
+									label.col-sm-2.control-label Email:
+									.col-md-4
+									for work in WorkOffers
+										p.form-control-static #{work.CustomerContactInfo.Email}
+				
 			.modal-footer
 				//- input(type="hidden" name="Today" value="#{Today}")
 				input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
-				button.btn.btn-success(type="submit" name="submit" value="submit") Create New Service Request
-				button.btn.btn-danger(type='button', data-dismiss='modal') Cancel
+				button.btn.btn-success(type="submit" name="submit" value="submit") Accept Service Request
+				button.btn.btn-danger(type='button', data-dismiss='modal') Reject
 		script
 			$(document).ready(function(){
 				$('#ProblemType').change(function() {
