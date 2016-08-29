@@ -104,10 +104,10 @@ exports.getData = function(req, res){
             },
         function(callback){
           ServiceOrder.find()
-            .where(_CreatedBy).equals(req.session.user._id)
-            .where(CurrentStatus).$ne('Completed')
-            .where('Checkin').gt('2016-08-28T09:47:19.000Z')
             .populate('_CreatedBy')
+            .where('_CreatedBy').equals(req.session.user._id)
+            .where('CurrentStatus').ne('Completed')
+            .where('Checkin').gt('2016-08-28T09:47:19.000Z')
             .populate('_Product')
             .populate('_Equipment')
             .exec(function (err, serviceorders){
