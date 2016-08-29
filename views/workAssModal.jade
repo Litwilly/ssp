@@ -36,6 +36,7 @@ html
 						textarea.form-control(id="ActionNotes" rows="7" name="ActionNotes" placeholder="Add Any Additonal Problem Notes Here...")
 			.modal-footer
 				input(type="hidden" name="reqid" value="#{reqid}")
-				input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
+				input(type="hidden" name="Today" value="#{moment(Today).utc()}")
+				//- input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
 				button.btn.btn-success(type="submit" name="submit" value="submit") Complete Service Request
 				button.btn.btn-danger(type='button', data-dismiss='modal') Cancel

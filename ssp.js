@@ -2,6 +2,7 @@
  * Module dependencies.
  */
 
+
 //ssp application
 var express = require('express');
 var dbstarter = require('./model/db_starter');
@@ -38,7 +39,8 @@ app.locals._      = require('underscore');
 app.locals.moment = require('moment');
 app.locals.accounting = require('accounting');
 app.locals.numeral = require('numeral');
-// app.locals.Today = new Date("August 1, 2016 03:15:00");
+var today = new Date();
+app.locals.Today = today.toUTCString();
 
 // development only
 if ('development' == app.get('env')) {

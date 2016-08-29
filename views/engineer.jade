@@ -1,7 +1,7 @@
 doctype 5
 html
 	head
-		title Ryan Rules
+		title Single Service Portal
 		link(rel='stylesheet', href='/stylesheets/styles.css')
 		link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
 		link(rel='stylesheet', href='/stylesheets/main.css')
@@ -9,7 +9,7 @@ html
 		link(rel='icon', type='images/png', href='images/favicon.png')
 
 	body
-		.modal.fade(id='workOfferModal' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		.modal.fade(id='workOffModal' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
 			.modal-dialog.wide-modal
 				.modal-content
 
@@ -21,7 +21,7 @@ html
 			.container
 				.navbar-header
 					a.emcTab(href='/', title='Wonski Medical Solutions')
-					h3.applicationIdentifier Wonski Medical Solutions
+					h3.applicationIdentifier 
 					ul.nav.navbar-nav.navbar-right
 						button.navbar-toggle(data-toggle='collapse', data-target='.navHeaderCollapse')
 							span.icon-bar
@@ -82,8 +82,8 @@ html
 							tr
 								td
 									//- a(data-toggle='modal', href='/workOffModal', data-target='#workOffModal') #{work._id}
-									//- a(data-toggle='modal', href='/workOffModal?reqid=#{work._id}&pd=#{work.PriorityDescription}&name=' + encodeURIComponent("#{work.Name}") + '&prd=' + encodeURIComponent("#{work.ProductName}") + '&status=' +encodeURIComponent("#{work.CurrentStatus}"), data-target='#workOffModal') #{work._id}
-									a(data-toggle='modal', href='/workOfferModal' , data-target='#workOfferModal') #{work._id}
+									a(data-toggle='modal', href='/workOffModal?reqid=#{work._id}&pd=#{work.PriorityDescription}&name=' + encodeURIComponent("#{work.Name}") + '&prd=' + encodeURIComponent("#{work.ProductName}") + '&status=' +encodeURIComponent("#{work.CurrentStatus}"), data-target='#workOffModal') #{work._id}
+									//- a(data-toggle='modal', href='/workOfferModal' , data-target='#workOfferModal') #{work._id}
 								td= work.PriorityDescription
 								td= work.Name
 								td= work.ProductName									

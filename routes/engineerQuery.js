@@ -128,6 +128,7 @@ exports.getWorkOfferModal = function(req, res){
     ServiceOrder.findOne({ _id: req.body.reqid})
     .exec(function(err, so) {
        so.CurrentStatus = req.body.Status;
+       so.CloseDate = req.body.Today;
        so.save(function (err,so){
        });
     });

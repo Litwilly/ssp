@@ -1,7 +1,7 @@
 doctype 5
 html
 	head
-		title Ryan Rules
+		title Single Service Portal
 		link(rel='stylesheet', href='/stylesheets/styles.css')
 		link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
 		link(rel='stylesheet', href='/stylesheets/main.css')
@@ -23,7 +23,7 @@ html
 			.container
 				.navbar-header
 					a.emcTab(href='/', title='Wonski Medical Solutions')
-					h3.applicationIdentifier Wonski Medical Solutions
+					h3.applicationIdentifier 
 					ul.nav.navbar-nav.navbar-right
 						button.navbar-toggle(data-toggle='collapse', data-target='.navHeaderCollapse')
 							span.icon-bar
@@ -63,10 +63,29 @@ html
 			br
 			.jumbotron
 				h1 Hello #{firstname}
-				h2 You are a Customer!
+				h2 Welcome Valued Customer!
 				p Today is #{moment(Date.now()).format('dddd, MMMM Do')}
 
 		.main
+		
+		if (completed.length)
+		for comp in completed
+			.container
+				.alert.alert-success.alert-dismissible.fade.in
+					button.close(type='button', data-dismiss='alert', aria-label='Close')
+						span(aria-hidden='true') ×
+					strong 
+						|  Service order #{comp._id} has been completed!
+
+		if (overdue.length)
+		for ov in overdue
+			.container
+				.alert.alert-danger.alert-dismissible.fade.in
+					button.close(type='button', data-dismiss='alert', aria-label='Close')
+						span(aria-hidden='true') ×
+					strong 
+						|  Service order #{ov._id} is overdue for maintenance!
+
 
 		//- SERVICE ORDER TABLE
 		.container

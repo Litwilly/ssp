@@ -30,6 +30,15 @@
     background-position:center 39px;
 }
 
+@media screen and (max-width: 768px) {
+.emcTab {
+  display: none;
+}
+.applicationIdentifier{
+  display:none;
+}
+}
+
 .applicationIdentifier {
     color: #FFF;
     font-size: 16px;

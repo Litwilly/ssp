@@ -12,22 +12,13 @@ var async = require('async');
 
 
 
-exports.req_modal = function(req, res){
-  res.render('modal-serv-req',{
-
-  });
-};
-
-exports.svc_modal = function(req, res){
-  res.render('modal-svc-order',{
-
-  });
-};
-
-
 exports.getData = function(req, res){
   var myequipment = [];
   var prods = [];
+  var completes = [];
+  var overdues = [];
+  var td = new Date();
+  var ourtoday = td.toUTCString();
   console.log("==Customer Queries==");
   async.parallel([
     function(callback){
@@ -59,35 +50,57 @@ exports.getData = function(req, res){
             callback();
           });
         },
-    // function(callback){
-    //   ServiceOrder.find({CloseDate: {$exists: true} })
-    //     .where('_CreatedBy').equals(req.session.user._id)
-    //     .where('CurrentStatus').equals('Completed')
-    //     // .populate('_CreatedBy')
-    //     .populate('_Product')
-    //     .populate('_Equipment')
-    //       //.select('_id SerialNumber OpenDate ProblemTypeDescription ProductName CurrentStatus')
-    //       .exec(function (err, serviceorders){
-    //         serviceorders.forEach(function(yours){
-    //           myequipment.push({
-    //             "_id": yours._id,
-    //             "_User": yours._User,
-    //             "StatusDescription": yours._StatusDescription,
-    //             "ServiceDetails": yours._ServiceDetails,
-    //             "SerialNumber": yours._Equipment.SerialNumber,
-    //             "Room": yours._Equipment.Room,
-    //             "InstallDate": yours._Equipment.InstallDate,
-    //             "NextPMDate": yours._Equipment.NextPMDate,
-    //             "NextPMDescription": yours._Equipment.NextPMDescription,
-    //             "OpenDate": yours.OpenDate,
-    //             "ProblemTypeDescription": yours.ProblemTypeDescription,
-    //             "ProductName": yours._Product.ProductName,
-    //             "CurrentStatus": yours.CurrentStatus
-    //           });
-    //         });
-    //         callback();
-    //       });
-    //     },
+    function(callback){
+      ServiceOrder.find()
+        .where('_CreatedBy').equals(req.session.user._id)
+        .where('CurrentStatus').equals('Completed')
+        .where('CloseDate').gt('2016-08-28T09:47:19.000Z')
+        .populate('_Product')
+        .populate('_Equipment')
+          //.select('_id SerialNumber OpenDate ProblemTypeDescription ProductName CurrentStatus')
+          .exec(function (err, serviceorders){
+            serviceorders.forEach(function(yours){
+              completes.push({
+                "_id": yours._id,
+                "_User": yours._User,
+                "StatusDescription": yours._StatusDescription,
+                "ServiceDetails": yours._ServiceDetails,
+                "SerialNumber": yours._Equipment.SerialNumber,
+                "Room": yours._Equipment.Room,
+                "InstallDate": yours._Equipment.InstallDate,
+                "NextPMDate": yours._Equipment.NextPMDate,
+                "NextPMDescription": yours._Equipment.NextPMDescription,
+                "OpenDate": yours.OpenDate,
+                "ProblemTypeDescription": yours.ProblemTypeDescription,
+                "ProductName": yours._Product.ProductName,
+                "CurrentStatus": yours.CurrentStatus
+              });
+            });
+            callback();
+          });
+        },
+        function(callback){
+          Equipment.find({ _User: req.session.user._id })
+              .where('NextPMDate').lt(ourtoday)
+              .populate('_CreatedBy')
+              .populate('_Product')
+              .populate('_Equipment')
+                        //.sort('NextPMDate')
+              //.select('_id SerialNumber ProductName NextPMDescription NextPMDate')
+              .exec(function (err, equipment){
+                  equipment.forEach(function(mine){
+                    overdues.push({
+                      "_id": mine._id,
+                      "SerialNumber": mine.SerialNumber,
+                      "StatusDescription": mine.StatusDescription,
+                      "ProductName": mine._Product.ProductName,
+                      "NextPMDescription": mine.NextPMDescription,
+                      "NextPMDate": mine.NextPMDate
+                    });
+                });
+                callback();
+              });
+            },
         function(callback){
           Equipment.find({ _User: req.session.user._id })
               .populate('_CreatedBy')
@@ -110,16 +123,21 @@ exports.getData = function(req, res){
                 });
               }], function(err){
                 if (err)return next(err);
-                if (req.session.user.RoleName === "Customer")
+                console.log("our today");
+                console.log(ourtoday);
+                console.log("completed work");
+                console.log(completes);
+                console.log("prods");
+                console.log(prods);
+                console.log("myequipment");
+                console.log(myequipment);
+                console.log("overdues");
+                console.log(overdues);
                   res.render('customer',
                         { equipment: myequipment,
                           products:  prods,
+                          completed: completes,
+                          overdue: overdues,
                           firstname: req.session.user.FirstName});
-                else if (req.session.user.RoleName === "Onsite Engineer")
-                  res.render('engineer',
-                        { equipment: myequipment,
-                          products:  prods,
-                          firstname: req.session.user.FirstName});
-              }
-            );
+              });
         };
