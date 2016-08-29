@@ -17,7 +17,7 @@ exports.getData = function(req, res){
   var prods = [];
   var completes = [];
   var overdues = [];
-  var checkin = [];
+  var checkins = [];
   var td = new Date();
   var ourtoday = td.toUTCString();
   console.log("==Customer Queries==");
@@ -107,29 +107,15 @@ exports.getData = function(req, res){
             .populate('_CreatedBy')
             .where('_CreatedBy').equals(req.session.user._id)
             .where('CurrentStatus').ne('Completed')
-            .where('Checkin').gt('2016-08-28T09:47:19.000Z')
+            .where('Checkin').equals(1)
             .populate('_Product')
-            .populate('_Equipment')
             .exec(function (err, serviceorders){
               serviceorders.forEach(function(yours){
-                checkin.push({
+                checkins.push({
                   "_id": yours._id,
-                  "_User": yours._User,
-                  "FirstName": yours._User.FirstName,
-                  "StatusDescription": yours._StatusDescription,
-                  "ServiceDetails": yours._ServiceDetails,
-                  "SerialNumber": yours._Equipment.SerialNumber,
-                  "CreatedBy": yours.CreatedBy,
-                  "Room": yours._Equipment.Room,
-                  "InstallDate": yours._Equipment.InstallDate,
-                  "NextPMDate": yours._Equipment.NextPMDate,
-                  "NextPMDescription": yours._Equipment.NextPMDescription,
-                  "OpenDate": yours.OpenDate,
-                  "ProblemTypeDescription": yours.ProblemTypeDescription,
                   "ProductName": yours._Product.ProductName,
                   "CurrentStatus": yours.CurrentStatus,
-                  "Checkin": yours._ServiceDetails.Checkin,
-                  "Checkout": yours._ServiceDetails.Checkout,
+                  "Checkin": yours.Checkin
                 });
               });
               callback();
@@ -159,19 +145,22 @@ exports.getData = function(req, res){
                 if (err)return next(err);
                 console.log("our today");
                 console.log(ourtoday);
-                console.log("completed work");
-                console.log(completes);
-                console.log("prods");
-                console.log(prods);
-                console.log("myequipment");
-                console.log(myequipment);
-                console.log("overdues");
-                console.log(overdues);
+                console.log("checkins");
+                console.log(checkins);
+                // console.log("completed work");
+                // console.log(completes);
+                // console.log("prods");
+                // console.log(prods);
+                // console.log("myequipment");
+                // console.log(myequipment);
+                // console.log("overdues");
+                // console.log(overdues);
                   res.render('customer',
                         { equipment: myequipment,
                           products:  prods,
                           completed: completes,
                           overdue: overdues,
+                          checkin: checkins,
                           firstname: req.session.user.FirstName});
               });
         };

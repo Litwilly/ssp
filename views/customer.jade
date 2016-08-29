@@ -82,22 +82,44 @@ html
 						|  Service order #{comp._id} has been completed!
 
 		if (overdue.length)
-		for ov in overdue
-			.container
-				.alert.alert-danger.alert-dismissible.fade.in
-					button.close(type='button', data-dismiss='alert', aria-label='Close')
-						span(aria-hidden='true') ×
-					strong 
-						|  Service order #{ov._id} is overdue for maintenance!
+			for ov in overdue
+				.container
+					.alert.alert-danger.alert-dismissible.fade.in
+						button.close(type='button', data-dismiss='alert', aria-label='Close')
+							span(aria-hidden='true') ×
+						strong 
+							|  Service order #{ov._id} is overdue for maintenance!
 
-		//- if (checkin.length)
-		//- for ci in checkin
-		//- 	.container
-		//- 		.alert.alert-info.alert-dismissible.fade.in
-		//- 			button.close(type='button', data-dismiss='alert', aria-label='Close')
-		//- 				span(aria-hidden='true') ×
-		//- 			strong 
-		//- 				|  Engineer #{ci._FirstName} has checked in for Service Order #{ci._id}
+		if (checkin.length)
+			for ci in checkin
+				.container
+					.alert.alert-info.alert-dismissible.fade.in
+						button.close(type='button', data-dismiss='alert', aria-label='Close')
+							span(aria-hidden='true') ×
+						strong 
+							|  Engineer Max has checked in for Service Order #{ci._id}
+
+			//- if (typeof overdue !== 'undefined' && overdue.length > 0)
+			//- 	for ov in overdue
+			//- 		.container
+			//- 			.alert.alert-danger.alert-dismissible.fade.in
+			//- 				button.close(type='button', data-dismiss='alert', aria-label='Close')
+			//- 					span(aria-hidden='true') ×
+			//- 				strong 
+			//- 					|  Service order #{ov._id} is overdue for maintenance!
+			//- else 
+			//- 	overdue = []
+			//- 
+			//- if (typeof checkin !== 'undefined' && checkin.length > 0)
+			//- 	for ci in checkin
+			//- 		.container
+			//- 			.alert.alert-info.alert-dismissible.fade.in
+			//- 				button.close(type='button', data-dismiss='alert', aria-label='Close')
+			//- 					span(aria-hidden='true') ×
+			//- 				strong 
+			//- 					|  Engineer Max has checked in for Service Order #{ci._id}
+			//- else 
+			//- 	checkin = []
 
 		// - TABS
 		.container
