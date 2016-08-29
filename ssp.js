@@ -72,6 +72,7 @@ app.get('/workOffModal', engineerQuery.getWorkOffModal);
 app.post('/engineer/accept', engineerQuery.postWorkOffModal);
 app.get('/workAssModal', engineerQuery.getWorkAssModal);
 app.post('/engineer/complete', engineerQuery.postWorkAssModal);
+app.post('/engineer/acceptReject', engineerQuery.quickAcceptReject);
 
 //Login and Validate User Routes, Logout
 app.get('/login', user.loginForm);							//Display Login Form
