@@ -85,6 +85,15 @@ html
 						span(aria-hidden='true') ×
 					strong 
 						|  Service order #{ov._id} is overdue for maintenance!
+		
+		if (checkin.length)
+		for ci in checkin
+			.container
+				.alert.alert-info.alert-dismissible.fade.in
+					button.close(type='button', data-dismiss='alert', aria-label='Close')
+						span(aria-hidden='true') ×
+					strong 
+						|  Engineer #{ci._FirstName} has checked in for Service Order #{ci._id}
 
 
 		//- SERVICE ORDER TABLE
