@@ -25,9 +25,13 @@ html
 		nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
 			.container
 				.navbar-header
+
 					a.emcTab(href='/', title='Wonski Medical Solutions')
+
 					h3.applicationIdentifier 
 					ul.nav.navbar-nav.navbar-right
+					form.navbar-form.navbar-right(action='/logout')
+						button(type='submit' class='btn btn-default ') Logout
 						button.navbar-toggle(data-toggle='collapse', data-target='.navHeaderCollapse')
 							span.icon-bar
 							span.icon-bar
@@ -57,7 +61,7 @@ html
 											a(href='') Email Search
 										li
 											a(href='') Add To Group
-				form.navbar-form.navbar-right(action='/logout')
+				form.navbar-form.navbar-right.logoutbig(action='/logout')
 					button(type='submit' class='btn btn-default pull-right') Logout
 
 		//- JUMBOTRON

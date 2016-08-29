@@ -37,6 +37,9 @@ body {
 .emcTab {
   display: none;
 }
+.logoutbig {
+  display: none;
+}
 .applicationIdentifier{
   display:none;
 }

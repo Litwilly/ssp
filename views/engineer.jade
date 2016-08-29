@@ -95,10 +95,11 @@ html
 												th.text-center Priority
 												th.text-center Customer
 												th.text-center Product
-												th.text-center Problem 
 												th.text-center Status
+												th.text-center 
 										tbody
 											for work in WorkOffers
+												//- if work.CurrentStatus == "Assigned, Waiting to be Accepted"
 												tr
 													td
 														//- a(data-toggle='modal', href='/workOffModal', data-target='#workOffModal') #{work._id}
@@ -107,11 +108,16 @@ html
 													td= work.PriorityDescription
 													td= work.Name
 													td= work.ProductName									
-													td= work.ProblemTypeDescription
 													if work.CurrentStatus == "Assigned, Waiting to be Accepted"
 														td.text-danger #{work.CurrentStatus}
 													else 
-														td= work.CurrentStatus
+														td= work.CurrentStatus                                                                       
+													td
+														form.form-accept(action='/engineer/acceptReject' method="post")
+															input(type="hidden" name="reqid" value="#{work._id}")
+															button.btn.btn-success(type="submit" name="submit" value="accept") Accept
+															button.btn.btn-danger(type='submit', name="submit" value="reject") Reject	
+														//- .button.btn.btn-success(type='button') Accept
 
 							#B.tab-pane
 								.well.well-sm
@@ -124,7 +130,6 @@ html
 												th.text-center Priority
 												th.text-center Customer
 												th.text-center Product
-												th.text-center Problem 
 												th.text-center Status
 										tbody
 											for work in WorkAssigned
@@ -136,11 +141,17 @@ html
 													td= work.PriorityDescription
 													td= work.Name
 													td= work.ProductName									
-													td= work.ProblemTypeDescription
 													if work.CurrentStatus == "Assigned, Waiting to be Accepted"
 														td.text-danger #{work.CurrentStatus}
 													else 
 														td= work.CurrentStatus
+													td
+														form.form-checkin(action='/engineer/checkin' method="post")
+															input(type="hidden" name="reqid" value="#{work._id}")
+															button.btn.btn-success(type="submit" name="submit" value="checkin") Checkin
+															button.btn.btn-danger(type='submit', name="submit" value="checkout") Checkout
+
+
 							#C.tab-pane
 								.well.well-sm I've decided that I like wells.
 

@@ -128,7 +128,24 @@ exports.getWorkOfferModal = function(req, res){
     ServiceOrder.findOne({ _id: req.body.reqid})
     .exec(function(err, so) {
        so.CurrentStatus = req.body.Status;
-       so.CloseDate = req.body.Today;
+       so.save(function (err,so){
+       });
+    });
+    res.redirect('/engineer');
+  };
+
+  exports.quickAcceptReject = function(req, res){
+    var ar;
+    if (req.body.submit == "accept"){
+      ar = "Accepted";
+    }else if (req.body.submit == "reject"){
+      ar = "Rejected";
+    }
+    console.log(ar);
+    console.log("ba");
+    ServiceOrder.findOne({ _id: req.body.reqid})
+    .exec(function(err, so) {
+       so.CurrentStatus = ar;
        so.save(function (err,so){
        });
     });
