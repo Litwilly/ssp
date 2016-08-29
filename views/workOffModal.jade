@@ -2,41 +2,109 @@ doctype 5
 html
 	head
 	body
-		form(role="form" id="workOffModal" name="workOffModal" method="post" action="/engineer/accept")
-			.modal-header
-				button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-				h2.myModalLabel.modal-title Add Notes or Complete 
-			.modal-body.form-horizontal
-				.form-group
-					label.col-sm-2.control-label Customer:
-					.col-sm-10
-						p.form-control-static #{reqname}
-				.form-group
-					label.col-sm-2.control-label Priorty:
-					.col-sm-10
-						p.form-control-static #{reqpd}
-				.form-group
-					label.col-sm-2.control-label Product:
-					.col-sm-10
-						p.form-control-static #{reqprd}
-				.form-group
-					label.col-sm-2.control-label Status:
-					.col-sm-10
-					select.form-control(name="Status" id="Status"  required)
-						option(value="" default selected) #{reqstatus}
-						option(value="Accepted") Accept
-						p.form-control-static #{reqstatus}
-				.form-group
-					label.col-sm-2.control-label Date:
-					.col-sm-10
-						p.form-control-static #{moment(Today).format('dddd, MMMM Do')}
-				.form-group
-					label.col-sm-2.control-label Work Notes:
-					.col-sm-offset-2.col-sm-10
-						textarea.form-control(id="ActionNotes" rows="7" name="ActionNotes" placeholder="Add Any Additonal Problem Notes Here...")
-			.modal-footer
-				input(type="hidden" name="reqid" value="#{reqid}")
-				input(type="hidden" name="Today" value="#{moment(Today).utc()}")
-				//- input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
-				button.btn.btn-success(type="submit" name="submit" value="submit") Accept Service Request
-				button.btn.btn-danger(type='button', data-dismiss='modal') Cancel
+		form(role="form" id="workOffModal" name="workOffModal" method="post")
+		.modal-header
+			button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+			h1.myModalLabel.modal-title 
+			| Work Offer      
+		.modal-body
+			#main.container
+				.row
+					.col-sm-6.col-md-4
+						.panel.panel-default(id='accordian3')
+							.panel-heading
+								h4.panel-title
+									a(data-toggle='collapse' data-parent='#accordian3' href='#collapse3') Details
+							.panel-collapse.collapse.in(id='collapse3')
+								.panel-body
+									for work in WorkOffers           
+										.clearfix #{work.ProblemNotes}         
+									hr
+									//New panel
+									label.col-sm-2.control-label Product
+										for work in WorkOffers
+											p.form-control-static #{work.ProductName} 
+
+							.panel.panel-default(id='accordian2')
+								.panel-heading
+									h4.panel-title
+										a(data-toggle='collapse' data-parent='#accordian2' href='#collapse2') Customer
+								.panel-collapse.collapse.in(id='collapse2')
+									.panel-body
+										.form-group
+											label.col-sm-2.control-label Product:
+											.col-md-4
+												for work in WorkOffers
+													p.form-control-static #{work.ProductName} 
+										.form-group
+											label.col-sm-2.control-label ID:
+											.col-md-4
+												for work in WorkOffers
+													p.form-control-static #{work.ID}				
+										.form-group
+											label.col-sm-2.control-label Serial:
+											.col-md-4
+												for work in WorkOffers
+													p.form-control-static #{work.SerialNumber}	
+										.form-group
+											label.col-sm-2.control-label Location:
+											.col-md-4
+												for work in WorkOffers
+													p.form-control-static #{work.Location}		
+
+
+							.panel.panel-default(id='accordian')
+								.panel-heading
+									h4.panel-title
+										a(data-toggle='collapse' data-parent='#accordian' href='#collapse1') Customer Contact
+								.panel-collapse.collapse(id='collapse1')
+									.panel-body
+										.form-group
+											label.col-sm-2.control-label Customer Name:
+											.col-md-4
+												for work in WorkOffers
+													p.form-control-static #{work.CustomerContactInfo.Name}
+										.form-group
+											label.col-sm-2.control-label Phone:
+											.col-md-4
+											for work in WorkOffers
+												p.form-control-static #{work.CustomerContactInfo.Phone}
+										.form-group
+											label.col-sm-2.control-label Email:
+											.col-md-4
+											for work in WorkOffers
+												p.form-control-static #{work.CustomerContactInfo.Email}
+
+						.panel.panel-default
+							.panel-heading
+								h4 Location
+							.panel-body
+								img.img-circle.pull-right(src='/images/uFp_tsTJboUY7kue5XAsGAs28.png')              
+								.clearfix
+								|               There a load of new free Bootstrap 3 ready templates at 
+								| Bootply. All of these templates are free and don&apos;t require extensive 
+								| customization to the Bootstrap baseline.
+								|               
+								hr
+								|               
+								ul.list-unstyled
+									li
+										label.col-sm-2.control-label Email
+											.col-md-4
+											for work in WorkOffers
+												a(href='http://usebootstrap.com/theme/google-plus') #{work.CustomerContactInfo.Email}
+									li
+										label.col-sm-2.control-label Phone
+											.col-md-4
+											for work in WorkOffers
+												a(href='http://usebootstrap.com/theme/google-plus') #{work.CustomerContactInfo.Phone}			
+				.row
+					.col-sm-4.col-xs-6			
+						input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
+						button.btn.btn-success(type="submit" name="submit" value="submit") Accept Service Request
+						button.btn.btn-danger(type='button', data-dismiss='modal') Reject				
+
+		//- //- input(type="hidden" name="Today" value="#{Today}")
+		//- input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
+		//- button.btn.btn-success(type="submit" name="submit" value="submit") Accept Service Request
+		//- button.btn.btn-danger(type='button', data-dismiss='modal') Reject
