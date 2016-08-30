@@ -10,7 +10,7 @@ html
 		link(href='assets/css/bootstrap.css', rel='stylesheet')
 		link(href='assets/css/google-plus.css', rel='stylesheet')
 
-	body
+	body#space
 		.modal.fade(id='workOffModal' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
 			.modal-dialog.wide-modal
 				.modal-content
@@ -49,12 +49,11 @@ html
 					button.gone768(type='submit' class='btn btn-default pull-right') Logout
 
 		.container
-			br
-			br
-			.jumbotron
-				h1 Hello #{firstname}
-				h2 Welcome to the Engineer Single Service Portal
-				p Today is #{moment(Date.now()).format('dddd, MMMM Do')}
+			.col-sm-6.col-md-4
+			.panel.panel-default#gray
+				h1.text-center Hello #{firstname}
+				h2.text-center Welcome to the Engineer Single Service Portal
+				p.text-center Today is #{moment(Date.now()).format('dddd, MMMM Do')}
 
 		.main
 
@@ -158,8 +157,8 @@ html
 					a(href='') Support 24x7
 				p.gone768.navbar-text.pull-right  
 					a(href='') Privacy Policy
-				form.here768(action='/logout')
-				button#here768(type='submit' class='btn btn-default pull-right') Logout
+				form.here768.navbar-right(action='/logout')
+				button#here768#lilpad(type='submit' class='btn btn-primary pull-right') Logout
 
 
 		script(src='/javascripts/jquery-2.0.3.min.js')

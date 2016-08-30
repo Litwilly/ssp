@@ -5,6 +5,15 @@
 }
 body {
     padding-bottom: 50px;
+    background-color: white !important;
+}
+
+#space {
+  padding-top: 75px;
+}
+
+#gray, .navbar-fixed-bottom {
+  background-color: #eaeaea !important;
 }
 
 .here768 {
