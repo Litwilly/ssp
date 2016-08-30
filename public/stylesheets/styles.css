@@ -9,9 +9,21 @@
 
 .jumbotron {
   /*color: white !important;*/
-  /*background-image: url(../images/maxresdefault.jpg);*/
-  text-align: center;
+  background-image: url(../images/hand1.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 1200px 400px;
+  text-align: left;
+  color: black !important;
 }
+
+.nav-tabs>li {
+    width: 33%;
+  }
+
+#fifty>li {
+    width: 50%;
+  }
 
 
 /*body > div.navbar.navbar-inverse.navbar-fixed-top, body > div.navbar.navbar-inverse.navbar-fixed-top > div > ul > div > ul {
