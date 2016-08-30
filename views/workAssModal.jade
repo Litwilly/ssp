@@ -18,30 +18,30 @@ html
 						.col-md-12.col-md-12
 							.panel.panel-primary
 								.panel-heading
-									h4 Details
+									h4 Service Details
 								.panel-body            
-									.text-center.clearfix
-									|	"This machine is smoking. Like actually on fire"
-									|               
-									hr
-									|               
+									.text-center.clearfix "#{reqproblemnotes}"
+									hr              
 									.col-xs-6
 										.p.thicker Product
 										p.p #{reqprd} 
-										p.p #{reqpd}
-										p.p #{reqpd}	
+										p
+										p.p Serial:  #{reqserial}
+										p.p ID:  #{reqequipid}	
 									.col-xs-6
 										.p.thicker Problem
-										p.p #{reqprd} 
-										p.p #{reqpd}
-										p.p #{reqpd}
+										p.p #{reqproblemdescription}
+										p
+										p.p Estimated Minutes:  #{reqserial}
+
+
 
 
 						//Panel 2
 						.col-md-12.col-md-12		
 							.panel.panel-default
 									.panel-heading
-										h4 Service Notes
+										h4 Notes
 									.panel-body
 										.col-md-12.col-sm-12
 											textarea.form-control(id="ActionNotes" rows="5" cols='75' name="ActionNotes" placeholder="Add serivce notes here...")
@@ -59,6 +59,6 @@ html
 						//Buttons				
 						input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
 						.col-xs-6
-								button.btn.btn-success.pull-right(type="submit" name="submit" value="submit") Accept Service Request
+								button.btn.btn-success.pull-right(type="submit" name="submit" value="submit") Check In 
 						.col-xs-6
-							button.btn.btn-danger.pull-left(type='button', data-dismiss='modal') Reject				
+							button.btn.btn-danger.pull-left(type='button', data-dismiss='modal') Check Out			

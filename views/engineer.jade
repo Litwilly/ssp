@@ -91,7 +91,7 @@ html
 											for work in WorkAssigned
 												tr
 													td
-														a(data-toggle='modal', href='/workAssModal?reqid=#{work._id}&pd=#{work.PriorityDescription}&status=#{work.CurrentStatus}&name=' + encodeURIComponent("#{work.Name}") + '&prd=' +encodeURIComponent("#{work.ProductName}"), data-target='#workAssModal') #{work._id}
+														a(data-toggle='modal', href='/workAssModal?reqid=#{work._id}&pd=#{work.PriorityDescription}&snum=#{work.SerialNumber}&EquipID=#{work.Equip_id}&status=#{work.CurrentStatus}&name=' + encodeURIComponent("#{work.Name}") + '&prd=' +encodeURIComponent("#{work.ProductName}") + '&problemnotes=' +encodeURIComponent("#{work.ProblemNotes}") + '&problemdescription=' +encodeURIComponent("#{work.ProblemTypeDescription}"), data-target='#workAssModal') #{work._id}
 														//- a(data-toggle='modal', href='/workAssModal?name=#{work.Name}&id=#{work._id}&pd=#{work.PriorityDescription}&prd=#{work.ProductName}&status=#{work.CurrentStatus}', data-target='#workAssModal') #{work._id}
 														//- a(data-toggle='modal', href='/workAssModal', data-target='#workAssModal') #{work._id}
 													td.gone768= work.PriorityDescription

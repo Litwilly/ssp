@@ -58,6 +58,7 @@ exports.getData = function(req, res){
                     "CustomerContactInfo": mine.CustomerContactInfo,
                     "ProductName": mine._Product.ProductName,
                     "SerialNumber": mine._Equipment.SerialNumber,
+                    "Equip_id": mine._Equipment._id,
                     "Location": mine._Equipment.Room,
                     //***CHANGE: Added more Equipment Queries
                     "ProblemNotes": mine.ProblemNotes,
@@ -127,6 +128,10 @@ exports.getWorkOfferModal = function(req, res){
     res.render('workAssModal',
       { firstname: req.session.user.FirstName,
         reqid: req.query.reqid,
+        reqproblemnotes: req.query.problemnotes,
+        reqserial: req.query.snum,
+        reqequipid: req.query.EquipID,
+        reqproblemdescription: req.query.problemdescription,
         reqprd: req.query.prd,
         reqpd: req.query.pd,
         reqstatus: req.query.status,
@@ -178,7 +183,7 @@ exports.getWorkOfferModal = function(req, res){
        so.save(function (err,so){
        });
     });
-    // res.redirect(req.get('referer')); 
+    // res.redirect(req.get('referer'));
     res.redirect('back');
   };
 
