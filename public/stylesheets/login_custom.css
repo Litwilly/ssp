@@ -2,14 +2,19 @@
 @import url("/stylesheets/bootstrap-theme.css");
 
 body {
-  padding-top: 300px;
-  padding-bottom: 50px;
-  background-image:url("/images/your-medical-team.jpg");
+  padding-top: 170px;
+  padding-bottom: 60px;
+  padding-left: 670px;
+  background-image:url("/images/mission.jpg");
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
   background-repeat: no-repeat;
-  
+
+}
+
+.panel-transparent{
+  background-color: rgba(0,0,0,0.15)!important;
 }
 
 .form-signin {
@@ -25,6 +30,7 @@ body {
   font-weight: normal;
 }
 .form-signin .form-control {
+  background-color: white !important;
   position: relative;
   font-size: 16px;
   height: auto;
@@ -36,11 +42,18 @@ body {
 .form-signin .form-control:focus {
   z-index: 2;
 }
+
+input[type="text"], textarea {
+  background-color: white !important;
+}
+
 .form-signin input[type="text"] {
   margin-bottom: -1px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
+
+
 .form-signin input[type="password"] {
   margin-bottom: 10px;
   border-top-left-radius: 0;
