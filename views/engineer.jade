@@ -127,7 +127,7 @@ html
 												tr
 													td
 														//- a(data-toggle='modal', href='/workOffModal', data-target='#workOffModal') #{work._id}
-														a(data-toggle='modal', href='/workOffModal?reqid=#{work._id}&pd=#{work.PriorityDescription}&name=' + encodeURIComponent("#{work.Name}") + '&prd=' + encodeURIComponent("#{work.ProductName}") + '&status=' +encodeURIComponent("#{work.CurrentStatus}"), data-target='#workOffModal') #{work._id}
+														a(data-toggle='modal', href='/workOffModal?reqid=#{work._id}&pd=#{work.PriorityDescription}&phone=#{work.Phone}&email=#{work.Email}&name=' + encodeURIComponent("#{work.Name}") + '&prd=' + encodeURIComponent("#{work.ProductName}") + '&status=' +encodeURIComponent("#{work.CurrentStatus}"), data-target='#workOffModal') #{work._id}
 														//- a(data-toggle='modal', href='/workOfferModal' , data-target='#workOfferModal') #{work._id}
 													td.gone768= work.PriorityDescription
 													td.gone768= work.Name

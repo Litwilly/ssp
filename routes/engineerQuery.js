@@ -36,7 +36,9 @@ exports.getData = function(req, res){
                 "ProblemTypeDescription": yours.ProblemTypeDescription,
                 "PriorityDescription": yours.PriorityDescription,
                 "CurrentStatus": yours.CurrentStatus,
-                "Name": yours.CustomerContactInfo.Name
+                "Name": yours.CustomerContactInfo.Name,
+                "Phone": yours.CustomerContactInfo.Phone,
+                "Email": yours.CustomerContactInfo.Email
               });
             });
             callback();
@@ -178,7 +180,7 @@ exports.getWorkOfferModal = function(req, res){
        so.save(function (err,so){
        });
     });
-    // res.redirect(req.get('referer'));
+    // res.redirectgit(req.get('referer'));
     res.redirect('back');
   };
 
@@ -215,7 +217,9 @@ exports.getWorkOfferModal = function(req, res){
         reqprd: req.query.prd,
         reqpd: req.query.pd,
         reqstatus: req.query.status,
-        reqname: req.query.name
+        reqname: req.query.name,
+        reqemail: req.query.email,
+        reqphone: req.query.phone
       });
 
   exports.postWorkOffModal = function(req, res){
