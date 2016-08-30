@@ -7,19 +7,21 @@ html
 		link(rel='stylesheet', href='/stylesheets/main.css')
 		link(rel='stylesheet', href='/stylesheets/emc-icon-styles.css')
 		link(rel='icon', type='images/png', href='images/favicon.png')
- 
+		meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+
+
 	body
 		script(src='/javascripts/jquery-2.0.3.min.js')
 		script(src='/javascripts/bootstrap.min.js')
-	
+
 		.modal.fade(id='serviceReqModal' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
 			.modal-dialog.wide-modal
 				.modal-content
-		
+
 		.modal.fade(id='create' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
 			.modal-dialog.wide-modal
 				.modal-content
-				
+
 		//- NAV BAR
 		nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
 			.container
@@ -69,7 +71,7 @@ html
 				p Today is #{moment(Date.now()).format('dddd, MMMM Do')}
 
 		.main
-	
+
 		//- EQUIPMENT TABLE
 		.container
 			h2.text-center My Equipment
@@ -81,7 +83,7 @@ html
 						th.text-center #{header} Current Status
 						th.text-center #{header3} Maintance Needed
 						th.text-center #{header3} Date Required
-							
+
 				tbody    
 				for p in products 
 					tr
@@ -91,7 +93,7 @@ html
 						td.text-center= p.StatusDescription
 						td.text-center= p.NextPMDescription
 						td.text-center #{moment(p.NextPMDate).format('dddd,MMMM Do YYYY, hh:mm A')}
-						
+
 			//- MODAL 
 			#EModal.modal.fade
 				.modal-content
@@ -113,7 +115,7 @@ html
 					.modal-footer
 						button.btn.btn-primary(type='button', data-dismiss='modal') Yes 
 						button.btn.btn-primary(type='button', data-dismiss='modal') No
-			
+
 		//- FOOTER
 			.navbar.navbar-default.navbar-fixed-bottom
 				.container
@@ -128,4 +130,3 @@ html
 		script(src='/javascripts/jquery-2.0.3.min.js')
 		script(src='/javascripts/jquery-1.12.3.js')
 		script(src='/javascripts/bootstrap.min.js')
-		
