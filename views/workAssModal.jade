@@ -6,59 +6,61 @@ html
 		link(href='stylesheets/modal_custom.css', rel='stylesheet')
 		script(src='//html5shim.googlecode.com/svn/trunk/html5.js')
 		link(href='assets/css/google-plus.css', rel='stylesheet')
+		meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+
 	body
 		.modal-header
 			button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
 			.myModalLabel.modal-title
 				.p.thicker #{reqid}     
 		.modal-body
-				form(role="form" id="workAssModal" name="workAssModal" method="post" action="/engineer/complete")
-					.row
-						//Panel 1e
-						.col-md-12.col-md-12
-							.panel.panel-primary
-								.panel-heading
-									h4 Details
-								.panel-body            
-									.text-center.clearfix
-									|	"This machine is smoking. Like actually on fire"
-									|               
-									hr
-									|               
-									.col-xs-6
-										.p.thicker Product
-										p.p #{reqprd} 
-										p.p #{reqpd}
-										p.p #{reqpd}	
-									.col-xs-6
-										.p.thicker Problem
-										p.p #{reqprd} 
-										p.p #{reqpd}
-										p.p #{reqpd}
+			form(role="form" id="workAssModal" name="workAssModal" method="post" action="/engineer/complete")
+				.row
+					//Panel 1e
+					.col-md-12.col-md-12
+						.panel.panel-primary
+							.panel-heading
+								h4 Details
+							.panel-body            
+								.text-center.clearfix
+								|	"This machine is smoking. Like actually on fire"
+								|               
+								hr
+								|               
+								.col-xs-6
+									.p.thicker Product
+									p.p #{reqprd} 
+									p.p #{reqpd}
+									p.p #{reqpd}	
+								.col-xs-6
+									.p.thicker Problem
+									p.p #{reqprd} 
+									p.p #{reqpd}
+									p.p #{reqpd}
 
 
-						//Panel 2
-						.col-md-12.col-md-12		
-							.panel.panel-default
-									.panel-heading
-										h4 Service Notes
-									.panel-body
-										.col-md-12.col-sm-12
-											textarea.form-control(id="ActionNotes" rows="5" cols='75' name="ActionNotes" placeholder="Add serivce notes here...")
-											hr	
-											.col-xs-6 Element
-											.col-xs-6 Element2
-						.col-md-12.col-md-12		
-							.panel.panel-default
-									.panel-heading
-										h4 Parts 
-									.panel-body
-										.col-md-12.col-sm-12
-											.col-xs-6 Element4
-										
-						//Buttons				
-						input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
-						.col-xs-6
-								button.btn.btn-success.pull-right(type="submit" name="submit" value="submit") Accept Service Request
-						.col-xs-6
-							button.btn.btn-danger.pull-left(type='button', data-dismiss='modal') Reject				
+					//Panel 2
+					.col-md-12.col-md-12		
+						.panel.panel-default
+							.panel-heading
+								h4 Service Notes
+							.panel-body
+								.col-md-12.col-sm-12
+									textarea.form-control(id="ActionNotes" rows="5" cols='75' name="ActionNotes" placeholder="Add serivce notes here...")
+									hr	
+									.col-xs-6 Element
+									.col-xs-6 Element2
+					.col-md-12.col-md-12		
+						.panel.panel-default
+							.panel-heading
+								h4 Parts 
+							.panel-body
+								.col-md-12.col-sm-12
+									.col-xs-6 Element4
+
+					//Buttons				
+					input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
+					.col-xs-6
+						button.btn.btn-success.pull-right(type="submit" name="submit" value="submit") Accept Service Request
+					.col-xs-6
+						button.btn.btn-danger.pull-left(type='button', data-dismiss='modal') Reject				
