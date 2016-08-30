@@ -178,7 +178,7 @@ exports.getWorkOfferModal = function(req, res){
        so.save(function (err,so){
        });
     });
-    // res.redirect(req.get('referer')); 
+    // res.redirect(req.get('referer'));
     res.redirect('back');
   };
 
