@@ -177,8 +177,34 @@ exports.getWorkOfferModal = function(req, res){
        so.save(function (err,so){
        });
     });
-    res.redirect('/engineer');
+    // res.redirect(req.get('referer')); 
+    res.redirect('back');
   };
+
+  // Failed attempt at ajax
+  // exports.checkin = function(req, res){
+  //   console.log("body goods");
+  //   console.log(req.body);
+  //   var c;
+  //   if (req.body.inout === "0"){
+  //     c = 1;
+  //   }else if (req.body.inout === "1"){
+  //     c = 0;
+  //   }
+  //   else {
+  //     console.log("not working");
+  //   }
+  //   console.log("Checkin Var");
+  //   console.log(c);
+  //   ServiceOrder.findOne({ _id: req.body.reqid})
+  //   .exec(function(err, so) {
+  //      so.Checkin = c;
+  //      so.save(function (err,so){
+  //      });
+  //   });
+  //   // res.redirect('/engineer');
+  //   res.redirect(req.get('referer'));
+  // };
 
   exports.getWorkOffModal = function(req, res){
     res.render('workOffModal',
