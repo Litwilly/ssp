@@ -7,6 +7,17 @@ body {
     padding-bottom: 50px;
 }
 
+.here768 {
+  display: none;
+}
+#here768 {
+  display: none;
+  margin-top: 8px;
+}
+#lilpad {
+  margin-top: 8px;
+}
+
 /*FONTS*/
 @font-face {
     font-weight: normal;
@@ -33,6 +44,20 @@ body {
     background-position:center 39px;
 }
 
+@media screen
+and (min-width : 368px)
+and (max-width : 767px) {
+.here768 {
+  display: block;
+}
+}
+
+@media screen and (max-width: 992px) {
+.gone992 {
+  display: none;
+}
+
+
 @media screen and (max-width: 768px) {
 .emcTab {
   display: none;
@@ -43,7 +68,12 @@ body {
 .applicationIdentifier{
   display:none;
 }
+.gone768 {
+  display: none;
 }
+}
+
+
 
 .applicationIdentifier {
     color: #FFF;

@@ -22,40 +22,31 @@ html
 		nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
 			.container
 				.navbar-header
-					a.emcTab(href='/', title='Wonski Medical Solutions')
-					h3.applicationIdentifier 
-					ul.nav.navbar-nav.navbar-right
+					//- a.emcTab(href='/', title='Wonski Medical Solutions')
+					//- h3.applicationIdentifier 
+					ul.nav.navbar-nav.navbar-left
 						button.navbar-toggle(data-toggle='collapse', data-target='.navHeaderCollapse')
 							span.icon-bar
 							span.icon-bar
 							span.icon-bar
 						.collapse.navbar-collapse.navHeaderCollapse
 							ul.nav.navbar-nav.navbar-right
-								li.active
+								li.text-center.active
 									a(href='')
 										span.glyphicon.glyphicon-home
 										|  Home
-								li.active
-									//- a(href='/service-create') Create Service Request
-									a(data-toggle='modal', href='/service-create', data-target='#create')
-										span.glyphicon.glyphicon-wrench
-										|  Create Service Request
-								li.active
+								li.text-center.active
 									a.dropdown-toggle(href='#', data-toggle='dropdown')
 										span.glyphicon.glyphicon-eye-open
-										|  My Equipment
+										|  My Work
 										b.caret
 									ul.dropdown-menu
 										li
-											a(href='') View My Equipment
+											a(href='') View My Service Orders 
 										li
 											a(href='') View My Reports 
-										li
-											a(href='') Email Search
-										li
-											a(href='') Add To Group
-				form.navbar-form.navbar-right(action='/logout')
-					button(type='submit' class='btn btn-default pull-right') Logout
+				form.gone768.navbar-form.navbar-right(action='/logout')
+					button.gone768(type='submit' class='btn btn-default pull-right') Logout
 
 		.container
 			br
@@ -77,26 +68,26 @@ html
 				.panel-body
 					ul.nav.nav-tabs
 						li.active
-							a(href='#A', data-toggle='tab') Offered Work
+							a.text-center(href='#A', data-toggle='tab') Offered Work
 						li
-							a(href='#B', data-toggle='tab') Assigned Work
+							a.text-center(href='#B', data-toggle='tab') Assigned Work
 						li
-							//- a(href='#C', data-toggle='tab') Section 3
+							a.text-center(href='#C', data-toggle='tab') Work History
 					.tabbable
 						.tab-content
 							#A.tab-pane.active
-								.well.well-sm 
+								//- .well.well-sm 
 								h3.text-center Work Offers
 								.table-responsive
 									table.text-center.table.table-striped.table-hover
 										thead
 											tr
 												th.text-center Service Order
-												th.text-center Priority
-												th.text-center Customer
-												th.text-center Product
-												th.text-center Status
-												th.text-center 
+												th.gone768.text-center Priority
+												th.gone768.text-center Customer
+												th.gone768.text-center Product
+												th.gone768.gone992.text-center Status
+												th.gone768.text-center 
 										tbody
 											for work in WorkOffers
 												//- if work.CurrentStatus == "Assigned, Waiting to be Accepted"
@@ -105,32 +96,33 @@ html
 														//- a(data-toggle='modal', href='/workOffModal', data-target='#workOffModal') #{work._id}
 														a(data-toggle='modal', href='/workOffModal?reqid=#{work._id}&pd=#{work.PriorityDescription}&name=' + encodeURIComponent("#{work.Name}") + '&prd=' + encodeURIComponent("#{work.ProductName}") + '&status=' +encodeURIComponent("#{work.CurrentStatus}"), data-target='#workOffModal') #{work._id}
 														//- a(data-toggle='modal', href='/workOfferModal' , data-target='#workOfferModal') #{work._id}
-													td= work.PriorityDescription
-													td= work.Name
-													td= work.ProductName									
+													td.gone768= work.PriorityDescription
+													td.gone768= work.Name
+													td.gone768= work.ProductName									
 													if work.CurrentStatus == "Assigned, Waiting to be Accepted"
-														td.text-danger #{work.CurrentStatus}
+														td.gone768.gone992.text-danger #{work.CurrentStatus}
 													else 
-														td= work.CurrentStatus                                                                       
+														td.gone768.gone992= work.CurrentStatus                                                                       
 													td
 														form.form-accept(action='/engineer/acceptReject' method="post")
 															input(type="hidden" name="reqid" value="#{work._id}")
 															button.btn.btn-success(type="submit" name="submit" value="accept") Accept
+															span
 															button.btn.btn-danger(type='submit', name="submit" value="reject") Reject	
 														//- .button.btn.btn-success(type='button') Accept
 
 							#B.tab-pane
-								.well.well-sm
+								//- .well.well-sm
 								h3.text-center Assigned Work
 								.table-responsive
 									table.text-center.table.table-striped.table-hover
 										thead
 											tr
 												th.text-center Service Order
-												th.text-center Priority
-												th.text-center Customer
-												th.text-center Product
-												th.text-center Status
+												th.gone768.text-center Priority
+												th.gone768.text-center Customer
+												th.gone768.text-center Product
+												th.gone768.gone992.text-center Status
 										tbody
 											for work in WorkAssigned
 												tr
@@ -138,32 +130,36 @@ html
 														a(data-toggle='modal', href='/workAssModal?reqid=#{work._id}&pd=#{work.PriorityDescription}&status=#{work.CurrentStatus}&name=' + encodeURIComponent("#{work.Name}") + '&prd=' +encodeURIComponent("#{work.ProductName}"), data-target='#workAssModal') #{work._id}
 														//- a(data-toggle='modal', href='/workAssModal?name=#{work.Name}&id=#{work._id}&pd=#{work.PriorityDescription}&prd=#{work.ProductName}&status=#{work.CurrentStatus}', data-target='#workAssModal') #{work._id}
 														//- a(data-toggle='modal', href='/workAssModal', data-target='#workAssModal') #{work._id}
-													td= work.PriorityDescription
-													td= work.Name
-													td= work.ProductName									
+													td.gone768= work.PriorityDescription
+													td.gone768= work.Name
+													td.gone768= work.ProductName									
 													if work.CurrentStatus == "Assigned, Waiting to be Accepted"
-														td.text-danger #{work.CurrentStatus}
+														td.gone768.gone992.text-danger #{work.CurrentStatus}
 													else 
-														td= work.CurrentStatus
+														td.gone768.gone992= work.CurrentStatus
 													td
 														form.form-checkin(action='/engineer/checkin' method="post")
 															input(type="hidden" name="reqid" value="#{work._id}")
-															button.btn.btn-success(type="submit" name="submit" value="checkin") Checkin
-															button.btn.btn-danger(type='submit', name="submit" value="checkout") Checkout
+															if work.Checkin == 1
+																button.btn.btn-danger(type='submit', name="submit" value="checkout") Checkout
+															else
+																button.btn.btn-success(type="submit" name="submit" value="checkin") Checkin
 
 
 							#C.tab-pane
-								.well.well-sm I've decided that I like wells.
+								h3 Need to add this table
 
 
 		.navbar.navbar-default.navbar-fixed-bottom
 			.container
 				p.navbar-text.pull-left
 					| &#174; 2016 WMD, Inc.
-				p.navbar-text.pull-right  
+				p.gone768.navbar-text.pull-right  
 					a(href='') Support 24x7
-				p.navbar-text.pull-right  
+				p.gone768.navbar-text.pull-right  
 					a(href='') Privacy Policy
+				form.here768(action='/logout')
+				button#here768(type='submit' class='btn btn-default pull-right') Logout
 
 
 		script(src='/javascripts/jquery-2.0.3.min.js')

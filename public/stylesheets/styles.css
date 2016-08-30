@@ -13,6 +13,10 @@
   text-align: center;
 }
 
+.nav-tabs>li {
+    width: 33%;
+  }
+
 
 /*body > div.navbar.navbar-inverse.navbar-fixed-top, body > div.navbar.navbar-inverse.navbar-fixed-top > div > ul > div > ul {
   height: 61px !important;

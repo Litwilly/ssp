@@ -26,28 +26,25 @@ html
 			.container
 				.navbar-header
 
-					a.emcTab(href='/', title='Wonski Medical Solutions')
-
-					h3.applicationIdentifier 
+					//- a.emcTab(href='/', title='Wonski Medical Solutions')
+					//- h3.applicationIdentifier 
 					ul.nav.navbar-nav.navbar-right
-					form.navbar-form.navbar-right(action='/logout')
-						button(type='submit' class='btn btn-default ') Logout
 						button.navbar-toggle(data-toggle='collapse', data-target='.navHeaderCollapse')
 							span.icon-bar
 							span.icon-bar
 							span.icon-bar
 						.collapse.navbar-collapse.navHeaderCollapse
 							ul.nav.navbar-nav.navbar-right
-								li.active
+								li.text-center.active
 									a(href='')
 										span.glyphicon.glyphicon-home
 										|  Home
-								li.active
+								li.text-center.active
 									//- a(href='/service-create') Create Service Request
 									a(data-toggle='modal', href='/service-create', data-target='#create')
 										span.glyphicon.glyphicon-wrench
 										|  Create Service Request
-								li.active
+								li.text-center.active
 									a.dropdown-toggle(href='#', data-toggle='dropdown')
 										span.glyphicon.glyphicon-eye-open
 										|  My Equipment
@@ -58,11 +55,8 @@ html
 										li
 											a(href='') View My Reports
 										li
-											a(href='') Email Search
-										li
-											a(href='') Add To Group
-				form.navbar-form.navbar-right.logoutbig(action='/logout')
-					button(type='submit' class='btn btn-default pull-right') Logout
+				form.gone768.navbar-form.navbar-right.logoutbig(action='/logout')
+					button.gone768(type='submit' class='btn btn-default pull-right') Logout
 
 		//- JUMBOTRON
 		.container
@@ -103,28 +97,6 @@ html
 						strong 
 							|  Engineer Max has checked in for Service Order #{ci._id}
 
-			//- if (typeof overdue !== 'undefined' && overdue.length > 0)
-			//- 	for ov in overdue
-			//- 		.container
-			//- 			.alert.alert-danger.alert-dismissible.fade.in
-			//- 				button.close(type='button', data-dismiss='alert', aria-label='Close')
-			//- 					span(aria-hidden='true') ×
-			//- 				strong 
-			//- 					|  Service order #{ov._id} is overdue for maintenance!
-			//- else 
-			//- 	overdue = []
-			//- 
-			//- if (typeof checkin !== 'undefined' && checkin.length > 0)
-			//- 	for ci in checkin
-			//- 		.container
-			//- 			.alert.alert-info.alert-dismissible.fade.in
-			//- 				button.close(type='button', data-dismiss='alert', aria-label='Close')
-			//- 					span(aria-hidden='true') ×
-			//- 				strong 
-			//- 					|  Engineer Max has checked in for Service Order #{ci._id}
-			//- else 
-			//- 	checkin = []
-
 		// - TABS
 		.container
 			.col-sm-6.col-md-4
@@ -135,15 +107,14 @@ html
 				.panel-body
 					ul.nav.nav-tabs
 						li.active
-							a(href='#A', data-toggle='tab') Service Orders
+							a.text-center(href='#A', data-toggle='tab') Service Orders
 						li
-							a(href='#B', data-toggle='tab') Equipment
+							a.text-center(href='#B', data-toggle='tab') Equipment
 						li
-							//- a(href='#C', data-toggle='tab') Section 3
+							a.text-center(href='#C', data-toggle='tab') Preventative Maintenance
 					.tabbable
 						.tab-content
 							#A.tab-pane.active
-								.well.well-sm 
 								h2.text-center Service Orders
 								table.text-center.table.table-striped.table-hover.table-responsive
 									thead
@@ -170,15 +141,14 @@ html
 													td= eq.CurrentStatus
 
 							#B.tab-pane
-								.well.well-sm 
 								h2.text-center My Equipment
 								table.table.table-striped.table-hover.table-responsive
 									thead
 										tr
 											th.text-center #{header1} Serial Number
 											th.text-center #{header2} Product
-											th.text-center #{header} Current Status
-											th.text-center #{header3} Maintance Needed
+											th.gone768.text-center #{header} Current Status
+											th.gone768.text-center #{header3} Maintance Needed
 											th.text-center #{header3} Date Required
 
 									tbody    
@@ -187,12 +157,13 @@ html
 											a(data-toggle='modal', href='#EModal') #{p._SerialNumber}
 											td.text-center= p.SerialNumber
 											td.text-center= p.ProductName
-											td.text-center= p.StatusDescription
-											td.text-center= p.NextPMDescription
-											td.text-center #{moment(p.NextPMDate).format('dddd,MMMM Do YYYY, hh:mm A')}
+											td.gone768.text-center= p.StatusDescription
+											td.gone768.text-center= p.NextPMDescription
+											td.text-center #{moment(p.NextPMDate).format('MMMM Do YYYY')}
+											//- td.text-center #{moment(p.NextPMDate).format('dddd,MMMM Do YYYY, hh:mm A')}
 
 							#C.tab-pane
-								.well.well-sm I've decided that I like wells.
+								h2 Need to add this table
 
 
 			//- MODAL - SERVICE ORDER TABLE 
@@ -234,10 +205,12 @@ html
 			.container
 				p.navbar-text.pull-left
 					| &#174; 2016 WMD, Inc.
-				p.navbar-text.pull-right  
+				p.gone768.navbar-text.pull-right  
 					a(href='') Support 24x7
-				p.navbar-text.pull-right  
+				p.gone768.navbar-text.pull-right  
 					a(href='') Privacy Policy
+				form.here768.navbar-right(action='/logout')
+					button.here768#lilpad(type='submit' class='btn btn-default pull-right') Logout
 
 
 		script(src='/javascripts/jquery-2.0.3.min.js')
