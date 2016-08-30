@@ -60,6 +60,7 @@ exports.getData = function(req, res){
                     "SerialNumber": mine._Equipment.SerialNumber,
                     "Location": mine._Equipment.Room,
                     //***CHANGE: Added more Equipment Queries
+                    "ProblemNotes": mine.ProblemNotes,
                     "ProblemTypeDescription": mine.ProblemTypeDescription,
                     "PriorityDescription": mine.PriorityDescription,
                     "CurrentStatus": mine.CurrentStatus,
