@@ -10,43 +10,61 @@ html
 		.modal-header
 			button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
 			h1.myModalLabel.modal-title 
-			|719767     
+			| Service Order ##{reqid}     
 		.modal-body
-				form(role="form" id="workOffModal" name="workOffModal" method="post")
-					.row
-						//Panel 1
-						.col-md-12.col-md-12
-							.panel.panel-primary
-								.panel-heading
-									h4 Details
-								.panel-body            
-									.text-center.clearfix
-									|	"This machine is smoking. Like actually on fire"
-									|               
-									hr
-									|               
-									.col-xs-6 Test
-									.col-xs-6 Test2
-									.col-xs-6 Test3
-									.col-xs-6 Test4
-						//Panel 2
-						.col-md-12.col-md-12		
-							.panel.panel-default
-									.panel-heading
-										img.img-circle.pull-right(src='/images/uFp_tsTJboUY7kue5XAsGAs28.png')
-										h4 Customer
-									.panel-body                        
-										hr	
-						//Panel 3
-						.col-md-12.col-md-12		
-							.panel.panel-default
-									.panel-heading
-										h4 Location
-									.panel-body                        
-										hr	
-						//Buttons				
-						input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
-						.col-xs-6
-							button.btn.btn-success.pull-right(type="submit" name="submit" value="submit") Accept Service Request
-						.col-xs-6
-							button.btn.btn-danger.pull-left(type='button', data-dismiss='modal') Reject				
+			form(role="form" id="workOffModal" name="workOffModal" method="post")
+				.row
+					//Panel 1
+					.col-md-12.col-md-12
+						.panel.panel-primary
+							.panel-heading
+								h4 Details
+							.panel-body            
+								.text-center.clearfix
+								|	"This machine is smoking. Like actually on fire"
+								|               
+								hr
+								|               
+								.col-xs-6
+									.p.thicker Product
+									p.p #{reqprd} 
+								.col-xs-6
+									.p.thicker Problem
+									p.p #{reqpd}
+					//Panel 2
+					.col-md-12.col-md-12		
+						.panel.panel-default
+							.panel-heading
+								img.img-circle.pull-right(src='/images/uFp_tsTJboUY7kue5XAsGAs28.png')
+								h4 Customer
+							.panel-body  
+								p.thicker Name: #{reqname}                    
+								p.thicker Phone: #{reqphone}                    
+								p.thicker Email: #{reqemail}                    
+								hr	
+					//Panel 3
+					.col-md-12.col-md-12		
+						.panel.panel-default
+							.panel-heading
+								h4 Location
+								iframe(width="100%",height="450",frameborder="0" style="border:0",src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD0Y0M31ThZDMJ7-EUHBjgvoOFqE9Txcck&q=Boston+MA", allowfullscreen)
+								//- #map
+								//- .panel-body                        
+								hr	
+					//Buttons				
+					input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
+					.col-xs-6
+						button.btn.btn-success.pull-right(type="submit" name="submit" value="submit") Accept Service Request
+					.col-xs-6
+						button.btn.btn-danger.pull-left(type='button', data-dismiss='modal') Reject				
+
+	//- script
+	//- 	function initMap() {
+	//- 	var mapDiv = document.getElementById('map');
+	//- 	var map = new google.maps.Map(mapDiv, {
+	//- 	center: {lat: 44.540, lng: -78.546},
+	//- 	zoom: 8
+	//- 	});
+	//- }
+	//- initMap();
+	//- script(async='', defer='', src='https://maps.googleapis.com/maps/api/js?key=AIzaSyD0Y0M31ThZDMJ7-EUHBjgvoOFqE9Txcck&callback=initMap')

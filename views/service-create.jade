@@ -8,7 +8,7 @@ html
 		//- link(rel='icon', type='images/png', href='images/favicon.png')
 		//- link(href='assets/css/bootstrap.css', rel='stylesheet')
 		//- link(href='assets/css/google-plus.css', rel='stylesheet')
-		
+
 	body
 		form(role="form" id="create" name="create" method="post" action="/customer/create")
 			.modal-header
@@ -20,23 +20,23 @@ html
 					label.col-sm-2.control-label Customer:
 					.col-sm-10
 						p.form-control-static #{firstname}
-						
-						
+
+
 				.form-group
-						label.col-sm-2.control-label Date:
-						.col-sm-10
-							//- Displays Today
-							//- p.form-control-static #{moment(Today).format('dddd, MMMM Do')} ----Displays Today 
-							
-							//- attempt 1 - works, no background
-							//- label(for='from')
-							//- input#from(type='text', name='from')
-							
-							//- attempt 2 - works, bootstrap code 
-							.input-group.date(data-provide='datepicker')
-								input.form-control(type='text')
-								.input-group-addon
-									span.glyphicon.glyphicon-th
+					label.col-sm-2.control-label Date:
+					.col-sm-10
+						//- Displays Today
+						//- p.form-control-static #{moment(Today).format('dddd, MMMM Do')} ----Displays Today 
+
+						//- attempt 1 - works, no background
+						//- label(for='from')
+						//- input#from(type='text', name='from')
+
+						//- attempt 2 - works, bootstrap code 
+						.input-group.date(data-provide='datepicker')
+							input.form-control(type='text')
+							.input-group-addon
+								span.glyphicon.glyphicon-th
 
 				.form-group
 					label.col-sm-2.control-label(for="Equipment") Equipment:
@@ -96,23 +96,23 @@ html
 					}
 				});
 			});
-			
-			//- attempt 1 - works, no background
-			$(function() {
-				$( "#from" ).datepicker({
-					defaultDate: "+1w",
-					changeMonth: true,
-					numberOfMonths: 1,
-					onClose: function( selectedDate ) {
-					}
-				});
-			});
-			
+
+			//- //- attempt 1 - works, no background
+			//- $(function() {
+			//- 	$( "#from" ).datepicker({
+			//- 		defaultDate: "+1w",
+			//- 		changeMonth: true,
+			//- 		numberOfMonths: 1,
+			//- 		onClose: function( selectedDate ) {
+			//- 		}
+			//- 	});
+			//- });
+
 			//- attempt 2 - not working, bootstrap code
 			$(function() {
 				$('.datepicker').datepicker({
-				  format: 'mm/dd/yyyy',
-				  startDate: '-3d',
+					format: 'mm/dd/yyyy',
+					startDate: '-3d',
 					defaultDate: "+1w",
 					changeMonth: true,
 					numberOfMonths: 1,
