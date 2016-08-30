@@ -10,43 +10,45 @@ html
 		.modal-header
 			button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
 			h1.myModalLabel.modal-title 
-			|719767     
+			| Service Order ##{reqid}     
 		.modal-body
-				form(role="form" id="workOffModal" name="workOffModal" method="post")
-					.row
-						//Panel 1
-						.col-md-12.col-md-12
-							.panel.panel-primary
-								.panel-heading
-									h4 Details
-								.panel-body            
-									.text-center.clearfix
-									|	"This machine is smoking. Like actually on fire"
-									|               
-									hr
-									|               
-									.col-xs-6 Test
-									.col-xs-6 Test2
-									.col-xs-6 Test3
-									.col-xs-6 Test4
-						//Panel 2
-						.col-md-12.col-md-12		
-							.panel.panel-default
-									.panel-heading
-										img.img-circle.pull-right(src='/images/uFp_tsTJboUY7kue5XAsGAs28.png')
-										h4 Customer
-									.panel-body                        
-										hr	
-						//Panel 3
-						.col-md-12.col-md-12		
-							.panel.panel-default
-									.panel-heading
-										h4 Location
-									.panel-body                        
-										hr	
-						//Buttons				
-						input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
-						.col-xs-6
-							button.btn.btn-success.pull-right(type="submit" name="submit" value="submit") Accept Service Request
-						.col-xs-6
-							button.btn.btn-danger.pull-left(type='button', data-dismiss='modal') Reject				
+			form(role="form" id="workOffModal" name="workOffModal" method="post")
+				.row
+					//Panel 1
+					.col-md-12.col-md-12
+						.panel.panel-primary
+							.panel-heading
+								h4 Details
+							.panel-body            
+								.text-center.clearfix
+								|	"This machine is smoking. Like actually on fire"
+								|               
+								hr
+								|               
+								.col-xs-6
+									.h5 Product
+									p.p #{reqprd} 
+								.col-xs-6
+									.h5 Problem
+									p.p #{reqpd}
+					//Panel 2
+					.col-md-12.col-md-12		
+						.panel.panel-default
+							.panel-heading
+								img.img-circle.pull-right(src='/images/uFp_tsTJboUY7kue5XAsGAs28.png')
+								h4 Customer
+							.panel-body                        
+								hr	
+					//Panel 3
+					.col-md-12.col-md-12		
+						.panel.panel-default
+							.panel-heading
+								h4 Location
+							.panel-body                        
+								hr	
+					//Buttons				
+					input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
+					.col-xs-6
+						button.btn.btn-success.pull-right(type="submit" name="submit" value="submit") Accept Service Request
+					.col-xs-6
+						button.btn.btn-danger.pull-left(type='button', data-dismiss='modal') Reject				
