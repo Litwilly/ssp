@@ -39,3 +39,8 @@ img.img-responsive {
 .nav-pills > li.active > a {
     background-color:red;
 }
+
+.datepicker {
+  background: lightgrey;
+  border: solid darkgrey;
+}
