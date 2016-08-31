@@ -127,7 +127,7 @@ html
 									for eq in equipment
 										tr
 											td
-												a(data-toggle='modal', href='/custServOrdModal?reqid=#{eq._id}&status=#{eq.CurrentStatus}&name=' + '&prd=' +encodeURIComponent("#{eq.ProductName}"), data-target='#custServOrdModal') #{eq._id}
+												a(data-toggle='modal', href='/custServOrdModal?reqid=#{eq._id}&pd=#{eq.PriorityDescription}&snum=#{eq.SerialNumber}&status=#{eq.CurrentStatus}&name=' + encodeURIComponent("#{eq.Name}") + '&prd=' +encodeURIComponent("#{eq.ProductName}") + '&problemnotes=' +encodeURIComponent("#{eq.ProblemNotes}") + '&problemdescription=' +encodeURIComponent("#{eq.ProblemTypeDescription}"), data-target='#custServOrdModal') #{eq._id}
 												//- + '&pn=' +encodeURIComponent("#{eq.ProblemNotes}")+ '&pd=' +encodeURIComponent("#{eq.PriorityDescription}")+ '&ptd=' +encodeURIComponent("#{eq.ProblemTypeDescription}"), data-target='#custServOrdModal'
 												//- a(href="/custServOrdModal?reqid=#{eq._id}") #{eq._id}
 												//- td= eq.SerialNumber

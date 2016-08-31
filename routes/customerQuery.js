@@ -143,13 +143,21 @@ exports.getData = function(req, res){
             .where('CurrentStatus').ne('Completed')
             .where('Checkin').equals(1)
             .populate('_Product')
+            .populate('_Equipment')
+            .populate('User')
             .exec(function (err, serviceorders){
               serviceorders.forEach(function(yours){
                 checkins.push({
                   "_id": yours._id,
                   "ProductName": yours._Product.ProductName,
+                  "CustomerContactInfo": yours.CustomerContactInfo,
                   "CurrentStatus": yours.CurrentStatus,
-                  "Checkin": yours.Checkin
+                  "Checkin": yours.Checkin,
+                  "ProblemNotes": yours.ProblemNotes,
+                  "Equip_id": yours._Equipment._id,
+                  "PriorityDescription": yours.PriorityDescription,
+                  "ProblemTypeDescription": yours.ProblemTypeDescription,
+                  "SerialNumber": yours._Equipment.SerialNumber,
                 });
               });
               callback();
@@ -209,9 +217,12 @@ exports.getcustServOrdModal = function(req, res){
       reqid: req.query.reqid,
       reqprd: req.query.prd,
       reqpd: req.query.pd,
+      reqproblemnotes: req.query.problemnotes,
       reqstatus: req.query.status,
       reqname: req.query.name,
       reqptd: req.query.ptd,
-      reqpn: req.query.pn
+      reqpn: req.query.pn,
+      reqserial: req.query.snum,
+      reqproblemdescription: req.query.problemdescription,
     });
   };
