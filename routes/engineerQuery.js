@@ -179,7 +179,7 @@ exports.getWorkOfferModal = function(req, res){
     console.log(req.body.reqid);
     ServiceOrder.findOne({ _id: req.body.reqid})
     .exec(function(err, so) {
-       so.CurrentStatus = req.body.Status;
+       so.CurrentStatus = "Completed";
        so.save(function (err,so){
        });
     });

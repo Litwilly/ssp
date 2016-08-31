@@ -113,7 +113,7 @@ html
 					.tabbable
 						.tab-content
 							#A.tab-pane.active
-								h2.text-center Service Orders
+								h2.text-center Pending Service Orders
 								table.text-center.table.table-striped.table-hover.table-responsive
 									thead
 										tr
@@ -138,6 +138,34 @@ html
 													td.text-danger #{eq.CurrentStatus}
 												else 
 													td= eq.CurrentStatus
+
+
+								h2.text-center Completed Service Orders
+								table.text-center.table.table-striped.table-hover.table-responsive
+									thead
+										tr
+											th.text-center #{header1} Service Order
+											//- th.text-center #{header2} Equipment
+											th.text-center #{header3} Product
+											//- th.text-center #{header4} Date Requested
+											//- th.text-center #{header5} Problem Type
+											th.text-center #{header6} Status
+									tbody
+									for eq in sequipment
+										tr
+											td
+												a(data-toggle='modal', href='/custServOrdModal?reqid=#{eq._id}&status=#{eq.CurrentStatus}&name=' + '&prd=' +encodeURIComponent("#{eq.ProductName}"), data-target='#custServOrdModal') #{eq._id}
+												//- + '&pn=' +encodeURIComponent("#{eq.ProblemNotes}")+ '&pd=' +encodeURIComponent("#{eq.PriorityDescription}")+ '&ptd=' +encodeURIComponent("#{eq.ProblemTypeDescription}"), data-target='#custServOrdModal'
+												//- a(href="/custServOrdModal?reqid=#{eq._id}") #{eq._id}
+												//- td= eq.SerialNumber
+												td= eq.ProductName
+												//- td #{moment(eq.OpenDate).format('dddd,MMMM Do YYYY, hh:mm A')}
+												//- td= eq.ProblemTypeDescription
+												if eq.CurrentStatus == "Waiting For Customer Approval"
+													td.text-danger #{eq.CurrentStatus}
+												else 
+													td= eq.CurrentStatus
+
 
 							#B.tab-pane
 								h2.text-center My Equipment

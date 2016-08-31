@@ -92,41 +92,39 @@ html
 		.container
 			.col-sm-6.col-md-4
 			.panel.panel-default
-				.panel-heading
-					h3.text-center Work Offers
-					.panel-body
-					.table-responsive
-						table.text-center.table.table-striped.table-hover
-							thead
+				h3.text-center Work Offers
+				.table-responsive
+					table.text-center.table.table-striped.table-hover
+						thead
+							tr
+								th.text-center Service Order
+								th.gone768.text-center Priority
+								th.gone768.text-center Customer
+								th.gone768.text-center Product
+								th.gone768.gone992.text-center Status
+								th.gone768.text-center 
+						tbody
+							for work in WorkOffers
+								//- if work.CurrentStatus == "Assigned, Waiting to be Accepted"
 								tr
-									th.text-center Service Order
-									th.gone768.text-center Priority
-									th.gone768.text-center Customer
-									th.gone768.text-center Product
-									th.gone768.gone992.text-center Status
-									th.gone768.text-center 
-							tbody
-								for work in WorkOffers
-									//- if work.CurrentStatus == "Assigned, Waiting to be Accepted"
-									tr
-										td
-											//- a(data-toggle='modal', href='/workOffModal', data-target='#workOffModal') #{work._id}
-											a(data-toggle='modal', href='/workOffModal?reqid=#{work._id}&snum=#{work.SerialNumber}&EquipID=#{work.Equip_id}&pd=#{work.PriorityDescription}&phone=#{work.Phone}&email=#{work.Email}&name=' + encodeURIComponent("#{work.Name}") + '&prd=' + encodeURIComponent("#{work.ProductName}") + '&problemnotes=' +encodeURIComponent("#{work.ProblemNotes}") + '&status=' +encodeURIComponent("#{work.CurrentStatus}") + '&problemdescription=' +encodeURIComponent("#{work.ProblemTypeDescription}"), data-target='#workOffModal') #{work._id}
-											//- a(data-toggle='modal', href='/workOfferModal' , data-target='#workOfferModal') #{work._id}
-										td.gone768= work.PriorityDescription
-										td.gone768= work.Name
-										td.gone768= work.ProductName									
-										if work.CurrentStatus == "Assigned, Waiting to be Accepted"
-											td.gone768.gone992.text-danger #{work.CurrentStatus}
-										else 
-											td.gone768.gone992= work.CurrentStatus                                                                       
-										td
-											form.form-accept(action='/engineer/acceptReject' method="post")
-												input(type="hidden" name="reqid" value="#{work._id}")
-												button.btn.btn-success(type="submit" name="submit" value="accept") Accept
-												span
-												button.btn.btn-danger(type='submit', name="submit" value="reject") Reject	
-											//- .button.btn.btn-success(type='button') Accept
+									td
+										a(data-toggle='modal', href='/workOffModal?reqid=#{work._id}&snum=#{work.SerialNumber}&EquipID=#{work.Equip_id}&pd=#{work.PriorityDescription}&phone=#{work.Phone}&email=#{work.Email}&name=' + encodeURIComponent("#{work.Name}") + '&prd=' + encodeURIComponent("#{work.ProductName}") + '&problemnotes=' +encodeURIComponent("#{work.ProblemNotes}") + '&status=' +encodeURIComponent("#{work.CurrentStatus}") + '&problemdescription=' +encodeURIComponent("#{work.ProblemTypeDescription}"), data-target='#workOffModal') #{work._id}
+										//- a(data-toggle='modal', href='/workOffModal', data-target='#workOffModal') #{work._id}
+										//- a(data-toggle='modal', href='/workOfferModal' , data-target='#workOfferModal') #{work._id}
+									td.gone768= work.PriorityDescription
+									td.gone768= work.Name
+									td.gone768= work.ProductName									
+									if work.CurrentStatus == "Assigned, Waiting to be Accepted"
+										td.gone768.gone992.text-danger #{work.CurrentStatus}
+									else 
+										td.gone768.gone992= work.CurrentStatus                                                                       
+									td
+										form.form-accept(action='/engineer/acceptReject' method="post")
+											input(type="hidden" name="reqid" value="#{work._id}")
+											button.btn.btn-success(type="submit" name="submit" value="accept") Accept
+											span
+											button.btn.btn-danger(type='submit', name="submit" value="reject") Reject	
+										//- .button.btn.btn-success(type='button') Accept
 
 
 		// - TABS

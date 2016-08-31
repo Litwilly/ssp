@@ -14,6 +14,7 @@ var async = require('async');
 
 exports.getData = function(req, res){
   var myequipment = [];
+  var mysequipment = [];
   var prods = [];
   var completes = [];
   var overdues = [];
@@ -25,7 +26,7 @@ exports.getData = function(req, res){
     function(callback){
       ServiceOrder.find()
         .where('_CreatedBy').equals(req.session.user._id)
-        // .where('CurrentStatus').equals('Completed')
+        .where('CurrentStatus').ne('Completed')
         // .populate('_CreatedBy')
         .populate('_Product')
         .populate('_Equipment')
@@ -33,6 +34,37 @@ exports.getData = function(req, res){
           .exec(function (err, serviceorders){
             serviceorders.forEach(function(yours){
               myequipment.push({
+                "_id": yours._id,
+                "_User": yours._User,
+                "StatusDescription": yours._StatusDescription,
+                "ServiceDetails": yours._ServiceDetails,
+                "SerialNumber": yours._Equipment.SerialNumber,
+                "Room": yours._Equipment.Room,
+                "InstallDate": yours._Equipment.InstallDate,
+                "NextPMDate": yours._Equipment.NextPMDate,
+                "NextPMDescription": yours._Equipment.NextPMDescription,
+                "OpenDate": yours.OpenDate,
+                "ProblemTypeDescription": yours.ProblemTypeDescription,
+                "ProductName": yours._Product.ProductName,
+                "CurrentStatus": yours.CurrentStatus,
+                "ProblemNotes": yours.ProblemNotes,
+                "PriorityDescription": yours.PriorityDescription
+              });
+            });
+            callback();
+          });
+        },
+    function(callback){
+      ServiceOrder.find()
+        .where('_CreatedBy').equals(req.session.user._id)
+        .where('CurrentStatus').equals('Completed')
+        // .populate('_CreatedBy')
+        .populate('_Product')
+        .populate('_Equipment')
+          //.select('_id SerialNumber OpenDate ProblemTypeDescription ProductName CurrentStatus')
+          .exec(function (err, serviceorders){
+            serviceorders.forEach(function(yours){
+              mysequipment.push({
                 "_id": yours._id,
                 "_User": yours._User,
                 "StatusDescription": yours._StatusDescription,
@@ -160,6 +192,7 @@ exports.getData = function(req, res){
                 // console.log(overdues);
                   res.render('customer',
                         { equipment: myequipment,
+                          sequipment: mysequipment,
                           products:  prods,
                           completed: completes,
                           overdue: overdues,
