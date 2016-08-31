@@ -9,6 +9,7 @@ html
 		link(rel='icon', type='images/png', href='images/favicon.png')
 		link(href='assets/css/bootstrap.css', rel='stylesheet')
 		link(href='assets/css/google-plus.css', rel='stylesheet')
+		meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
 
 
 	body
@@ -77,7 +78,7 @@ html
 					button.close(type='button', data-dismiss='alert', aria-label='Close')
 						span(aria-hidden='true') ×
 					strong 
-						|  Service order #{comp._id} has been completed!
+						.text-center  Service order #{comp._id} has been completed!
 
 		if (overdue.length)
 			for ov in overdue
@@ -86,7 +87,7 @@ html
 						button.close(type='button', data-dismiss='alert', aria-label='Close')
 							span(aria-hidden='true') ×
 						strong 
-							|  Service order #{ov._id} is overdue for maintenance!
+							.text-center  Service order #{ov._id} is overdue for maintenance!
 
 		if (checkin.length)
 			for ci in checkin
@@ -95,7 +96,7 @@ html
 						button.close(type='button', data-dismiss='alert', aria-label='Close')
 							span(aria-hidden='true') ×
 						strong 
-							|  Engineer Max has checked in for Service Order #{ci._id}
+							.text-center  Engineer Max has checked in for Service Order #{ci._id}
 
 		// - TABS
 		.container
@@ -164,7 +165,7 @@ html
 											//- td.text-center #{moment(p.NextPMDate).format('dddd,MMMM Do YYYY, hh:mm A')}
 
 							#C.tab-pane
-								h2 Need to add this table
+								h2 
 
 
 			//- MODAL - SERVICE ORDER TABLE 
