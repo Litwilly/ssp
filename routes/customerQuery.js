@@ -164,6 +164,7 @@ exports.getData = function(req, res){
                           completed: completes,
                           overdue: overdues,
                           checkin: checkins,
+                          lastname: req.session.user.LastName,
                           firstname: req.session.user.FirstName});
               });
         };

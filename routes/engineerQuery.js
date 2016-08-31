@@ -13,10 +13,12 @@ var async = require('async');
 exports.getData = function(req, res){
   var workoffers = [];
   var workassigned = [];
+  var historys = [];
   console.log("==Engineer Queries==");
   async.parallel([
     function(callback){
       ServiceOrder.find({CloseDate: {$exists: false} })
+        .where('_AssignedTo').equals(req.session.user._id)
         .where('CurrentStatus').equals('Assigned, Waiting to be Accepted')
         // .populate('_CreatedBy')
         .populate('_Product')
@@ -44,9 +46,35 @@ exports.getData = function(req, res){
           });
         },
         function(callback){
+          ServiceOrder.find()
+            .where('_AssignedTo').equals(req.session.user._id)
+            .populate('_Product')
+            .populate('Priority')
+            .populate('_Equipment')
+            .populate('User')
+              //.select('_id SerialNumber OpenDate ProblemTypeDescription ProductName CurrentStatus')
+              .exec(function (err, serviceorders){
+                serviceorders.forEach(function(yours){
+                  historys.push({
+                    "_id": yours._id,
+                    "CustomerContactInfo": yours.CustomerContactInfo,
+                    "ProductName": yours._Product.ProductName,
+                    "SerialNumber": yours._Equipment.SerialNumber,
+                    "Location": yours._Equipment.Room,
+                    "ProblemTypeDescription": yours.ProblemTypeDescription,
+                    "ProblemNotes": yours.ProblemNotes,
+                    "PriorityDescription": yours.PriorityDescription,
+                    "CurrentStatus": yours.CurrentStatus,
+                    "Name": yours.CustomerContactInfo.Name
+                  });
+                });
+                callback();
+              });
+            },
+        function(callback){
           ServiceOrder.find({CloseDate: {$exists: false} })
             .where('CurrentStatus').equals('Accepted')
-            // .populate('_CreatedBy')
+            .where('_AssignedTo').equals(req.session.user._id)
             .populate('_Product')
             .populate('Priority')
             .populate('_Equipment')
@@ -90,6 +118,7 @@ exports.getData = function(req, res){
                 res.render('engineer',
                       { WorkOffers: workoffers,
                         WorkAssigned:  workassigned,
+                        history:  historys,
                         firstname: req.session.user.FirstName,
                         rejected: req.query.rso,
                         accepted: req.query.aso,
@@ -119,8 +148,6 @@ exports.getWorkOfferModal = function(req, res){
                 "Location": yours._Equipment.Room,
                 "Equip_id": yours._Equipment._id,
                 "ProblemNotes": yours.ProblemNotes,
-                "SerialNumber": mine._Equipment.SerialNumber,
-                //***Stuart CHANGE: Added more Equipment Queries
                 "ProblemTypeDescription": yours.ProblemTypeDescription,
                 "PriorityDescription": yours.PriorityDescription,
                 "CurrentStatus": yours.CurrentStatuss
@@ -139,8 +166,6 @@ exports.getWorkOfferModal = function(req, res){
         reqid: req.query.reqid,
         reqproblemnotes: req.query.problemnotes,
         reqserial: req.query.snum,
-        reqparts: req.query.parts1,
-        reqparts: req.query.parts,
         reqequipid: req.query.EquipID,
         reqproblemdescription: req.query.problemdescription,
         reqprd: req.query.prd,
@@ -166,7 +191,7 @@ exports.getWorkOfferModal = function(req, res){
     if (req.body.submit == "accept"){
       ServiceOrder.findOne({ _id: req.body.reqid})
       .exec(function(err, so) {
-         so.CurrentStatus = req.body.Status;
+         so.CurrentStatus = "Accepted";
          so.CloseDate = req.body.Today;
          so.save(function (err,so){
          });
@@ -176,7 +201,7 @@ exports.getWorkOfferModal = function(req, res){
     }else if (req.body.submit == "reject"){
       ServiceOrder.findOne({ _id: req.body.reqid})
       .exec(function(err, so) {
-         so.CurrentStatus = req.body.Status;
+         so.CurrentStatus = "Rejected";
          so.save(function (err,so){
          });
       });
@@ -232,7 +257,7 @@ exports.getWorkOfferModal = function(req, res){
     console.log(req.body.reqid);
     ServiceOrder.findOne({ _id: req.body.reqid})
     .exec(function(err, so) {
-       so.CurrentStatus = req.body.Status;
+       so.CurrentStatus = "Completed";
        so.CloseDate = req.body.Today;
        so.save(function (err,so){
        });
