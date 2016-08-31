@@ -97,26 +97,26 @@ html
 				});
 			});
 			
-			//- attempt 1 - works, no background
-			$(function() {
-				$( "#from" ).datepicker({
-					defaultDate: "+1w",
-					changeMonth: true,
-					numberOfMonths: 1,
-					onClose: function( selectedDate ) {
-					}
-				});
-			});
-			
-			//- attempt 2 - not working, bootstrap code
-			$(function() {
-				$('.datepicker').datepicker({
-				  format: 'mm/dd/yyyy',
-				  startDate: '-3d',
-					defaultDate: "+1w",
-					changeMonth: true,
-					numberOfMonths: 1,
-					onClose: function( selectedDate ){
-					}
-				});	
-			});	
+			//- //- attempt 1 - works, no background
+			//- $(function() {
+			//- 	$( "#from" ).datepicker({
+			//- 		defaultDate: "+1w",
+			//- 		changeMonth: true,
+			//- 		numberOfMonths: 1,
+			//- 		onClose: function( selectedDate ) {
+			//- 		}
+			//- 	});
+			//- });
+			//- 
+			//- //- attempt 2 - not working, bootstrap code
+			//- $(function() {
+			//- 	$('.datepicker').datepicker({
+			//- 	  format: 'mm/dd/yyyy',
+			//- 	  startDate: '-3d',
+			//- 		defaultDate: "+1w",
+			//- 		changeMonth: true,
+			//- 		numberOfMonths: 1,
+			//- 		onClose: function( selectedDate ){
+			//- 		}
+			//- 	});	
+			//- });	

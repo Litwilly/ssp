@@ -1,0 +1,72 @@
+doctype 5
+html
+	head
+		meta
+		link(href='assets/css/bootstrap.css', rel='stylesheet')
+		link(href='stylesheets/modal_custom.css', rel='stylesheet')
+		script(src='//html5shim.googlecode.com/svn/trunk/html5.js')
+		link(href='assets/css/google-plus.css', rel='stylesheet')
+	body
+		.modal-header
+			button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+			.myModalLabel.modal-title
+				.p.thicker #{reqid}
+		.modal-body
+				form(role="form" id="custServOrdModal" name="custServOrdModal" method="post" action="/engineer/complete")
+					.row
+						//Panel 1e
+						.col-md-12.col-md-12
+							.panel.panel-primary
+								.panel-heading
+									h4 Service Order Details
+								.panel-body
+									table
+										tr
+											td Customer:
+											td #{firstname}
+										//- tr
+										//- 	td Date: 
+										//- 	td 
+										tr
+											td Equipment: 
+											td #{reqid}
+										tr
+											td Product: 
+											td #{reqprd}
+										tr
+											td Status: 
+											td #{reqstatus}
+										//- tr
+										//- 	td Problem: 
+										//- 	td #{reqptd}
+										//- tr
+										//- 	td Priority: 
+										//- 	td #{reqpd}
+										//- tr
+										//- 	td Problem Notes:
+										//- 	td #{reqpn}
+
+						//Panel 2
+						.col-md-12.col-md-12
+							.panel.panel-default
+									.panel-heading
+										h4 Contact Information
+									.panel-body
+										table
+											tr
+												td Contact Name: 
+												td #{ContactName} Ryan Litwiller
+											tr
+												td Contact Email: 
+												td #{ContactEmail}ryan.litwiller@emc.com
+											tr
+												td Contact Phone: 
+												td #{ContactPhone}123-456-7890
+						
+
+						//Buttons
+						input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
+						//- .col-xs-6
+						//- 		button.btn.btn-success.pull-right(type="submit" name="submit" value="submit") Accept Service Request
+						.col-xs-6
+							button.btn.btn-danger.pull-left(type='button', data-dismiss='modal') Close

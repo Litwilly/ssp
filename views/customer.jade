@@ -13,7 +13,7 @@ html
 
 	body
 
-		.modal.fade(id='serviceReqModal' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		.modal.fade(id='custServOrdModal' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
 			.modal-dialog.wide-modal
 				.modal-content
 
@@ -129,8 +129,9 @@ html
 									for eq in equipment
 										tr
 											td
-												a(data-toggle='modal', href='#SOModal') #{eq._id}
-												//a(href="/servicedetails?id=#{eq._id}") #{eq._id}
+												a(data-toggle='modal', href='/custServOrdModal?reqid=#{eq._id}&status=#{eq.CurrentStatus}&name=' + '&prd=' +encodeURIComponent("#{eq.ProductName}"), data-target='#custServOrdModal') #{eq._id}
+												//- + '&pn=' +encodeURIComponent("#{eq.ProblemNotes}")+ '&pd=' +encodeURIComponent("#{eq.PriorityDescription}")+ '&ptd=' +encodeURIComponent("#{eq.ProblemTypeDescription}"), data-target='#custServOrdModal'
+												//- a(href="/custServOrdModal?reqid=#{eq._id}") #{eq._id}
 												//- td= eq.SerialNumber
 												td= eq.ProductName
 												//- td #{moment(eq.OpenDate).format('dddd,MMMM Do YYYY, hh:mm A')}
