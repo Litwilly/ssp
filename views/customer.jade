@@ -78,7 +78,7 @@ html
 					button.close(type='button', data-dismiss='alert', aria-label='Close')
 						span(aria-hidden='true') ×
 					strong 
-						|  Service order #{comp._id} has been completed!
+						.text-center  Service order #{comp._id} has been completed!
 
 		if (overdue.length)
 			for ov in overdue
@@ -87,7 +87,7 @@ html
 						button.close(type='button', data-dismiss='alert', aria-label='Close')
 							span(aria-hidden='true') ×
 						strong 
-							|  Service order #{ov._id} is overdue for maintenance!
+							.text-center  Service order #{ov._id} is overdue for maintenance!
 
 		if (checkin.length)
 			for ci in checkin
@@ -96,7 +96,7 @@ html
 						button.close(type='button', data-dismiss='alert', aria-label='Close')
 							span(aria-hidden='true') ×
 						strong 
-							|  Engineer Max has checked in for Service Order #{ci._id}
+							.text-center  Engineer Max has checked in for Service Order #{ci._id}
 
 		// - TABS
 		.container
