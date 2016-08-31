@@ -1,0 +1,273 @@
+doctype 5
+html
+	head
+		title Single Service Portal
+		link(rel='stylesheet', href='/stylesheets/styles.css')
+		link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+		link(rel='stylesheet', href='/stylesheets/main.css')
+		link(rel='stylesheet', href='/stylesheets/emc-icon-styles.css')
+		link(rel='icon', type='images/png', href='images/favicon.png')
+		link(href='assets/css/bootstrap.css', rel='stylesheet')
+		link(href='assets/css/google-plus.css', rel='stylesheet')
+		meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+
+	body#space
+		.modal.fade(id='workOffModal' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+			.modal-dialog.wide-modal
+				.modal-content
+
+		.modal.fade(id='workAssModal' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+			.modal-dialog.wide-modal
+				.modal-content
+
+		nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+			.container
+				.navbar-header 
+					//- a.emcTab(href='/', title='Wonski Medical Solutions')
+					//- h3.applicationIdentifier 
+					ul.nav.navbar-nav.navbar-left
+						button.navbar-toggle(data-toggle='collapse', data-target='.navHeaderCollapse')
+							span.icon-bar
+							span.icon-bar
+							span.icon-bar
+						.collapse.navbar-collapse.navHeaderCollapse
+							ul.nav.navbar-nav.navbar-right
+								li.text-center.active
+									a(href='')
+										span.glyphicon.glyphicon-home
+										|  Home
+								li.text-center.active
+									a.dropdown-toggle(href='#', data-toggle='dropdown')
+										span.glyphicon.glyphicon-eye-open
+										|  My Work
+										b.caret
+									ul.dropdown-menu
+										li
+											a(href='') View My Service Orders 
+										li
+											a(href='') View My Reports 
+				form.gone768.navbar-form.navbar-right(action='/logout')
+					button.gone768(type='submit' class='btn btn-default pull-right') Logout
+
+		.container
+			.col-sm-6.col-md-4
+			.panel.panel-default#gray 
+				h3.text-center Welcome to the Engineer Single Service Portal
+				p.text-center Hello <strong> #{firstname}</strong>, your work as of #{moment(Date.now()).format('dddd, MMMM Do')}
+
+		.main
+
+		if (rejected)
+			.container
+				.alert.alert-danger.alert-dismissible.fade.in
+					button.close(type='button', data-dismiss='alert', aria-label='Close')
+						span(aria-hidden='true') ×
+					strong 
+						.text-center  Service order #{rejected} has been rejected!
+
+		if (accepted)
+			.container
+				.alert.alert-success.alert-dismissible.fade.in
+					button.close(type='button', data-dismiss='alert', aria-label='Close')
+						span(aria-hidden='true') ×
+					strong 
+						.text-center Service order #{accepted} has been accepted!
+
+		if (checkin)
+			.container
+				.alert.alert-success.alert-dismissible.fade.in
+					button.close(type='button', data-dismiss='alert', aria-label='Close')
+						span(aria-hidden='true') ×
+					strong
+						.text-center  You have checked in for service order #{checkin}.
+
+		if (checkout)
+			.container
+				.alert.alert-success.alert-dismissible.fade.in
+					button.close(type='button', data-dismiss='alert', aria-label='Close')
+						span(aria-hidden='true') ×
+					strong 
+					.text-center  You have checked out for service order #{checkout}.
+
+		.container
+			.col-sm-6.col-md-4
+			.panel.panel-default
+				h3.text-center Work Offers
+				.table-responsive
+					table.text-center.table.table-striped.table-hover
+						thead
+							tr
+								th.text-center Service Order
+								th.gone768.text-center Priority
+								th.gone768.text-center Customer
+								th.gone768.text-center Product
+								th.gone768.gone992.text-center Status
+								th.gone768.text-center 
+						tbody
+							for work in WorkOffers
+								//- if work.CurrentStatus == "Assigned, Waiting to be Accepted"
+								tr
+									td
+										a(data-toggle='modal', href='/workOffModal?reqid=#{work._id}&snum=#{work.SerialNumber}&EquipID=#{work.Equip_id}&pd=#{work.PriorityDescription}&phone=#{work.Phone}&email=#{work.Email}&name=' + encodeURIComponent("#{work.Name}") + '&prd=' + encodeURIComponent("#{work.ProductName}") + '&problemnotes=' +encodeURIComponent("#{work.ProblemNotes}") + '&status=' +encodeURIComponent("#{work.CurrentStatus}") + '&problemdescription=' +encodeURIComponent("#{work.ProblemTypeDescription}"), data-target='#workOffModal') #{work._id}
+										//- a(data-toggle='modal', href='/workOffModal', data-target='#workOffModal') #{work._id}
+										//- a(data-toggle='modal', href='/workOfferModal' , data-target='#workOfferModal') #{work._id}
+									td.gone768= work.PriorityDescription
+									td.gone768= work.Name
+									td.gone768= work.ProductName									
+									if work.CurrentStatus == "Assigned, Waiting to be Accepted"
+										td.gone768.gone992.text-danger #{work.CurrentStatus}
+									else 
+										td.gone768.gone992= work.CurrentStatus                                                                       
+									td
+										form.form-accept(action='/engineer/acceptReject' method="post")
+											input(type="hidden" name="reqid" value="#{work._id}")
+											button.btn.btn-success(type="submit" name="submit" value="accept") Accept
+											span
+											button.btn.btn-danger(type='submit', name="submit" value="reject") Reject	
+										//- .button.btn.btn-success(type='button') Accept
+
+
+		// - TABS
+		.container
+			.col-sm-6.col-md-4
+			.panel.panel-default
+				.panel-heading
+					a.pull-right(href='#')
+					//- h4 Tabs
+				.panel-body
+					ul.nav.nav-tabs#fifty
+						li#fifty.active
+							a.text-center(href='#A', data-toggle='tab') Work Assigned 
+						li#fifty
+							a.text-center(href='#B', data-toggle='tab') Work History
+						//- li
+						//- 	a.text-center(href='#C', data-toggle='tab') Work History
+					.tabbable
+						.tab-content
+							#A.tab-pane.active
+
+								h3.text-center Assigned Work
+								.table-responsive
+									table.text-center.table.table-striped.table-hover
+										thead
+											tr
+												th.text-center Service Order
+												th.gone768.text-center Priority
+												th.gone768.text-center Customer
+												th.gone768.text-center Product
+												th.gone768.gone992.text-center Status
+												th
+										tbody
+											for work in WorkAssigned
+												tr
+													td
+														a(data-toggle='modal', href='/workAssModal?reqid=#{work._id}&pd=#{work.PriorityDescription}&snum=#{work.SerialNumber}&EquipID=#{work.Equip_id}&status=#{work.CurrentStatus}&name=' + encodeURIComponent("#{work.Name}") + '&prd=' +encodeURIComponent("#{work.ProductName}") + '&problemnotes=' +encodeURIComponent("#{work.ProblemNotes}") + '&problemdescription=' +encodeURIComponent("#{work.ProblemTypeDescription}") + '&parts=' +encodeURIComponent("#{work.Parts}") + '&parts1=' +encodeURIComponent("#{work.Parts}"), data-target='#workAssModal') #{work._id}
+														//- a(data-toggle='modal', href='/workAssModal?name=#{work.Name}&id=#{work._id}&pd=#{work.PriorityDescription}&prd=#{work.ProductName}&status=#{work.CurrentStatus}', data-target='#workAssModal') #{work._id}
+														//- a(data-toggle='modal', href='/workAssModal', data-target='#workAssModal') #{work._id}
+													td.gone768= work.PriorityDescription
+													td.gone768= work.Name
+													td.gone768= work.ProductName									
+													if work.CurrentStatus == "Assigned, Waiting to be Accepted"
+														td.gone768.gone992.text-danger #{work.CurrentStatus}
+													else 
+														td.gone768.gone992= work.CurrentStatus
+													td
+														form.form-checkin(action='/engineer/checkin' method="post")
+															input(type="hidden" name="reqid" value="#{work._id}")
+															if work.Checkin == 1
+																button.btn.btn-danger(type='submit', name="submit" value="checkout") Checkout
+															else
+																button.btn.btn-success(type="submit" name="submit" value="checkin") Checkin
+
+							#B.tab-pane
+								h3.text-center Assigned Work
+								.table-responsive
+									table.text-center.table.table-striped.table-hover
+										thead
+											tr
+												th.text-center Service Order
+												th.gone768.text-center Priority
+												th.gone768.text-center Customer
+												th.gone768.text-center Product
+												th.gone768.gone992.text-center Status
+										tbody
+											for work in history
+												tr
+													td
+														a(data-toggle='modal', href='/workAssModal?reqid=#{work._id}&pd=#{work.PriorityDescription}&snum=#{work.SerialNumber}&EquipID=#{work.Equip_id}&status=#{work.CurrentStatus}&name=' + encodeURIComponent("#{work.Name}") + '&prd=' +encodeURIComponent("#{work.ProductName}") + '&problemnotes=' +encodeURIComponent("#{work.ProblemNotes}") + '&problemdescription=' +encodeURIComponent("#{work.ProblemTypeDescription}") + '&parts=' +encodeURIComponent("#{work.Parts}") + '&parts1=' +encodeURIComponent("#{work.Parts}"), data-target='#workAssModal') #{work._id}
+														//- a(data-toggle='modal', href='/workAssModal?name=#{work.Name}&id=#{work._id}&pd=#{work.PriorityDescription}&prd=#{work.ProductName}&status=#{work.CurrentStatus}', data-target='#workAssModal') #{work._id}
+														//- a(data-toggle='modal', href='/workAssModal', data-target='#workAssModal') #{work._id}
+													td.gone768= work.PriorityDescription
+													td.gone768= work.Name
+													td.gone768= work.ProductName									
+													if work.CurrentStatus == "Assigned, Waiting to be Accepted"
+														td.gone768.gone992.text-danger #{work.CurrentStatus}
+													else 
+														td.gone768.gone992= work.CurrentStatus
+
+
+		.navbar.navbar-default.navbar-fixed-bottom
+			.container
+				p.navbar-text.pull-left
+					| &#174; 2016 WMD, Inc.
+				p.gone768.navbar-text.pull-right  
+					a(href='') Support 24x7
+				p.gone768.navbar-text.pull-right  
+					a(href='') Privacy Policy
+				form.here768.navbar-right(action='/logout')
+				button#here768(type='submit' class='btn btn-primary pull-right') Logout
+
+
+		script(src='/javascripts/jquery-2.0.3.min.js')
+		script(src='/javascripts/bootstrap.min.js')
+
+		//- script
+		//- 	$(document).ready(function(){
+		//- 		$('#ProblemType').change(function() {
+		//- 			var probSelect = $('#ProblemType option:selected').val();
+		//- 			if(probSelect == "Preventative Maintenance") {
+		//- 				$('#PM').html("<label class='col-sm-2 control-label PM2' for='PMType'> Preventative Maintenance Type: </label>\
+		//- 				<div class='col-sm-10'> <select id='pmOptions' class='form-control PM2' name='PMType' id='PMType' required> <option value='' default selected> Select The Preventative Maintenance Type Required </option>");
+		//- 				$.each( !{JSON.stringify(pmt)}, function( key, pmtypes ){
+		//- 					$('#pmOptions').append("<option value='" + pmtypes.PMDescription + "'>" + pmtypes.PMDescription + "</option>");
+		//- 				});
+		//- 			}else {
+		//- 				$('.PM2').hide();
+		//- 			}
+		//- 		});
+		//- 	});
+		//- script
+		//- 	$('#form-checkin').submit(function(e){
+		//- 		e.preventDefault();
+		//- 		$.post(
+		//- 			$(this).attr("engineer/checkin"), // The URL to send form data to
+		//- 			$(this).serialize(), // Serializes the form data to be sent
+		//- 			// Success callback function
+		//- 			function(data){ 
+		//- 				if(data.url){
+		//- 					window.location.href = data.url;
+		//- 				} else{
+		//- 					$('#msg').html(data.msg);
+		//- 				}
+		//- 			}
+		//- 		);
+		//- 	});
+		//- script
+		//- 	$("#form-checkin").serialize()
+		//- 	$('#form-checkin').submit(function(e){
+		//- 		$.ajax({
+		//- 			type: "POST",
+		//- 			url: "engineer/checkin",
+		//- 			data: $("#form-checkin").serialize(),
+		//- 			success: function() {
+		//- 				console.log('worked');
+		//- 			}
+		//- 		});
+		//- 	});
+
+			//- $.ajax({
+			//- 	url: url,
+			//- 	data: data,
+			//- 	success: success,
+			//- 	dataType: dataType
+			//- });

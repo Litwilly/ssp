@@ -1,0 +1,266 @@
+doctype 5
+html
+	head
+		title Single Service Portal
+		link(rel='stylesheet', href='/stylesheets/styles.css')
+		link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+		link(rel='stylesheet', href='/stylesheets/main.css')
+		link(rel='stylesheet', href='/stylesheets/emc-icon-styles.css')
+		link(rel='icon', type='images/png', href='images/favicon.png')
+		link(href='assets/css/bootstrap.css', rel='stylesheet')
+		link(href='assets/css/google-plus.css', rel='stylesheet')
+		meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+
+
+	body#space
+		.modal.fade(id='custServOrdModal' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+			.modal-dialog.wide-modal
+				.modal-content
+
+		.modal.fade(id='create' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+			.modal-dialog.wide-modal
+				.modal-content
+
+		//- NAV BAR
+		nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+			.container
+				.navbar-header
+
+					//- a.emcTab(href='/', title='Wonski Medical Solutions')
+					//- h3.applicationIdentifier 
+					ul.nav.navbar-nav.navbar-right
+						button.navbar-toggle(data-toggle='collapse', data-target='.navHeaderCollapse')
+							span.icon-bar
+							span.icon-bar
+							span.icon-bar
+						.collapse.navbar-collapse.navHeaderCollapse
+							ul.nav.navbar-nav.navbar-right
+								li.text-center.active
+									a(href='')
+										span.glyphicon.glyphicon-home
+										|  Home
+								li.text-center.active
+									//- a(href='/service-create') Create Service Request
+									a(data-toggle='modal', href='/service-create', data-target='#create')
+										span.glyphicon.glyphicon-wrench
+										|  Create Service Request
+								li.text-center.active
+									a.dropdown-toggle(href='#', data-toggle='dropdown')
+										span.glyphicon.glyphicon-eye-open
+										|  My Equipment
+										b.caret
+									ul.dropdown-menu
+										li
+											a(href='') View My Equipment
+										li
+											a(href='') View My Reports
+										li
+				form.gone768.navbar-form.navbar-right.logoutbig(action='/logout')
+					button.gone768(type='submit' class='btn btn-default pull-right') Logout
+
+		//- JUMBOTRON
+		.container
+			.col-sm-6.col-md-4
+			.panel.panel-default#gray 
+				h3.text-center Welcome <strong> Dr. #{lastname}!</strong>
+				p.text-center Today is #{moment(Date.now()).format('dddd, MMMM Do')}
+
+
+		.main
+
+		if (completed.length)
+		for comp in completed
+			.container
+				.alert.alert-success.alert-dismissible.fade.in
+					button.close(type='button', data-dismiss='alert', aria-label='Close')
+						span(aria-hidden='true') ×
+					strong 
+						.text-center  Service order #{comp._id} has been completed!
+
+		if (overdue.length)
+			for ov in overdue
+				.container
+					.alert.alert-danger.alert-dismissible.fade.in
+						button.close(type='button', data-dismiss='alert', aria-label='Close')
+							span(aria-hidden='true') ×
+						strong 
+							.text-center #{ov.ProductName} - #{ov.SerialNumber} is overdue for maintenance!
+
+		if (checkin.length)
+			for ci in checkin
+				.container
+					.alert.alert-info.alert-dismissible.fade.in
+						button.close(type='button', data-dismiss='alert', aria-label='Close')
+							span(aria-hidden='true') ×
+						strong 
+							.text-center  Engineer Max has checked in for Service Order #{ci._id}
+
+		// - TABS
+		.container
+			.col-sm-6.col-md-4
+			.panel.panel-default
+				.panel-heading
+					a.pull-right(href='#')
+					//- h4 Tabs
+				.panel-body
+					ul.nav.nav-tabs
+						li.active
+							a.text-center(href='#A', data-toggle='tab') Service Orders
+						li
+							a.text-center(href='#B', data-toggle='tab') Equipment
+						li
+							a.text-center(href='#C', data-toggle='tab') Preventative Maintenance
+					.tabbable
+						.tab-content
+							#A.tab-pane.active
+								h2.text-center Pending Service Orders
+								table.text-center.table.table-striped.table-hover.table-responsive
+									thead
+										tr
+											th.text-center #{header1} Service Order
+											//- th.text-center #{header2} Equipment
+											th.text-center #{header3} Product
+											//- th.text-center #{header4} Date Requested
+											//- th.text-center #{header5} Problem Type
+											th.text-center #{header6} Status
+									tbody
+									for eq in equipment
+										tr
+											td
+												a(data-toggle='modal', href='/custServOrdModal?reqid=#{eq._id}&pd=#{eq.PriorityDescription}&snum=#{eq.SerialNumber}&status=#{eq.CurrentStatus}&name=' + encodeURIComponent("#{eq.Name}") + '&prd=' +encodeURIComponent("#{eq.ProductName}") + '&problemnotes=' +encodeURIComponent("#{eq.ProblemNotes}") + '&problemdescription=' +encodeURIComponent("#{eq.ProblemTypeDescription}"), data-target='#custServOrdModal') #{eq._id}
+												//- + '&pn=' +encodeURIComponent("#{eq.ProblemNotes}")+ '&pd=' +encodeURIComponent("#{eq.PriorityDescription}")+ '&ptd=' +encodeURIComponent("#{eq.ProblemTypeDescription}"), data-target='#custServOrdModal'
+												//- a(href="/custServOrdModal?reqid=#{eq._id}") #{eq._id}
+												//- td= eq.SerialNumber
+												td= eq.ProductName
+												//- td #{moment(eq.OpenDate).format('dddd,MMMM Do YYYY, hh:mm A')}
+												//- td= eq.ProblemTypeDescription
+												if eq.CurrentStatus == "Waiting For Customer Approval"
+													td.text-danger #{eq.CurrentStatus}
+												else 
+													td= eq.CurrentStatus
+
+
+								h2.text-center Completed Service Orders
+								table.text-center.table.table-striped.table-hover.table-responsive
+									thead
+										tr
+											th.text-center #{header1} Service Order
+											//- th.text-center #{header2} Equipment
+											th.text-center #{header3} Product
+											//- th.text-center #{header4} Date Requested
+											//- th.text-center #{header5} Problem Type
+											th.text-center #{header6} Status
+									tbody
+									for eq in sequipment
+										tr
+											td
+												a(data-toggle='modal', href='/custServOrdModal?reqid=#{eq._id}&status=#{eq.CurrentStatus}&name=' + '&prd=' +encodeURIComponent("#{eq.ProductName}"), data-target='#custServOrdModal') #{eq._id}
+												//- + '&pn=' +encodeURIComponent("#{eq.ProblemNotes}")+ '&pd=' +encodeURIComponent("#{eq.PriorityDescription}")+ '&ptd=' +encodeURIComponent("#{eq.ProblemTypeDescription}"), data-target='#custServOrdModal'
+												//- a(href="/custServOrdModal?reqid=#{eq._id}") #{eq._id}
+												//- td= eq.SerialNumber
+												td= eq.ProductName
+												//- td #{moment(eq.OpenDate).format('dddd,MMMM Do YYYY, hh:mm A')}
+												//- td= eq.ProblemTypeDescription
+												if eq.CurrentStatus == "Waiting For Customer Approval"
+													td.text-danger #{eq.CurrentStatus}
+												else 
+													td= eq.CurrentStatus
+
+
+							#B.tab-pane
+								h2.text-center My Equipment
+								table.table.table-striped.table-hover.table-responsive
+									thead
+										tr
+											th.text-center #{header1} Serial Number
+											th.text-center #{header2} Product
+											th.gone768.text-center #{header} Current Status
+											th.gone768.text-center #{header3} Maintance Needed
+											th.text-center #{header3} Date Required
+
+									tbody    
+									for p in products 
+										tr
+											a(data-toggle='modal', href='#EModal') #{p._SerialNumber}
+											td.text-center= p.SerialNumber
+											td.text-center= p.ProductName
+											td.gone768.text-center= p.StatusDescription
+											td.gone768.text-center= p.NextPMDescription
+											td.text-center #{moment(p.NextPMDate).format('MMMM Do YYYY')}
+											//- td.text-center #{moment(p.NextPMDate).format('dddd,MMMM Do YYYY, hh:mm A')}
+
+							#C.tab-pane
+								h2.text-center My Preventative Maintenance
+								table.table.table-striped.table-hover.table-responsive
+									thead
+										tr
+											th.text-center Date Required
+											th.text-center Serial Number
+											th.text-center Product
+											th.gone768.text-center Current Status
+											th.gone768.text-center Maintance Needed
+
+									tbody    
+									for p in products 
+										tr
+											td.text-center #{moment(p.NextPMDate).format('MMMM Do YYYY')}
+											a(data-toggle='modal', href='#EModal') #{p._SerialNumber}
+											td.text-center= p.SerialNumber
+											td.text-center= p.ProductName
+											td.gone768.text-center= p.StatusDescription
+											td.gone768.text-center= p.NextPMDescription
+											//- td.text-center #{moment(p.NextPMDate).format('dddd,MMMM Do YYYY, hh:mm A')}
+
+
+
+			//- MODAL - SERVICE ORDER TABLE 
+			#SOModal.modal.fade
+				.modal-content
+					.modal-header
+						button.close(type='button', data-dismiss='modal', aria-hidden='true')
+						h4.myModalLabel.modal-title
+						| ECHODATA OF SERVICE ORDER FORM
+					.modal-body
+						p Here is the Service Order echodata the customer filled out. 
+					.modal-footer
+						button.btn.btn-primary(type='button', data-dismiss='modal') Close
+
+			//- MODAL - EQUIPMENT TABLE
+			#EModal.modal.fade
+				.modal-content
+					.modal-header
+						button.close(type='button', data-dismiss='modal', aria-hidden='true')
+						h4.myModalLabel.modal-title
+						| Would you like to create a service order for this product?
+					//- .modal-body
+					//- 	p Here is the Service Order echodata the customer filled out. 
+					//- 	.panel-group(id='accordian')
+					//- 		.panel.panel-default
+					//- 			.panel-heading
+					//- 				h4.panel-title
+					//- 					a(data-toggle='collapse' data-parent='#accordion' href='#collapse1') 
+					//- 			.panel-collapse.collapse(id='collapse1')
+					//- 				.panel-body
+					//- 					p.lead This is all of my Collapse 1 Content
+					//- 					p this content is very cool.
+					.modal-footer
+						button.btn.btn-primary(type='button', data-dismiss='modal') Yes 
+						button.btn.btn-primary(type='button', data-dismiss='modal') No
+
+		//- FOOTER
+		.navbar.navbar-default.navbar-fixed-bottom
+			.container
+				p.navbar-text.pull-left
+					| &#174; 2016 WMD, Inc.
+				p.gone768.navbar-text.pull-right  
+					a(href='') Support 24x7
+				p.gone768.navbar-text.pull-right  
+					a(href='') Privacy Policy
+				form.here768.navbar-right(action='/logout')
+				button#here768(type='submit' class='btn btn-primary pull-right') Logout
+
+
+		script(src='/javascripts/jquery-2.0.3.min.js')
+		//- script(src='/javascripts/jquery-1.12.3.js')
+		script(src='//code.jquery.com/ui/1.10.4/jquery-ui.js')
+		script(src='/javascripts/bootstrap.min.js')

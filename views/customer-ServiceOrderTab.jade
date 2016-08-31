@@ -1,0 +1,128 @@
+doctype 5
+html
+	head
+		title Ryan Rules
+		link(rel='stylesheet', href='/stylesheets/styles.css')
+		link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+		link(rel='stylesheet', href='/stylesheets/main.css')
+		link(rel='stylesheet', href='/stylesheets/emc-icon-styles.css')
+		link(rel='icon', type='images/png', href='images/favicon.png')
+		meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+
+
+	body
+		script(src='/javascripts/jquery-2.0.3.min.js')
+		script(src='/javascripts/bootstrap.min.js')
+
+		.modal.fade(id='serviceReqModal' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+			.modal-dialog.wide-modal
+				.modal-content
+
+		.modal.fade(id='create' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+			.modal-dialog.wide-modal
+				.modal-content
+
+		//- NAV BAR
+		nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+			.container
+				.navbar-header
+					a.emcTab(href='/', title='Wonski Medical Solutions')
+					h3.applicationIdentifier Wonski Medical Solutions
+					ul.nav.navbar-nav.navbar-right
+						button.navbar-toggle(data-toggle='collapse', data-target='.navHeaderCollapse')
+							span.icon-bar
+							span.icon-bar
+							span.icon-bar
+						.collapse.navbar-collapse.navHeaderCollapse
+							ul.nav.navbar-nav.navbar-right
+								li.active
+									a(href='')
+										span.glyphicon.glyphicon-home
+										|  Home
+								li.active
+									//- a(href='/service-create') Create Service Request
+									a(data-toggle='modal', href='/service-create', data-target='#create')
+										span.glyphicon.glyphicon-wrench
+										|  Create Service Request
+								li.active
+									a.dropdown-toggle(href='#', data-toggle='dropdown')
+										span.glyphicon.glyphicon-eye-open
+										|  My Equipment
+										b.caret
+									ul.dropdown-menu
+										li
+											a(href='') View My Equipment
+										li
+											a(href='') View My Reports
+										li
+											a(href='') Email Search
+										li
+											a(href='') Add To Group
+				form.navbar-form.navbar-right(action='/logout')
+					button(type='submit' class='btn btn-default pull-right') Logout
+
+		//- JUMBOTRON
+		.container
+			br
+			br
+			.jumbotron
+				h1 Hello #{firstname}
+				h2 You are a Customer!
+				p Today is #{moment(Date.now()).format('dddd, MMMM Do')}
+
+		.main
+
+		//- SERVICE ORDER TABLE
+		.container
+			h2.text-center Service Orders
+			table.text-center.table.table-striped.table-hover.table-responsive
+				thead
+					tr
+						th.text-center #{header1} Service Order
+						//- th.text-center #{header2} Equipment
+						th.text-center #{header3} Product
+						//- th.text-center #{header4} Date Requested
+						//- th.text-center #{header5} Problem Type
+						th.text-center #{header6} Status
+				tbody
+				for eq in equipment
+					tr
+						td
+							a(data-toggle='modal', href='#SOModal') #{eq._id}
+							//a(href="/servicedetails?id=#{eq._id}") #{eq._id}
+							//- td= eq.SerialNumber
+							td= eq.ProductName
+							//- td #{moment(eq.OpenDate).format('dddd,MMMM Do YYYY, hh:mm A')}
+							//- td= eq.ProblemTypeDescription
+							if eq.CurrentStatus == "Waiting For Customer Approval"
+								td.text-danger #{eq.CurrentStatus}
+							else 
+								td= eq.CurrentStatus
+
+			//- MODAL  
+			#SOModal.modal.fade
+				.modal-content
+					.modal-header
+						button.close(type='button', data-dismiss='modal', aria-hidden='true')
+						h4.myModalLabel.modal-title
+						| ECHODATA OF SERVICE ORDER FORM
+					.modal-body
+						p Here is the Service Order echodata the customer filled out. 
+					.modal-footer
+						button.btn.btn-primary(type='button', data-dismiss='modal') Close
+
+
+		//- FOOTER
+			.navbar.navbar-default.navbar-fixed-bottom
+				.container
+					p.navbar-text.pull-left
+						| &#174; 2016 WMD, Inc.
+					p.navbar-text.pull-right  
+						a(href='') Support 24x7
+					p.navbar-text.pull-right  
+						a(href='') Privacy Policy
+
+
+		script(src='/javascripts/jquery-2.0.3.min.js')
+		script(src='/javascripts/jquery-1.12.3.js')
+		script(src='/javascripts/bootstrap.min.js')

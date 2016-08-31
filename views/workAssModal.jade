@@ -1,0 +1,92 @@
+doctype 5
+html
+	head
+		meta 
+		link(href='assets/css/bootstrap.css', rel='stylesheet')
+		link(href='stylesheets/modal_custom.css', rel='stylesheet')
+		script(src='//html5shim.googlecode.com/svn/trunk/html5.js')
+		link(href='assets/css/google-plus.css', rel='stylesheet')
+		script(src='javascripts/modal_custom.js')
+
+	body
+		.modal-header
+			button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+			.myModalLabel.modal-title
+				.p.thicker Service Request: #{reqid}     
+		.modal-body
+			form(role="form" id="workAssModal" name="workAssModal" method="post" action="/engineer/complete")
+				.row
+					//Panel 1
+					.col-xs-12.col-md-12
+						.panel.panel-primary
+							.panel-heading.nobottompadding
+								h4 Service Details
+							.panel-body            
+								.text-center.clearfix "#{reqproblemnotes}"
+								hr
+								.col-xs-12              
+									.col-xs-6
+										.p.thicker Product
+										p.p #{reqprd} 
+										p
+									.col-xs-6
+										.p.thicker Equipment
+										p.p Serial:  #{reqserial}
+										p.p ID:  #{reqequipid}
+								.col-xs-12 
+									p
+								.col-xs-12
+									.col-xs-6
+										.p.thicker Problem
+										p.p #{reqproblemdescription}
+										p
+									.col-xs-6
+										.p.thicker Priority
+										p.p #{reqpd}
+
+					//Panel 2
+					.col-xs-12.col-md-12		
+						.panel.panel-default
+							.panel-heading.nobottompadding
+								h4 Notes
+							.panel-body.notoppadding
+								.col-xs-12.col-md-12
+									textarea.form-control(id="ActionNotes" rows="5" cols='75' name="ActionNotes" placeholder="Add serivce notes here...")
+
+					//Panel 3
+					.col-xs-12.col-md-12		
+						.panel.panel-default
+							.panel-heading.nobottompadding
+								h4 Parts 
+							.panel-body
+								.col-xs-12
+									.well(style='max-height: 150px;overflow: auto;')
+										ul.list-group.checked-list-box
+											li.list-group-item Capacitors
+											li.list-group-item Circuit Board
+											li.list-group-item Dedicated Synthesis Unit
+											li.list-group-item Deflection Coil
+											li.list-group-item Electron Gun
+											li.list-group-item Fiber Optic Cable
+											li.list-group-item Path Receiver
+											li.list-group-item Scanner
+											li.list-group-item Fiber Optic Cable
+											li.list-group-item Generator Cooling Unit
+											li.list-group-item Fiber Optic Cable
+											li.list-group-item Circuit Board
+											li.list-group-item Generator Cooling Unit
+											li.list-group-item Focus Coil
+											li.list-group-item Magnet 
+
+					//Buttons				
+					input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
+					input(type="hidden" name="reqid" value="#{reqid}")
+					.col-xs-6
+					button.btn.btn-danger.pull-right(type="submit" name="submit" value="submit") Check Out
+					//- .col-xs-6
+					//- button.btn.btn-danger.pull-left(type='button', data-dismiss='modal') Check Out			
+
+//- script
+//- 	function myFunction(){
+//-   	document.getElementById("partlist").innerHTML = "Hello World";
+//-   }

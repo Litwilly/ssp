@@ -1,0 +1,39 @@
+doctype 5
+html
+  head
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(rel="shortcut icon" href="/images/johnson-and-johnson-squarelogo.png")
+    title= title
+    link(href="/stylesheets/login_custom.css" rel="stylesheet")
+    
+  body
+    div.container
+    .panel.panel-default.panel-transparent
+      form.form-signin(role="form" id="login", name="login" method="post", action="/login")
+        .form-group
+          h2.form-signin-heading Please Sign In
+          input.form-control(type="email" id="UserMail" placeholder="Email Address" name="UserMail" required autofocus)
+          input.form-control(type="password" id="Password" placeholder="Password" name="Password" required)
+          button.btn.btn-lg.btn-primary.btn.block(type="submit") Sign In
+    script(src='/javascripts/jquery-2.0.3.min.js')
+    script(src='/javascripts/bootstrap.min.js')
+    script(src='/javascripts/happy.js')
+    script(src='/javascripts/happy.methods.js')
+    script
+      $(document).ready(function () {
+        $('#login').isHappy({
+          fields: {
+            // reference the field you're talking about, probably by `id`
+            // but you could certainly do $('[name=name]') as well.
+            '#UserMail': {
+              required: true,
+              message: 'You Have Entered An Invalid Email Address',
+              test: happy.email // this can be *any* function that returns true or false
+            },
+            '#Password': {
+              required: true,
+              message: 'You Must Input a Password'
+            }
+          }
+        });
+      }); 

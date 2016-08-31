@@ -1,0 +1,78 @@
+doctype 5
+html
+	head
+		meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+
+	body
+		form(role="form" id="workOfferModal" name="workOfferModal" method="post")
+			.modal-header
+				button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+				h4.myModalLabel.modal-title 
+				| Accept or Reject Work
+			.modal-body.form-horizontal
+				.form-group
+					label.col-sm-2.control-label Customer:
+					.col-sm-10
+						p.form-control-static #{firstname}
+				.form-group
+					label.col-sm-2.control-label Date:
+					.col-sm-10
+						p.form-control-static #{moment(Today).format('dddd, MMMM Do')}
+				.form-group
+					label.col-sm-2.control-label(for="Equipment") Equipment:
+					.col-sm-10
+						select.form-control(name="Equipment" id="Equipment" required autofocus)
+							option(value="" default selected) Select Your Equipment For Service
+							- for equipment in WorkOffers
+								p.form-control-static #{equipment._id}
+								option(value="{\"equipid\": #{equipment._id}, \"prodid\": #{equipment.ProductID}}") #{equipment.SerialNumber} - #{equipment.ProductName} - #{equipment.Room}
+				.form-group
+					label.col-sm-2.control-label(for="ProblemType") Service Type:
+					.col-sm-10
+						select.form-control(name="ProblemType" id="ProblemType"  required)
+							option(value="" default selected) Select The Problem Type You Are Experiencing
+							- for serviceType in WorkOffers
+								option(value="#{serviceType.ProblemTypeDescription}") #{serviceType.ProblemTypeDescription}
+				.form-group(id="PM")
+				.form-group
+					label.col-sm-2.control-label(for="Priority") Priority:
+					.col-sm-10
+						select.form-control(name="Priority" id="Priority"  required)
+							option(value="" default selected) Select The Severity Of The Issue You Are Experiencing
+							- for priority in WorkOffers
+								option(value="#{priority.PriorityDescription}") #{priority.PriorityDescription}
+				.form-group
+					label.col-sm-2.control-label(for="ContactName") Contact Name:
+					.col-sm-10
+						input.form-control(type="text" name="ContactName" id="ContactName"  required placeholder="Example: Albert Einstien")
+				.form-group
+					label.col-sm-2.control-label(for="ContactEmail") Contact Email:
+					.col-sm-10
+						input.form-control(type="email" name="ContactEmail" id="ContactEmail"  required placeholder="Example: aeinstein@genius.com")
+				.form-group
+					label.col-sm-2.control-label(for="ContactPhone") Contact Phone:
+					.col-sm-10
+						input.form-control(type="tel" name="ContactPhone" id="ContactPhone"  required placeholder="Example: 123-456-7890")
+				.form-group
+					.col-sm-offset-2.col-sm-10
+						textarea.form-control(id="ProblemNotes" rows="7" name="ProblemNotes" placeholder="Add Any Additonal Problem Notes Here...")
+			.modal-footer
+				//- input(type="hidden" name="Today" value="#{Today}")
+				input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
+				button.btn.btn-success(type="submit" name="submit" value="submit") Create New Service Request
+				button.btn.btn-danger(type='button', data-dismiss='modal') Cancel
+		script
+			$(document).ready(function(){
+				$('#ProblemType').change(function() {
+					var probSelect = $('#ProblemType option:selected').val();
+					if(probSelect == "Preventative Maintenance") {
+						$('#PM').html("<label class='col-sm-2 control-label PM2' for='PMType'> Preventative Maintenance Type: </label>\
+						<div class='col-sm-10'> <select id='pmOptions' class='form-control PM2' name='PMType' id='PMType' required> <option value='' default selected> Select The Preventative Maintenance Type Required </option>");
+						$.each( !{JSON.stringify(pmt)}, function( key, pmtypes ){
+							$('#pmOptions').append("<option value='" + pmtypes.PMDescription + "'>" + pmtypes.PMDescription + "</option>");
+						});
+					}else {
+						$('.PM2').hide();
+					}
+				});
+			});

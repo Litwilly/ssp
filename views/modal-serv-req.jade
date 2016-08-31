@@ -1,0 +1,41 @@
+doctype 5
+html
+	head
+		meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+
+	body
+		.modal-header
+			button.close(type='button', data-dismiss='modal', aria-hidden='true') x
+			h1.myModalLabel.modal-title
+			| View Equipment Details
+		.modal-body
+			.panel-group(id='accordian')
+				.panel.panel-default
+					.panel-heading 
+						h4.panel-title 
+							a(data-toggle='collapse' data-parent='#accordian' href='#collapse1') Action 1
+					.panel-collapse.collapse(id='collapse1')
+						.panel-body
+							p.lead Look at me collapse!!
+							p this content is sweeet
+			.panel-group(id='accordian2')
+				.panel.panel-default
+					.panel-heading
+						h4.panel-title
+							a(data-toggle='collapse' data-parent='#accordian' href='#collapse2') Action 2
+					.panel-collapse.collapse(id='collapse2')
+						.panel-body
+							p.lead This is all of my Collapse 2 Content.
+							p hi world   
+			p
+				button.btn.btn-info(type='button' href='#' id='poppop' rel='popover' data-trigger='hover' data-placement='bottom' data-content='Look at my Popover!' data-original-title='Popover 1:') Let's Pop:
+			p
+				button.btn.btn-info(type='button' href='#' id='poppop2' rel='popover' data-trigger='click' data-placement='right' data-content='Look at my 2nd Popover!' data-original-title='Popover 2:') Pop Again:
+		.modal-footer
+			button.btn.btn-primary(type='button', data-dismiss='modal') Close
+
+		script 
+			$('#poppop').popover();
+			$('#poppop2').popover();
+			$('#poppop3').popover();
+			$('#poppop4').popover();

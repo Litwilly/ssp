@@ -1,0 +1,102 @@
+doctype 5
+html
+	head
+		meta 
+		link(href='assets/css/bootstrap.css', rel='stylesheet')
+		link(href='stylesheets/modal_custom.css', rel='stylesheet')
+		script(src='//html5shim.googlecode.com/svn/trunk/html5.js')
+		link(href='assets/css/google-plus.css', rel='stylesheet')
+		meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+
+	body
+		form(role="form" id="workOfferModal" name="workOfferModal" method="post" action="/engineer/accept")
+		.modal-header
+			button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+			.myModalLabel.modal-title
+				.p.thicker Service Request: #{reqid}    
+		.modal-body
+			form(role="form" id="workOffModal" name="workOffModal" method="post")
+				.row
+					//Panel 1
+					.col-md-12.col-md-12
+						.panel.panel-primary
+							.panel-heading.nobottompadding
+								h4 Service Details
+							.panel-body            
+								.text-center.clearfix "#{reqproblemnotes}"              
+								hr           
+								.col-xs-12              
+									.col-xs-6
+										.p.thicker Product
+										p.p #{reqprd} 
+										p 
+									.col-xs-6
+										.p.thicker Equipment
+										p.p Serial:  #{reqserial}
+										p.p ID:  5509
+								.col-xs-12 
+									p
+								.col-xs-12
+									.col-xs-6
+										.p.thicker Problem
+										p.p #{reqproblemdescription}
+										p
+									.col-xs-6
+										.p.thicker Priority
+										p.p #{reqpd}
+
+
+					//Panel 2
+					.col-md-12.col-md-12		
+						.panel.panel-default
+							.panel-heading
+								img.img-circle.pull-right(src='/images/uFp_tsTJboUY7kue5XAsGAs28.png')
+								h4 Contact Information
+							.panel-body
+								.col-xs-12              
+									.col-xs-6
+										.p.thicker Name
+										p.p Harvard Anderson
+										p 
+									.col-xs-6
+										.p.thicker Phone
+										p.p #{reqphone} 774-245-4280
+										p 
+								.col-xs-12 
+									p
+								.col-xs-12 
+									.col-xs-8
+										.p.thicker Email 
+										p.p handerson@bellevue.com
+										p
+									.col-xs-8
+										.p.thicker Practice
+										p.p #{reqphone} Bellevue Regional Hospital
+										p 
+								hr	
+					//Panel 3
+					.col-md-12.col-md-12		
+						.panel.panel-default
+							.panel-heading
+								h4 Location
+								iframe(width="100%",height="450",frameborder="0" style="border:0",src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD0Y0M31ThZDMJ7-EUHBjgvoOFqE9Txcck&q=bellevue+hospital", allowfullscreen)
+								//- #map
+								//- .panel-body                        
+								hr	
+					//Buttons				
+					input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
+					.col-xs-6
+						button.btn.btn-success.pull-right(type="submit" name="submit" value="submit") Accept Service Request
+					.col-xs-6
+						button.btn.btn-danger.pull-left(type='button', data-dismiss='modal') Reject				
+
+	//- script
+	//- 	function initMap() {
+	//- 	var mapDiv = document.getElementById('map');
+	//- 	var map = new google.maps.Map(mapDiv, {
+	//- 	center: {lat: 44.540, lng: -78.546},
+	//- 	zoom: 8
+	//- 	});
+	//- }
+	//- initMap();
+	//- script(async='', defer='', src='https://maps.googleapis.com/maps/api/js?key=AIzaSyD0Y0M31ThZDMJ7-EUHBjgvoOFqE9Txcck&callback=initMap')
