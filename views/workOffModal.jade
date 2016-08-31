@@ -3,6 +3,7 @@ html
 	head
 		meta 
 		link(href='assets/css/bootstrap.css', rel='stylesheet')
+		link(href='stylesheets/modal_custom.css', rel='stylesheet')
 		script(src='//html5shim.googlecode.com/svn/trunk/html5.js')
 		link(href='assets/css/google-plus.css', rel='stylesheet')
 		meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
@@ -11,38 +12,62 @@ html
 		form(role="form" id="workOfferModal" name="workOfferModal" method="post" action="/workOffModal")
 		.modal-header
 			button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-			h1.myModalLabel.modal-title 
-			| Service Order ##{reqid}     
+			.myModalLabel.modal-title
+				.p.thicker Service Request: #{reqid}    
 		.modal-body
 			form(role="form" id="workOffModal" name="workOffModal" method="post")
 				.row
 					//Panel 1
 					.col-md-12.col-md-12
 						.panel.panel-primary
-							.panel-heading
-								h4 Details
+							.panel-heading.nobottompadding
+								h4 Service Details
 							.panel-body            
-								.text-center.clearfix
-								|	"This machine is smoking. Like actually on fire"
-								|               
-								hr
-								|               
-								.col-xs-6
-									.p.thicker Product
-									p.p #{reqprd} 
-								.col-xs-6
-									.p.thicker Problem
-									p.p #{reqpd}
+								.text-center.clearfix "#{reqproblemnotes}"              
+								hr           
+								.col-xs-12              
+									.col-xs-6
+										.p.thicker Product
+										p.p #{reqprd} 
+										p 
+									.col-xs-6
+										.p.thicker Equipment
+										p.p Serial:  #{reqserial}
+										p.p ID:  5509
+								.col-xs-12 
+									p
+								.col-xs-12
+									.col-xs-6
+										.p.thicker Problem
+										p.p #{reqproblemdescription}
+										p
+									.col-xs-6
+										.p.thicker Priority
+										p.p #{reqpd}
+										
+										
 					//Panel 2
 					.col-md-12.col-md-12		
 						.panel.panel-default
 							.panel-heading
 								img.img-circle.pull-right(src='/images/uFp_tsTJboUY7kue5XAsGAs28.png')
 								h4 Customer
-							.panel-body  
-								p.thicker Name: #{reqname}                    
-								p.thicker Phone: #{reqphone}                    
-								p.thicker Email: #{reqemail}                    
+							.panel-body
+								.col-xs-12              
+									.col-xs-6
+										.p.thicker Name
+										p.p #{reqname} 
+										p 
+									.col-xs-6
+									.p.thicker Phone
+									p.p #{reqphone} 
+									p 
+								.col-xs-12 
+									p
+								.col-xs-12
+									.col-xs-6
+										.p.thicker Email
+										p.p #{reqemail}
 								hr	
 					//Panel 3
 					.col-md-12.col-md-12		

@@ -12,6 +12,14 @@ button {
 
 }
 
+.state-icon {
+    left: -5px;
+}
+.list-group-item-primary {
+    color: rgb(255, 255, 255);
+    background-color: rgb(66, 139, 202);
+}
+
 .jumbotron{
     margin-top: 40px;
     color: #FFFFFF;
@@ -50,6 +58,15 @@ button {
   font-weight:400;
   font-size:11px;
 }
+
+.notoppadding {
+   padding-top: 0 !important;
+}
+
+.nobottompadding {
+   padding-bottom: 0 !important;
+}
+
 .panel .panel-default {
   border-color:#cccccc;
 }

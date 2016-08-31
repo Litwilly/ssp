@@ -137,6 +137,7 @@ var serviceOrderSchema = new mongoose.Schema({
   TotalEstimatedMinutes: Number,
   Checkin: Number,
   ProblemNotes: String,
+  ComponentDescription: String,
   LaborCost: Number,
   PartsCost: Number,
   CustomerContactInfo: {
