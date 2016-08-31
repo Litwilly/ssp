@@ -67,11 +67,11 @@ html
 				.panel-body
 					ul.nav.nav-tabs#fifty
 						li.active
-							a.text-center(href='#A', data-toggle='tab') Current Work
+							a.text-center(href='#A', data-toggle='tab') Work Assigned 
 						li
-							a.text-center(href='#B', data-toggle='tab') Work History
-						//- li
-						//- 	a.text-center(href='#C', data-toggle='tab') Work History
+							a.text-center(href='#B', data-toggle='tab') Work Offered
+						li
+							a.text-center(href='#C', data-toggle='tab') Work History
 					.tabbable
 						.tab-content
 							#A.tab-pane.active
@@ -91,7 +91,7 @@ html
 											for work in WorkAssigned
 												tr
 													td
-														a(data-toggle='modal', href='/workAssModal?reqid=#{work._id}&pd=#{work.PriorityDescription}&snum=#{work.SerialNumber}&EquipID=#{work.Equip_id}&status=#{work.CurrentStatus}&name=' + encodeURIComponent("#{work.Name}") + '&prd=' +encodeURIComponent("#{work.ProductName}") + '&problemnotes=' +encodeURIComponent("#{work.ProblemNotes}") + '&problemdescription=' +encodeURIComponent("#{work.ProblemTypeDescription}"), data-target='#workAssModal') #{work._id}
+														a(data-toggle='modal', href='/workAssModal?reqid=#{work._id}&pd=#{work.PriorityDescription}&snum=#{work.SerialNumber}&EquipID=#{work.Equip_id}&status=#{work.CurrentStatus}&name=' + encodeURIComponent("#{work.Name}") + '&prd=' +encodeURIComponent("#{work.ProductName}") + '&problemnotes=' +encodeURIComponent("#{work.ProblemNotes}") + '&problemdescription=' +encodeURIComponent("#{work.ProblemTypeDescription}") + '&parts=' +encodeURIComponent("#{work.Parts}") + '&parts1=' +encodeURIComponent("#{work.Parts}"), data-target='#workAssModal') #{work._id}
 														//- a(data-toggle='modal', href='/workAssModal?name=#{work.Name}&id=#{work._id}&pd=#{work.PriorityDescription}&prd=#{work.ProductName}&status=#{work.CurrentStatus}', data-target='#workAssModal') #{work._id}
 														//- a(data-toggle='modal', href='/workAssModal', data-target='#workAssModal') #{work._id}
 													td.gone768= work.PriorityDescription
@@ -109,7 +109,7 @@ html
 															else
 																button.btn.btn-success(type="submit" name="submit" value="checkin") Checkin
 
-
+							#B.tab-pane
 								h3.text-center Work Offers
 								.table-responsive
 									table.text-center.table.table-striped.table-hover
@@ -127,7 +127,7 @@ html
 												tr
 													td
 														//- a(data-toggle='modal', href='/workOffModal', data-target='#workOffModal') #{work._id}
-														a(data-toggle='modal', href='/workOffModal?reqid=#{work._id}&pd=#{work.PriorityDescription}&name=' + encodeURIComponent("#{work.Name}") + '&prd=' + encodeURIComponent("#{work.ProductName}") + '&status=' +encodeURIComponent("#{work.CurrentStatus}"), data-target='#workOffModal') #{work._id}
+														a(data-toggle='modal', href='/workOffModal?reqid=#{work._id}&snum=#{work.SerialNumber}&EquipID=#{work.Equip_id}&pd=#{work.PriorityDescription}&phone=#{work.Phone}&email=#{work.Email}&name=' + encodeURIComponent("#{work.Name}") + '&prd=' + encodeURIComponent("#{work.ProductName}") + '&problemnotes=' +encodeURIComponent("#{work.ProblemNotes}") + '&status=' +encodeURIComponent("#{work.CurrentStatus}") + '&problemdescription=' +encodeURIComponent("#{work.ProblemTypeDescription}"), data-target='#workOffModal') #{work._id}
 														//- a(data-toggle='modal', href='/workOfferModal' , data-target='#workOfferModal') #{work._id}
 													td.gone768= work.PriorityDescription
 													td.gone768= work.Name
@@ -145,7 +145,7 @@ html
 														//- .button.btn.btn-success(type='button') Accept
 
 
-							#B.tab-pane
+							#C.tab-pane
 								h3 Need to add this table
 
 

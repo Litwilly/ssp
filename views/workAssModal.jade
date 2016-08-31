@@ -6,59 +6,85 @@ html
 		link(href='stylesheets/modal_custom.css', rel='stylesheet')
 		script(src='//html5shim.googlecode.com/svn/trunk/html5.js')
 		link(href='assets/css/google-plus.css', rel='stylesheet')
+		script(src='javascripts/modal_custom.js')
 	body
 		.modal-header
 			button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
 			.myModalLabel.modal-title
-				.p.thicker #{reqid}     
+				.p.thicker Service Request: #{reqid}     
 		.modal-body
 				form(role="form" id="workAssModal" name="workAssModal" method="post" action="/engineer/complete")
 					.row
-						//Panel 1e
-						.col-md-12.col-md-12
+						//Panel 1
+						.col-xs-12.col-md-12
 							.panel.panel-primary
-								.panel-heading
+								.panel-heading.nobottompadding
 									h4 Service Details
 								.panel-body            
 									.text-center.clearfix "#{reqproblemnotes}"
-									hr              
-									.col-xs-6
-										.p.thicker Product
-										p.p #{reqprd} 
+									hr
+									.col-xs-12              
+										.col-xs-6
+											.p.thicker Product
+											p.p #{reqprd} 
+											p
+										.col-xs-6
+											.p.thicker Equipment
+											p.p Serial:  #{reqserial}
+											p.p ID:  #{reqequipid}
+									.col-xs-12 
 										p
-										p.p Serial:  #{reqserial}
-										p.p ID:  #{reqequipid}	
-									.col-xs-6
-										.p.thicker Problem
-										p.p #{reqproblemdescription}
-										p
-										p.p Estimated Minutes:  #{reqserial}
-
-
-
+									.col-xs-12
+										.col-xs-6
+											.p.thicker Problem
+											p.p #{reqproblemdescription}
+											p
+										.col-xs-6
+											.p.thicker Priority
+											p.p #{reqpd}
 
 						//Panel 2
-						.col-md-12.col-md-12		
+						.col-xs-12.col-md-12		
 							.panel.panel-default
-									.panel-heading
+									.panel-heading.nobottompadding
 										h4 Notes
-									.panel-body
-										.col-md-12.col-sm-12
+									.panel-body.notoppadding
+										.col-xs-12.col-md-12
 											textarea.form-control(id="ActionNotes" rows="5" cols='75' name="ActionNotes" placeholder="Add serivce notes here...")
-											hr	
-											.col-xs-6 Element
-											.col-xs-6 Element2
-						.col-md-12.col-md-12		
+											
+						//Panel 3
+						.col-xs-12.col-md-12		
 							.panel.panel-default
-									.panel-heading
+									.panel-heading.nobottompadding
 										h4 Parts 
 									.panel-body
-										.col-md-12.col-sm-12
-											.col-xs-6 Element4
-										
+										.col-xs-12
+											.well(style='max-height: 150px;overflow: auto;')
+												ul.list-group.checked-list-box
+													li.list-group-item Capacitors
+													li.list-group-item Circuit Board
+													li.list-group-item Dedicated Synthesis Unit
+													li.list-group-item Deflection Coil
+													li.list-group-item Electron Gun
+													li.list-group-item Fiber Optic Cable
+													li.list-group-item Path Receiver
+													li.list-group-item Scanner
+													li.list-group-item Fiber Optic Cable
+													li.list-group-item Generator Cooling Unit
+													li.list-group-item Fiber Optic Cable
+													li.list-group-item Circuit Board
+													li.list-group-item Generator Cooling Unit
+													li.list-group-item Focus Coil
+													li.list-group-item Magnet
+
 						//Buttons				
 						input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
 						.col-xs-6
 								button.btn.btn-success.pull-right(type="submit" name="submit" value="submit") Check In 
 						.col-xs-6
 							button.btn.btn-danger.pull-left(type='button', data-dismiss='modal') Check Out			
+
+//- script
+//- 	function myFunction(){
+//-   	document.getElementById("partlist").innerHTML = "Hello World";
+//-   }

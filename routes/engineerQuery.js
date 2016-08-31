@@ -34,9 +34,12 @@ exports.getData = function(req, res){
                 "Location": yours._Equipment.Room,
                 //***CHANGE: Added more Equipment Queries
                 "ProblemTypeDescription": yours.ProblemTypeDescription,
+                "ProblemNotes": yours.ProblemNotes,
                 "PriorityDescription": yours.PriorityDescription,
                 "CurrentStatus": yours.CurrentStatus,
-                "Name": yours.CustomerContactInfo.Name
+                "Name": yours.CustomerContactInfo.Name,
+                "Phone": yours.CustomerContactInfo.Phone,
+                "Email": yours.CustomerContactInfo.Email
               });
             });
             callback();
@@ -57,11 +60,14 @@ exports.getData = function(req, res){
                     "_id": mine._id,
                     "CustomerContactInfo": mine.CustomerContactInfo,
                     "ProductName": mine._Product.ProductName,
+                    "Parts": mine._Product.Components[0],
+                    "Parts1": mine._Product.Components[1],
                     "SerialNumber": mine._Equipment.SerialNumber,
                     "Equip_id": mine._Equipment._id,
                     "Location": mine._Equipment.Room,
                     //***CHANGE: Added more Equipment Queries
                     "ProblemNotes": mine.ProblemNotes,
+                    "ActualMinutes": mine.ActualMinutes,
                     "ProblemTypeDescription": mine.ProblemTypeDescription,
                     "PriorityDescription": mine.PriorityDescription,
                     "CurrentStatus": mine.CurrentStatus,
@@ -109,8 +115,9 @@ exports.getWorkOfferModal = function(req, res){
                 "ProductName": yours._Product.ProductName,
                 "SerialNumber": yours._Equipment.SerialNumber,
                 "Location": yours._Equipment.Room,
-                "ID": yours._Equipment._id,
+                "Equip_id": yours._Equipment._id,
                 "ProblemNotes": yours.ProblemNotes,
+                "SerialNumber": mine._Equipment.SerialNumber,
                 //***Stuart CHANGE: Added more Equipment Queries
                 "ProblemTypeDescription": yours.ProblemTypeDescription,
                 "PriorityDescription": yours.PriorityDescription,
@@ -130,6 +137,8 @@ exports.getWorkOfferModal = function(req, res){
         reqid: req.query.reqid,
         reqproblemnotes: req.query.problemnotes,
         reqserial: req.query.snum,
+        reqparts: req.query.parts1,
+        reqparts: req.query.parts,
         reqequipid: req.query.EquipID,
         reqproblemdescription: req.query.problemdescription,
         reqprd: req.query.prd,
@@ -183,7 +192,7 @@ exports.getWorkOfferModal = function(req, res){
        so.save(function (err,so){
        });
     });
-    // res.redirect(req.get('referer'));
+
     res.redirect('back');
   };
 
@@ -217,10 +226,16 @@ exports.getWorkOfferModal = function(req, res){
       {
         firstname: req.session.user.FirstName,
         reqid: req.query.reqid,
+        reqproblemnotes: req.query.problemnotes,
+        reqserial: req.query.snum,
+        reqproblemdescription: req.query.problemdescription,
         reqprd: req.query.prd,
+        reqequipid: req.query.EquipID,
         reqpd: req.query.pd,
         reqstatus: req.query.status,
-        reqname: req.query.name
+        reqname: req.query.name,
+        reqemail: req.query.email,
+        reqphone: req.query.phone
       });
 
   exports.postWorkOffModal = function(req, res){
