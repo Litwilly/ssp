@@ -122,7 +122,7 @@ exports.create = function(req, res){
                 ProblemNotes: req.body.ProblemNotes,
                 OpenDate: req.body.Today,
                 Checkin: 0,
-                _AssignedTo: 83791,
+                _AssignedTo: 84714,
                 CurrentStatus: "Assigned, Waiting to be Accepted"
                 // ServiceDetails: {_ID: 1, _User: req.session.user._id, StatusDescription: "Assigned, Waiting to be Accepted" }
               }, function (err, serviceorder) {
@@ -145,7 +145,7 @@ exports.create = function(req, res){
                 ProblemNotes: req.body.ProblemNotes,
                 OpenDate: req.body.Today,
                 Checkin: 0,
-                _AssignedTo: 83791,
+                _AssignedTo: 84714,
                 CurrentStatus: "Assigned, Waiting to be Accepted"
                 // ServiceDetails: {_ID: 1, _User: req.session.user._id, StatusDescription: "Assigned, Waiting to be Accepted" }
               }, function (err, serviceorder) {

@@ -9,7 +9,7 @@ html
 		meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
 
 	body
-		form(role="form" id="workOfferModal" name="workOfferModal" method="post")
+		form(role="form" id="workOfferModal" name="workOfferModal" method="post" action="/engineer/accept")
 		.modal-header
 			button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
 			.myModalLabel.modal-title
@@ -44,8 +44,8 @@ html
 									.col-xs-6
 										.p.thicker Priority
 										p.p #{reqpd}
-										
-										
+
+
 					//Panel 2
 					.col-md-12.col-md-12		
 						.panel.panel-default

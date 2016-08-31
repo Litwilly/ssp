@@ -12,8 +12,7 @@ html
 		meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
 
 
-	body
-
+	body#space
 		.modal.fade(id='custServOrdModal' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
 			.modal-dialog.wide-modal
 				.modal-content
@@ -61,12 +60,10 @@ html
 
 		//- JUMBOTRON
 		.container
-			br
-			br
-			.jumbotron
-				h1 Hello #{firstname}
-				h2 Welcome Valued Customer!
-				p Today is #{moment(Date.now()).format('dddd, MMMM Do')}
+			.col-sm-6.col-md-4
+			.panel.panel-default#gray 
+				h3.text-center Welcome <strong> Dr. #{lastname}!</strong>
+				p.text-center Today is #{moment(Date.now()).format('dddd, MMMM Do')}
 
 
 		.main
@@ -87,7 +84,7 @@ html
 						button.close(type='button', data-dismiss='alert', aria-label='Close')
 							span(aria-hidden='true') ×
 						strong 
-							.text-center  Service order #{ov._id} is overdue for maintenance!
+							.text-center #{ov.ProductName} - #{ov.SerialNumber} is overdue for maintenance!
 
 		if (checkin.length)
 			for ci in checkin
@@ -165,7 +162,27 @@ html
 											//- td.text-center #{moment(p.NextPMDate).format('dddd,MMMM Do YYYY, hh:mm A')}
 
 							#C.tab-pane
-								h2 
+								h2.text-center My Preventative Maintenance
+								table.table.table-striped.table-hover.table-responsive
+									thead
+										tr
+											th.text-center Date Required
+											th.text-center Serial Number
+											th.text-center Product
+											th.gone768.text-center Current Status
+											th.gone768.text-center Maintance Needed
+
+									tbody    
+									for p in products 
+										tr
+											td.text-center #{moment(p.NextPMDate).format('MMMM Do YYYY')}
+											a(data-toggle='modal', href='#EModal') #{p._SerialNumber}
+											td.text-center= p.SerialNumber
+											td.text-center= p.ProductName
+											td.gone768.text-center= p.StatusDescription
+											td.gone768.text-center= p.NextPMDescription
+											//- td.text-center #{moment(p.NextPMDate).format('dddd,MMMM Do YYYY, hh:mm A')}
+
 
 
 			//- MODAL - SERVICE ORDER TABLE 
@@ -212,7 +229,7 @@ html
 				p.gone768.navbar-text.pull-right  
 					a(href='') Privacy Policy
 				form.here768.navbar-right(action='/logout')
-					button.here768#lilpad(type='submit' class='btn btn-primary pull-right') Logout
+				button#here768(type='submit' class='btn btn-primary pull-right') Logout
 
 
 		script(src='/javascripts/jquery-2.0.3.min.js')
