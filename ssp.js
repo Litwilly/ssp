@@ -75,6 +75,8 @@ app.post('/engineer/complete', engineerQuery.postWorkAssModal);
 app.post('/engineer/acceptReject', engineerQuery.quickAcceptReject);
 app.post('/engineer/checkin', engineerQuery.checkin);
 
+app.get('/custServOrdModal', customerQuery.getcustServOrdModal);
+
 //Login and Validate User Routes, Logout
 app.get('/login', user.loginForm);							//Display Login Form
 app.post('/login', user.doLogin);							//Accept Form Data, Execute Login Action

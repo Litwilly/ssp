@@ -9,11 +9,12 @@ html
 		link(rel='icon', type='images/png', href='images/favicon.png')
 		link(href='assets/css/bootstrap.css', rel='stylesheet')
 		link(href='assets/css/google-plus.css', rel='stylesheet')
+		meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
 
 
 	body
 
-		.modal.fade(id='serviceReqModal' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		.modal.fade(id='custServOrdModal' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
 			.modal-dialog.wide-modal
 				.modal-content
 
@@ -77,7 +78,7 @@ html
 					button.close(type='button', data-dismiss='alert', aria-label='Close')
 						span(aria-hidden='true') ×
 					strong 
-						|  Service order #{comp._id} has been completed!
+						.text-center  Service order #{comp._id} has been completed!
 
 		if (overdue.length)
 			for ov in overdue
@@ -86,7 +87,7 @@ html
 						button.close(type='button', data-dismiss='alert', aria-label='Close')
 							span(aria-hidden='true') ×
 						strong 
-							|  Service order #{ov._id} is overdue for maintenance!
+							.text-center  Service order #{ov._id} is overdue for maintenance!
 
 		if (checkin.length)
 			for ci in checkin
@@ -95,7 +96,7 @@ html
 						button.close(type='button', data-dismiss='alert', aria-label='Close')
 							span(aria-hidden='true') ×
 						strong 
-							|  Engineer Max has checked in for Service Order #{ci._id}
+							.text-center  Engineer Max has checked in for Service Order #{ci._id}
 
 		// - TABS
 		.container
@@ -129,8 +130,9 @@ html
 									for eq in equipment
 										tr
 											td
-												a(data-toggle='modal', href='#SOModal') #{eq._id}
-												//a(href="/servicedetails?id=#{eq._id}") #{eq._id}
+												a(data-toggle='modal', href='/custServOrdModal?reqid=#{eq._id}&status=#{eq.CurrentStatus}&name=' + '&prd=' +encodeURIComponent("#{eq.ProductName}"), data-target='#custServOrdModal') #{eq._id}
+												//- + '&pn=' +encodeURIComponent("#{eq.ProblemNotes}")+ '&pd=' +encodeURIComponent("#{eq.PriorityDescription}")+ '&ptd=' +encodeURIComponent("#{eq.ProblemTypeDescription}"), data-target='#custServOrdModal'
+												//- a(href="/custServOrdModal?reqid=#{eq._id}") #{eq._id}
 												//- td= eq.SerialNumber
 												td= eq.ProductName
 												//- td #{moment(eq.OpenDate).format('dddd,MMMM Do YYYY, hh:mm A')}

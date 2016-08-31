@@ -1,13 +1,6 @@
 doctype 5
 html
 	head
-		//- link(rel='stylesheet', href='/stylesheets/styles.css')
-		//- link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
-		//- link(rel='stylesheet', href='/stylesheets/main.css')
-		//- link(rel='stylesheet', href='/stylesheets/emc-icon-styles.css')
-		//- link(rel='icon', type='images/png', href='images/favicon.png')
-		//- link(href='assets/css/bootstrap.css', rel='stylesheet')
-		//- link(href='assets/css/google-plus.css', rel='stylesheet')
 
 	body
 		form(role="form" id="create" name="create" method="post" action="/customer/create")
@@ -50,7 +43,7 @@ html
 					label.col-sm-2.control-label(for="ProblemType") Service Type:
 					.col-sm-10
 						select.form-control(name="ProblemType" id="ProblemType"  required)
-							option(value="" default selected) Select The Problem Type You Are Experiencing
+							option(value="" default selected) Select The Problem Type
 							- for serviceType in equipments
 								option(value="#{serviceType.ProblemTypeDescription}") #{serviceType.ProblemTypeDescription}
 				.form-group(id="PM")
@@ -58,7 +51,7 @@ html
 					label.col-sm-2.control-label(for="Priority") Priority:
 					.col-sm-10
 						select.form-control(name="Priority" id="Priority"  required)
-							option(value="" default selected) Select The Severity Of The Issue You Are Experiencing
+							option(value="" default selected) Select The Severity 
 							- for priority in priorities
 								option(value="#{priority.PriorityDescription}") #{priority.PriorityDescription}
 				.form-group
@@ -107,6 +100,7 @@ html
 			//- 		}
 			//- 	});
 			//- });
+
 
 			//- attempt 2 - not working, bootstrap code
 			$(function() {

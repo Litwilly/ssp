@@ -176,3 +176,21 @@ exports.create = function(req, res){
         });
 
   };
+
+// exports.presentform = function(req, res){
+//   res.render('custServOrdModal', { title: 'Submit Form' });
+// };
+// exports.echodata = function(req, res){
+//   res.render('custServOrdModal', { title: 'Confirm',
+//     					             firstname: req.body.firstname,
+//                            date: req.body.date,
+//                            equipment: req.body.equipment,
+//                            problem: req.body.problem,
+//                            priority: req.body.priority,
+//                            ProblemNotes: req.body.ProblemNotes,
+//                            ContactName: req.body.ContactName,
+//                            ContactEmail: req.body.ContactEmail,
+//     					             ContactPhone: req.body.ContactPhone
+//   });
+//
+// };

@@ -7,19 +7,21 @@ html
 		link(rel='stylesheet', href='/stylesheets/main.css')
 		link(rel='stylesheet', href='/stylesheets/emc-icon-styles.css')
 		link(rel='icon', type='images/png', href='images/favicon.png')
- 
+		meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+
+
 	body
 		script(src='/javascripts/jquery-2.0.3.min.js')
 		script(src='/javascripts/bootstrap.min.js')
-	
+
 		.modal.fade(id='serviceReqModal' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
 			.modal-dialog.wide-modal
 				.modal-content
-		
+
 		.modal.fade(id='create' tabindex='1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
 			.modal-dialog.wide-modal
 				.modal-content
-				
+
 		//- NAV BAR
 		nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
 			.container
@@ -96,7 +98,7 @@ html
 								td.text-danger #{eq.CurrentStatus}
 							else 
 								td= eq.CurrentStatus
-						
+
 			//- MODAL  
 			#SOModal.modal.fade
 				.modal-content
@@ -108,8 +110,8 @@ html
 						p Here is the Service Order echodata the customer filled out. 
 					.modal-footer
 						button.btn.btn-primary(type='button', data-dismiss='modal') Close
-		
-			
+
+
 		//- FOOTER
 			.navbar.navbar-default.navbar-fixed-bottom
 				.container
@@ -124,4 +126,3 @@ html
 		script(src='/javascripts/jquery-2.0.3.min.js')
 		script(src='/javascripts/jquery-1.12.3.js')
 		script(src='/javascripts/bootstrap.min.js')
-		

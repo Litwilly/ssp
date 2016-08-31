@@ -37,9 +37,7 @@ exports.getData = function(req, res){
                 "ProblemNotes": yours.ProblemNotes,
                 "PriorityDescription": yours.PriorityDescription,
                 "CurrentStatus": yours.CurrentStatus,
-                "Name": yours.CustomerContactInfo.Name,
-                "Phone": yours.CustomerContactInfo.Phone,
-                "Email": yours.CustomerContactInfo.Email
+                "Name": yours.CustomerContactInfo.Name
               });
             });
             callback();
@@ -92,7 +90,11 @@ exports.getData = function(req, res){
                 res.render('engineer',
                       { WorkOffers: workoffers,
                         WorkAssigned:  workassigned,
-                         firstname: req.session.user.FirstName});
+                        firstname: req.session.user.FirstName,
+                        rejected: req.query.rso,
+                        accepted: req.query.aso,
+                        checkin: req.query.cin,
+                        checkout: req.query.cout});
               }
             );
         };
@@ -160,66 +162,55 @@ exports.getWorkOfferModal = function(req, res){
   };
 
   exports.quickAcceptReject = function(req, res){
-    var ar;
+    console.log(req.body.reqid);
     if (req.body.submit == "accept"){
-      ar = "Accepted";
+      ServiceOrder.findOne({ _id: req.body.reqid})
+      .exec(function(err, so) {
+         so.CurrentStatus = req.body.Status;
+         so.CloseDate = req.body.Today;
+         so.save(function (err,so){
+         });
+      });
+      res.redirect('/engineer?aso=' + req.body.reqid);
+      // res.redirect(req.get('referer')+'?aso='+req.body.reqid);
     }else if (req.body.submit == "reject"){
-      ar = "Rejected";
+      ServiceOrder.findOne({ _id: req.body.reqid})
+      .exec(function(err, so) {
+         so.CurrentStatus = req.body.Status;
+         so.save(function (err,so){
+         });
+      });
+      res.redirect('/engineer?rso=' + req.body.reqid);
     }
-    console.log(ar);
-    console.log("ba");
-    ServiceOrder.findOne({ _id: req.body.reqid})
-    .exec(function(err, so) {
-       so.CurrentStatus = ar;
-       so.save(function (err,so){
-       });
-    });
-    res.redirect('/engineer');
   };
 
   exports.checkin = function(req, res){
-    var c;
-    if (req.body.submit == "checkout"){
-      c = 0;
-    }else if (req.body.submit == "checkin"){
-      c = 1;
-    }
-    console.log("Checkin Var");
-    console.log(c);
+  var c;
+  if (req.body.submit == "checkout"){
+    c = 0;
     ServiceOrder.findOne({ _id: req.body.reqid})
     .exec(function(err, so) {
        so.Checkin = c;
        so.save(function (err,so){
        });
     });
+    res.redirect('/engineer?cout=' + req.body.reqid);
+    // res.redirect('back');
+  }else if (req.body.submit == "checkin"){
+    c = 1;
+    ServiceOrder.findOne({ _id: req.body.reqid})
+    .exec(function(err, so) {
+       so.Checkin = c;
+       so.save(function (err,so){
+       });
+    });
+    res.redirect('/engineer?cin=' + req.body.reqid);
+    // res.redirect('back');
+  }
+  console.log("Checkin Var");
+  console.log(c);
 
-    res.redirect('back');
-  };
-
-  // Failed attempt at ajax
-  // exports.checkin = function(req, res){
-  //   console.log("body goods");
-  //   console.log(req.body);
-  //   var c;
-  //   if (req.body.inout === "0"){
-  //     c = 1;
-  //   }else if (req.body.inout === "1"){
-  //     c = 0;
-  //   }
-  //   else {
-  //     console.log("not working");
-  //   }
-  //   console.log("Checkin Var");
-  //   console.log(c);
-  //   ServiceOrder.findOne({ _id: req.body.reqid})
-  //   .exec(function(err, so) {
-  //      so.Checkin = c;
-  //      so.save(function (err,so){
-  //      });
-  //   });
-  //   // res.redirect('/engineer');
-  //   res.redirect(req.get('referer'));
-  // };
+};
 
   exports.getWorkOffModal = function(req, res){
     res.render('workOffModal',
@@ -233,10 +224,9 @@ exports.getWorkOfferModal = function(req, res){
         reqequipid: req.query.EquipID,
         reqpd: req.query.pd,
         reqstatus: req.query.status,
-        reqname: req.query.name,
-        reqemail: req.query.email,
-        reqphone: req.query.phone
+        reqname: req.query.name
       });
+    };
 
   exports.postWorkOffModal = function(req, res){
     console.log(req.body.reqid);
@@ -248,8 +238,8 @@ exports.getWorkOfferModal = function(req, res){
        });
     });
     res.redirect('/engineer');
+
   };
-    };
 
   exports.postWorkOffModal = function(req, res){
     console.log(req.body.reqid);

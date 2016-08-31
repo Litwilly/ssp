@@ -45,7 +45,9 @@ exports.getData = function(req, res){
                 "OpenDate": yours.OpenDate,
                 "ProblemTypeDescription": yours.ProblemTypeDescription,
                 "ProductName": yours._Product.ProductName,
-                "CurrentStatus": yours.CurrentStatus
+                "CurrentStatus": yours.CurrentStatus,
+                "ProblemNotes": yours.ProblemNotes,
+                "PriorityDescription": yours.PriorityDescription
               });
             });
             callback();
@@ -136,7 +138,8 @@ exports.getData = function(req, res){
                       "StatusDescription": mine.StatusDescription,
                       "ProductName": mine._Product.ProductName,
                       "NextPMDescription": mine.NextPMDescription,
-                      "NextPMDate": mine.NextPMDate
+                      "NextPMDate": mine.NextPMDate,
+                      "ProblemNotes": mine.ProblemNotes
                     });
                   });
                   callback();
@@ -164,3 +167,17 @@ exports.getData = function(req, res){
                           firstname: req.session.user.FirstName});
               });
         };
+
+//MODAL FUNCTIONS
+exports.getcustServOrdModal = function(req, res){
+  res.render('custServOrdModal',
+    { firstname: req.session.user.FirstName,
+      reqid: req.query.reqid,
+      reqprd: req.query.prd,
+      reqpd: req.query.pd,
+      reqstatus: req.query.status,
+      reqname: req.query.name,
+      reqptd: req.query.ptd,
+      reqpn: req.query.pn
+    });
+  };
