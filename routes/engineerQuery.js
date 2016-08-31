@@ -48,11 +48,11 @@ exports.getData = function(req, res){
         function(callback){
           ServiceOrder.find()
             .where('_AssignedTo').equals(req.session.user._id)
+            .where('CurrentStatus').equals('Completed')
             .populate('_Product')
             .populate('Priority')
             .populate('_Equipment')
             .populate('User')
-              //.select('_id SerialNumber OpenDate ProblemTypeDescription ProductName CurrentStatus')
               .exec(function (err, serviceorders){
                 serviceorders.forEach(function(yours){
                   historys.push({
@@ -216,6 +216,7 @@ exports.getWorkOfferModal = function(req, res){
     ServiceOrder.findOne({ _id: req.body.reqid})
     .exec(function(err, so) {
        so.Checkin = c;
+       so.CurrentStatus = "Completed";
        so.save(function (err,so){
        });
     });
@@ -258,21 +259,11 @@ exports.getWorkOfferModal = function(req, res){
     ServiceOrder.findOne({ _id: req.body.reqid})
     .exec(function(err, so) {
        so.CurrentStatus = "Completed";
+       so.Checkin = 0;
        so.CloseDate = req.body.Today;
        so.save(function (err,so){
        });
     });
     res.redirect('/engineer');
 
-  };
-
-  exports.postWorkOffModal = function(req, res){
-    console.log(req.body.reqid);
-    ServiceOrder.findOne({ _id: req.body.reqid})
-    .exec(function(err, so) {
-       so.CurrentStatus = req.body.Status;
-       so.save(function (err,so){
-       });
-    });
-    res.redirect('/engineer');
   };
