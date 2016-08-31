@@ -1,7 +1,6 @@
 doctype 5
 html
 	head
-		meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
 
 	body
 		form(role="form" id="create" name="create" method="post" action="/customer/create")
@@ -44,7 +43,7 @@ html
 					label.col-sm-2.control-label(for="ProblemType") Service Type:
 					.col-sm-10
 						select.form-control(name="ProblemType" id="ProblemType"  required)
-							option(value="" default selected) Select The Problem Type You Are Experiencing
+							option(value="" default selected) Select The Problem Type
 							- for serviceType in equipments
 								option(value="#{serviceType.ProblemTypeDescription}") #{serviceType.ProblemTypeDescription}
 				.form-group(id="PM")
@@ -52,7 +51,7 @@ html
 					label.col-sm-2.control-label(for="Priority") Priority:
 					.col-sm-10
 						select.form-control(name="Priority" id="Priority"  required)
-							option(value="" default selected) Select The Severity Of The Issue You Are Experiencing
+							option(value="" default selected) Select The Severity 
 							- for priority in priorities
 								option(value="#{priority.PriorityDescription}") #{priority.PriorityDescription}
 				.form-group
