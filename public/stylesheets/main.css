@@ -21,11 +21,8 @@ body {
 }
 #here768 {
   display: none;
-  margin-top: 8px;
 }
-#lilpad {
-  margin-top: 8px;
-}
+
 
 /*FONTS*/
 @font-face {
@@ -56,8 +53,9 @@ body {
 @media screen
 and (min-width : 368px)
 and (max-width : 767px) {
-.here768 {
+#here768 {
   display: block;
+  margin-top: 8px;
 }
 }
 

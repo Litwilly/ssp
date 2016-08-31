@@ -57,7 +57,7 @@ html
 				p.text-center Today is #{moment(Date.now()).format('dddd, MMMM Do')}
 
 		.main
-		
+
 		if (rejected)
 			.container
 				.alert.alert-danger.alert-dismissible.fade.in
@@ -65,7 +65,7 @@ html
 						span(aria-hidden='true') ×
 					strong 
 						.text-center  Service order #{rejected} has been rejected!
-		
+
 		if (accepted)
 			.container
 				.alert.alert-success.alert-dismissible.fade.in
@@ -73,7 +73,7 @@ html
 						span(aria-hidden='true') ×
 					strong 
 						.text-center Service order #{accepted} has been accepted!
-						
+
 		if (checkin)
 			.container
 				.alert.alert-success.alert-dismissible.fade.in
@@ -81,7 +81,7 @@ html
 						span(aria-hidden='true') ×
 					strong
 						.text-center  You have checked in for service order #{checkin}.
-		
+
 		if (checkout)
 			.container
 				.alert.alert-success.alert-dismissible.fade.in
@@ -89,7 +89,7 @@ html
 						span(aria-hidden='true') ×
 					strong 
 					.text-center  You have checked in for service order #{checkout}.
-		
+
 		.container
 			.col-sm-6.col-md-4
 			.panel.panel-default
@@ -231,7 +231,7 @@ html
 				p.gone768.navbar-text.pull-right  
 					a(href='') Privacy Policy
 				form.here768.navbar-right(action='/logout')
-				button#here768#lilpad(type='submit' class='btn btn-primary pull-right') Logout
+				button#here768(type='submit' class='btn btn-primary pull-right') Logout
 
 
 		script(src='/javascripts/jquery-2.0.3.min.js')
