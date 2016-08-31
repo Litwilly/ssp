@@ -172,22 +172,32 @@ exports.getWorkOfferModal = function(req, res){
   };
 
   exports.checkin = function(req, res){
-    var c;
-    if (req.body.submit == "checkout"){
-      c = 0;
-    }else if (req.body.submit == "checkin"){
-      c = 1;
-    }
-    console.log("Checkin Var");
-    console.log(ar);
+  var c;
+  if (req.body.submit == "checkout"){
+    c = 0;
     ServiceOrder.findOne({ _id: req.body.reqid})
     .exec(function(err, so) {
-       so.CurrentStatus = ar;
+       so.Checkin = c;
        so.save(function (err,so){
        });
     });
-    res.redirect('/engineer');
-  };
+    res.redirect('/engineer?cout=' + req.body.reqid);
+    // res.redirect('back');
+  }else if (req.body.submit == "checkin"){
+    c = 1;
+    ServiceOrder.findOne({ _id: req.body.reqid})
+    .exec(function(err, so) {
+       so.Checkin = c;
+       so.save(function (err,so){
+       });
+    });
+    res.redirect('/engineer?cin=' + req.body.reqid);
+    // res.redirect('back');
+  }
+  console.log("Checkin Var");
+  console.log(c);
+
+};
 
   exports.getWorkOffModal = function(req, res){
     res.render('workOffModal',
