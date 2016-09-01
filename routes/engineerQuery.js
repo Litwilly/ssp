@@ -18,7 +18,7 @@ exports.getData = function(req, res){
   async.parallel([
     function(callback){
       ServiceOrder.find({CloseDate: {$exists: false} })
-        .where('_AssignedTo').equals(req.session.user._id)
+        .where('_AssignedTo').equals(84714)
         .where('CurrentStatus').equals('Assigned, Waiting to be Accepted')
         // .populate('_CreatedBy')
         .populate('_Product')
@@ -47,7 +47,7 @@ exports.getData = function(req, res){
         },
         function(callback){
           ServiceOrder.find()
-            .where('_AssignedTo').equals(req.session.user._id)
+            .where('_AssignedTo').equals(84714)
             .where('CurrentStatus').equals('Completed')
             .populate('_Product')
             .populate('Priority')
@@ -74,7 +74,7 @@ exports.getData = function(req, res){
         function(callback){
           ServiceOrder.find({CloseDate: {$exists: false} })
             .where('CurrentStatus').equals('Accepted')
-            .where('_AssignedTo').equals(req.session.user._id)
+            .where('_AssignedTo').equals(84714)
             .populate('_Product')
             .populate('Priority')
             .populate('_Equipment')
@@ -105,12 +105,12 @@ exports.getData = function(req, res){
               });
             }], function(err){
                 if (err)return next(err);
-                if (req.session.user.RoleName === "Customer")
-                  res.render('customer',
-                        { equipment: workoffers,
-                          products:  workassigned,
-                          firstname: req.session.user.FirstName});
-                else if (req.session.user.RoleName === "Onsite Engineer")
+                // if (req.session.user.RoleName === "Customer")
+                //   res.render('customer',
+                //         { equipment: workoffers,
+                //           products:  workassigned,
+                //           firstname: req.session.user.FirstName});
+                // else if (req.session.user.RoleName === "Onsite Engineer")
                 console.log("-----Work Offers");
                 console.log(workoffers);
                 console.log("-------------Assigned Work");
@@ -119,7 +119,7 @@ exports.getData = function(req, res){
                       { WorkOffers: workoffers,
                         WorkAssigned:  workassigned,
                         history:  historys,
-                        firstname: req.session.user.FirstName,
+                        firstname: "EMC",
                         rejected: req.query.rso,
                         accepted: req.query.aso,
                         checkin: req.query.cin,
@@ -157,12 +157,12 @@ exports.getWorkOfferModal = function(req, res){
           //***Stuart CHANGE: Reference Test modal
           res.render('workOffModal',
                 { WorkOffers: workoffers,
-                  firstname: req.session.user.FirstName});
+                  firstname: "Max"});
         };
 
   exports.getWorkAssModal = function(req, res){
     res.render('workAssModal',
-      { firstname: req.session.user.FirstName,
+      { firstname: "Max",
         reqid: req.query.reqid,
         reqproblemnotes: req.query.problemnotes,
         reqserial: req.query.snum,
@@ -241,7 +241,7 @@ exports.getWorkOfferModal = function(req, res){
   exports.getWorkOffModal = function(req, res){
     res.render('workOffModal',
       {
-        firstname: req.session.user.FirstName,
+        firstname: "Max",
         reqid: req.query.reqid,
         reqproblemnotes: req.query.problemnotes,
         reqserial: req.query.snum,
@@ -258,12 +258,12 @@ exports.getWorkOfferModal = function(req, res){
     console.log(req.body.reqid);
     ServiceOrder.findOne({ _id: req.body.reqid})
     .exec(function(err, so) {
-       so.CurrentStatus = "Completed";
+       so.CurrentStatus = "Accepted";
        so.Checkin = 0;
        so.CloseDate = req.body.Today;
        so.save(function (err,so){
        });
     });
-    res.redirect('/engineer');
+    res.redirect('/engineer?aso=' + req.body.reqid);
 
   };

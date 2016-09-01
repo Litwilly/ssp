@@ -9,13 +9,12 @@ html
 		meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
 
 	body
-		form(role="form" id="workOfferModal" name="workOfferModal" method="post" action="/engineer/accept")
 		.modal-header
 			button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
 			.myModalLabel.modal-title
 				.p.thicker Service Request: #{reqid}    
 		.modal-body
-			form(role="form" id="workOffModal" name="workOffModal" method="post")
+			form(role="form" id="workOfferModal" name="workOfferModal" method="post" action="/engineer/accept")
 				.row
 					//Panel 1
 					.col-md-12.col-md-12
@@ -84,11 +83,12 @@ html
 								//- .panel-body                        
 								hr	
 					//Buttons				
+					input(type="hidden" name="reqid" value="#{reqid}")
 					input(type="hidden" name="Today" value="2016-01-06T08:04:00.000Z")
 					.col-xs-6
 						button.btn.btn-success.pull-right(type="submit" name="submit" value="submit") Accept Service Request
-					.col-xs-6
-						button.btn.btn-danger.pull-left(type='button', data-dismiss='modal') Reject				
+					//- .col-xs-6
+						//- button.btn.btn-danger.pull-left(type='button', data-dismiss='modal') Reject				
 
 	//- script
 	//- 	function initMap() {
