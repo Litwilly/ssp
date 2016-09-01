@@ -87,7 +87,7 @@ html
 					button.close(type='button', data-dismiss='alert', aria-label='Close')
 						span(aria-hidden='true') ×
 					strong 
-					.text-center  You have checked out for service order #{checkout}.
+					.text-center  You have completed service order #{checkout}.
 
 		.container
 			.col-sm-6.col-md-4
@@ -175,7 +175,8 @@ html
 														form.form-checkin(action='/engineer/checkin' method="post")
 															input(type="hidden" name="reqid" value="#{work._id}")
 															if work.Checkin == 1
-																button.btn.btn-danger(type='submit', name="submit" value="checkout") Checkout
+																button.btn.btn-danger(data-toggle='modal', href='/workAssModal?reqid=#{work._id}&pd=#{work.PriorityDescription}&snum=#{work.SerialNumber}&EquipID=#{work.Equip_id}&status=#{work.CurrentStatus}&name=' + encodeURIComponent("#{work.Name}") + '&prd=' +encodeURIComponent("#{work.ProductName}") + '&problemnotes=' +encodeURIComponent("#{work.ProblemNotes}") + '&problemdescription=' +encodeURIComponent("#{work.ProblemTypeDescription}") + '&parts=' +encodeURIComponent("#{work.Parts}") + '&parts1=' +encodeURIComponent("#{work.Parts}"), data-target='#workAssModal') Checkout
+																//- button.btn.btn-danger(type='submit', name="submit" value="checkout") Checkout
 															else
 																button.btn.btn-success(type="submit" name="submit" value="checkin") Checkin
 

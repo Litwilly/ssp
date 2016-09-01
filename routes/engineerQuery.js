@@ -180,10 +180,12 @@ exports.getWorkOfferModal = function(req, res){
     ServiceOrder.findOne({ _id: req.body.reqid})
     .exec(function(err, so) {
        so.CurrentStatus = "Completed";
+       so.CloseDate = "2016-08-29T00:59:00.000Z";
+       so.Checkin = 0;
        so.save(function (err,so){
        });
     });
-    res.redirect('/engineer');
+    res.redirect('/engineer?cout=' + req.body.reqid);
   };
 
   exports.quickAcceptReject = function(req, res){
@@ -192,7 +194,6 @@ exports.getWorkOfferModal = function(req, res){
       ServiceOrder.findOne({ _id: req.body.reqid})
       .exec(function(err, so) {
          so.CurrentStatus = "Accepted";
-         so.CloseDate = req.body.Today;
          so.save(function (err,so){
          });
       });
@@ -217,6 +218,7 @@ exports.getWorkOfferModal = function(req, res){
     .exec(function(err, so) {
        so.Checkin = c;
        so.CurrentStatus = "Completed";
+       so.CloseDate = "2016-08-29T00:59:00.000Z";
        so.save(function (err,so){
        });
     });
@@ -260,10 +262,9 @@ exports.getWorkOfferModal = function(req, res){
     .exec(function(err, so) {
        so.CurrentStatus = "Accepted";
        so.Checkin = 0;
-       so.CloseDate = req.body.Today;
        so.save(function (err,so){
        });
     });
-    res.redirect('/engineer');
+    res.redirect('/engineer?aso=' + req.body.reqid);
 
   };
